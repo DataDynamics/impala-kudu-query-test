@@ -34,7 +34,7 @@ jdbc:impala://<COORDINATOR>:21050;AuthMech=0
 jdbc:impala://localhost:18000/default2;AuthMech=3;UID=cloudera;PWD=cloudera;MEM_LIMIT=1000000000;REQUEST_POOL=myPool
 ```
 
-이것 이외에 JDBC Driver에서 제공하는 추가 설정은
+이것 이외에 JDBC Driver에서 주로 사용하는 커넥터 옵션은 다음과 같습니다.
 
 * `DelegationUID`
    * 모든 요청을 특정 사용자에게 위임하는 기능
