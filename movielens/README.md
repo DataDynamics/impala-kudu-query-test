@@ -4,8 +4,11 @@
 
 [MovieLens Latest Datasets](https://grouplens.org/datasets/movielens/latest/)을 다음의 URL에서 크기에 맞춰서 다운로드합니다.
 
-* [Small](https://files.grouplens.org/datasets/movielens/ml-latest-small.zip)
-* [Large](https://files.grouplens.org/datasets/movielens/ml-latest.zip)
+* [100K dataset](https://files.grouplens.org/datasets/movielens/ml-latest-small.zip)
+* [1M dataset](https://files.grouplens.org/datasets/movielens/ml-1m.zip)
+* [25M dataset](https://files.grouplens.org/datasets/movielens/ml-25m.zip)
+* [32M dataset](https://files.grouplens.org/datasets/movielens/ml-32m.zip)
+* [Latest dataset](https://files.grouplens.org/datasets/movielens/ml-latest.zip)
 
 ### 데이터 적재를 위한 테이블 생성
 
