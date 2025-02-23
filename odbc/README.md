@@ -27,7 +27,7 @@ yum install -y unixODBC cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain
 
 ## Impala ODBC Driver 설치
 
-Cloudera에서 Impala ODBC Connector를 다운로드(https://www.cloudera.com/downloads/connectors/impala/odbc)하고 다음의 커맨드로 설치합니다. 설치후 Impala ODBC Driver의 홈 디렉토리는 `/opt/cloudera/impalaodbc`를 사용합니다.
+Cloudera에서 Impala ODBC Connector를 다운로드(https://www.cloudera.com/downloads/connectors/impala/odbc) 하고 다음의 커맨드로 설치합니다. 설치후 Impala ODBC Driver의 홈 디렉토리는 `/opt/cloudera/impalaodbc`를 사용합니다.
 
 ```
 yum install -y ClouderaImpalaODBC-2.7.2.1011-1.x86_64.rpm
