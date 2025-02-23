@@ -147,9 +147,9 @@ public class GenTable extends Configured implements Tool {
         System.out.println(String.format("Output will be written to %s", in));
 
         if (table.equals("all")) {
-            out.writeBytes(String.format("/usr/bin/java -jar tpcds.jar -d $DIR --overwrite --scale %d --parallelism %d\n", scale, parallel));
+            out.writeBytes(String.format("java -jar tpcds.jar -d $DIR --overwrite --scale %d --parallelism %d\n", scale, parallel));
         } else {
-            out.writeBytes(String.format("/usr/bin/java -jar tpcds.jar -d $DIR -table %s --overwrite --scale %d --parallelism %d\n", table, scale, parallel));
+            out.writeBytes(String.format("java -jar tpcds.jar -d $DIR -table %s --overwrite --scale %d --parallelism %d\n", table, scale, parallel));
         }
         out.close();
         return in;
