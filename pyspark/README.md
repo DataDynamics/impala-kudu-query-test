@@ -111,6 +111,17 @@ user_1_movies.show()
 spark.stop()
 ```
 
+
+
+
+
+
+
+
+
+
+```
+
 Kudu 테이블을 PySpark에서 이용하려면 다음과 같이 인자를 추가합니다.
 
 ```shell
