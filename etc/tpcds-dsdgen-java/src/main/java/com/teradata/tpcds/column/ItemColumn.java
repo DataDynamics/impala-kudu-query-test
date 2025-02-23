@@ -16,16 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.ITEM;
-import static com.teradata.tpcds.column.ColumnTypes.DATE;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum ItemColumn
-        implements Column
-{
+        implements Column {
     I_ITEM_SK(IDENTIFIER),
     I_ITEM_ID(character(16)),
     I_REC_START_DATE(DATE),
@@ -51,32 +45,27 @@ public enum ItemColumn
 
     private final ColumnType type;
 
-    ItemColumn(ColumnType type)
-    {
+    ItemColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return ITEM;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

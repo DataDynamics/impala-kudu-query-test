@@ -20,46 +20,33 @@ import com.teradata.tpcds.type.Date;
 import com.teradata.tpcds.type.Decimal;
 
 import static com.teradata.tpcds.distribution.CalendarDistribution.getWeightForDayNumber;
-import static com.teradata.tpcds.distribution.EnglishDistributions.pickRandomAdjective;
-import static com.teradata.tpcds.distribution.EnglishDistributions.pickRandomAdverb;
-import static com.teradata.tpcds.distribution.EnglishDistributions.pickRandomArticle;
-import static com.teradata.tpcds.distribution.EnglishDistributions.pickRandomAuxiliary;
-import static com.teradata.tpcds.distribution.EnglishDistributions.pickRandomNoun;
-import static com.teradata.tpcds.distribution.EnglishDistributions.pickRandomPreposition;
-import static com.teradata.tpcds.distribution.EnglishDistributions.pickRandomSentence;
-import static com.teradata.tpcds.distribution.EnglishDistributions.pickRandomTerminator;
-import static com.teradata.tpcds.distribution.EnglishDistributions.pickRandomVerb;
+import static com.teradata.tpcds.distribution.EnglishDistributions.*;
 import static com.teradata.tpcds.distribution.TopDomainsDistribution.pickRandomTopDomain;
-import static com.teradata.tpcds.type.Date.fromJulianDays;
-import static com.teradata.tpcds.type.Date.getDaysInYear;
-import static com.teradata.tpcds.type.Date.toJulianDays;
+import static com.teradata.tpcds.type.Date.*;
 import static java.util.Objects.requireNonNull;
 
-public final class RandomValueGenerator
-{
+public final class RandomValueGenerator {
     public static final String ALPHA_NUMERIC = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ0123456789";
     public static final String DIGITS = "0123456789";
 
-    private RandomValueGenerator() {}
+    private RandomValueGenerator() {
+    }
 
-    public static int generateUniformRandomInt(int min, int max, RandomNumberStream randomNumberStream)
-    {
+    public static int generateUniformRandomInt(int min, int max, RandomNumberStream randomNumberStream) {
         int result = (int) randomNumberStream.nextRandom(); // truncating long to int copies behavior of c code.
         result %= max - min + 1;
         result += min;
         return result;
     }
 
-    public static long generateUniformRandomKey(long min, long max, RandomNumberStream randomNumberStream)
-    {
+    public static long generateUniformRandomKey(long min, long max, RandomNumberStream randomNumberStream) {
         int result = (int) randomNumberStream.nextRandom(); // truncating long to int copies behavior of c code
         result %= (int) (max - min + 1);
         result += (int) min;
         return result;
     }
 
-    public static Decimal generateUniformRandomDecimal(Decimal min, Decimal max, RandomNumberStream randomNumberStream)
-    {
+    public static Decimal generateUniformRandomDecimal(Decimal min, Decimal max, RandomNumberStream randomNumberStream) {
         int precision = min.getPrecision() < max.getPrecision() ? min.getPrecision() : max.getPrecision();
 
         // compute number
@@ -70,15 +57,13 @@ public final class RandomValueGenerator
         return new Decimal(number, precision);
     }
 
-    public static Date generateUniformRandomDate(Date min, Date max, RandomNumberStream randomNumberStream)
-    {
+    public static Date generateUniformRandomDate(Date min, Date max, RandomNumberStream randomNumberStream) {
         int range = toJulianDays(max) - toJulianDays(min);
         int julianDays = toJulianDays(min) + generateUniformRandomInt(0, range, randomNumberStream);
         return fromJulianDays(julianDays);
     }
 
-    public static Date generateSalesReturnsRandomDate(Date min, Date max, CalendarDistribution.Weights weights, RandomNumberStream randomNumberStream)
-    {
+    public static Date generateSalesReturnsRandomDate(Date min, Date max, CalendarDistribution.Weights weights, RandomNumberStream randomNumberStream) {
         // get random date based on distribution.
         // Copying behavior of dsdgen, but unclear what's going on there
         // Date.day represents the day of the month, but for some reason
@@ -94,8 +79,7 @@ public final class RandomValueGenerator
             if (dayCount == getDaysInYear(year)) {
                 year += 1;
                 dayCount = 1;
-            }
-            else {
+            } else {
                 dayCount += 1;
             }
         }
@@ -120,8 +104,7 @@ public final class RandomValueGenerator
         return fromJulianDays(julianDays);
     }
 
-    public static String generateRandomCharset(String set, int min, int max, RandomNumberStream randomNumberStream)
-    {
+    public static String generateRandomCharset(String set, int min, int max, RandomNumberStream randomNumberStream) {
         requireNonNull(set, "set is null");
 
         int length = generateUniformRandomInt(min, max, randomNumberStream);
@@ -139,8 +122,7 @@ public final class RandomValueGenerator
         return builder.toString();
     }
 
-    public static String generateRandomEmail(String first, String last, RandomNumberStream randomNumberStream)
-    {
+    public static String generateRandomEmail(String first, String last, RandomNumberStream randomNumberStream) {
         String domain = pickRandomTopDomain(randomNumberStream);
         int companyLength = generateUniformRandomInt(10, 20, randomNumberStream);
         String company = generateRandomCharset(ALPHA_NUMERIC, 1, 20, randomNumberStream);
@@ -149,8 +131,7 @@ public final class RandomValueGenerator
         return String.format("%s.%s@%s.%s", first, last, company, domain);
     }
 
-    public static String generateRandomIpAddress(RandomNumberStream randomNumberStream)
-    {
+    public static String generateRandomIpAddress(RandomNumberStream randomNumberStream) {
         int[] ipSegments = new int[4];
 
         for (int i = 0; i < 4; i++) {
@@ -160,13 +141,11 @@ public final class RandomValueGenerator
         return String.format("%d.%d.%d.%d", ipSegments[0], ipSegments[1], ipSegments[2], ipSegments[3]);
     }
 
-    public static String generateRandomUrl(RandomNumberStream randomNumberStream)
-    {
+    public static String generateRandomUrl(RandomNumberStream randomNumberStream) {
         return "http://www.foo.com";  // This is what the c code does. No joke.
     }
 
-    public static int generateExponentialRandomInt(int min, int max, RandomNumberStream randomNumberStream)
-    {
+    public static int generateExponentialRandomInt(int min, int max, RandomNumberStream randomNumberStream) {
         int range = max - min + 1;
         double doubleResult = 0;
         for (int i = 0; i < 12; i++) {
@@ -175,8 +154,7 @@ public final class RandomValueGenerator
         return min + (int) (range * doubleResult);
     }
 
-    public static long generateExponentialRandomKey(long min, long max, RandomNumberStream randomNumberStream)
-    {
+    public static long generateExponentialRandomKey(long min, long max, RandomNumberStream randomNumberStream) {
         double doubleResult = 0;
         for (int i = 0; i < 12; i++) {
             doubleResult += ((double) randomNumberStream.nextRandom() / Integer.MAX_VALUE) - 0.5;
@@ -184,8 +162,7 @@ public final class RandomValueGenerator
         return (int) min + (int) ((max - min + 1) * doubleResult); // truncating long to int copies behavior of c code
     }
 
-    public static Decimal generateExponentialRandomDecimal(Decimal min, Decimal max, Decimal mean, RandomNumberStream randomNumberStream)
-    {
+    public static Decimal generateExponentialRandomDecimal(Decimal min, Decimal max, Decimal mean, RandomNumberStream randomNumberStream) {
         // compute precision
         int precision = min.getPrecision() < max.getPrecision() ? min.getPrecision() : max.getPrecision();
 
@@ -201,15 +178,13 @@ public final class RandomValueGenerator
         return new Decimal(number, precision);
     }
 
-    public static Date generateExponentialRandomDate(Date min, Date max, RandomNumberStream randomNumberStream)
-    {
+    public static Date generateExponentialRandomDate(Date min, Date max, RandomNumberStream randomNumberStream) {
         int range = toJulianDays(max) - toJulianDays(min);
         int days = toJulianDays(min) + generateExponentialRandomInt(0, range, randomNumberStream);
         return fromJulianDays(days);
     }
 
-    public static String generateRandomText(int minLength, int maxLength, RandomNumberStream stream)
-    {
+    public static String generateRandomText(int minLength, int maxLength, RandomNumberStream stream) {
         boolean isSentenceBeginning = true;
         StringBuilder text = new StringBuilder();
         int targetLength = generateUniformRandomInt(minLength, maxLength, stream);
@@ -240,8 +215,7 @@ public final class RandomValueGenerator
         return text.toString();
     }
 
-    private static String generateRandomSentence(RandomNumberStream stream)
-    {
+    private static String generateRandomSentence(RandomNumberStream stream) {
         StringBuilder verbiage = new StringBuilder();
         String syntax = pickRandomSentence(stream);
         for (int i = 0; i < syntax.length(); i++) {
@@ -278,8 +252,7 @@ public final class RandomValueGenerator
         return verbiage.toString();
     }
 
-    public static String generateWord(long seed, int maxChars, StringValuesDistribution distribution)
-    {
+    public static String generateWord(long seed, int maxChars, StringValuesDistribution distribution) {
         long size = distribution.getSize();
         StringBuilder word = new StringBuilder();
         while (seed > 0) {
@@ -287,8 +260,7 @@ public final class RandomValueGenerator
             seed /= size;
             if ((word.length() + syllable.length()) <= maxChars) {
                 word.append(syllable);
-            }
-            else {
+            } else {
                 break;
             }
         }

@@ -16,14 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.CATALOG_PAGE;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum CatalogPageColumn
-        implements Column
-{
+        implements Column {
     CP_CATALOG_PAGE_SK(IDENTIFIER),
     CP_CATALOG_PAGE_ID(character(16)),
     CP_START_DATE_SK(INTEGER),
@@ -36,32 +32,27 @@ public enum CatalogPageColumn
 
     private final ColumnType type;
 
-    CatalogPageColumn(ColumnType type)
-    {
+    CatalogPageColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CATALOG_PAGE;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

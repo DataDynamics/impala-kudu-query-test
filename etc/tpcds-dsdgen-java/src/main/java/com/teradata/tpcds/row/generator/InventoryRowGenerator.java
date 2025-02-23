@@ -20,25 +20,20 @@ import com.teradata.tpcds.SlowlyChangingDimensionUtils;
 import com.teradata.tpcds.row.InventoryRow;
 
 import static com.teradata.tpcds.Nulls.createNullBitMap;
-import static com.teradata.tpcds.Table.INVENTORY;
-import static com.teradata.tpcds.Table.ITEM;
-import static com.teradata.tpcds.Table.WAREHOUSE;
+import static com.teradata.tpcds.Table.*;
 import static com.teradata.tpcds.generator.InventoryGeneratorColumn.INV_NULLS;
 import static com.teradata.tpcds.generator.InventoryGeneratorColumn.INV_QUANTITY_ON_HAND;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static com.teradata.tpcds.type.Date.JULIAN_DATE_MINIMUM;
 
 public class InventoryRowGenerator
-        extends AbstractRowGenerator
-{
-    public InventoryRowGenerator()
-    {
+        extends AbstractRowGenerator {
+    public InventoryRowGenerator() {
         super(INVENTORY);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(INVENTORY, getRandomNumberStream(INV_NULLS));
         int index = (int) rowNumber - 1;
         Scaling scaling = session.getScaling();

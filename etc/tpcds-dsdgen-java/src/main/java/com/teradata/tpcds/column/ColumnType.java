@@ -23,24 +23,11 @@ import static com.teradata.tpcds.column.ColumnType.Base.VARCHAR;
 // This class was derived from the TpchColumnType class in the following repo
 // https://github.com/airlift/tpch. The license for that class can be found here
 // https://www.apache.org/licenses/LICENSE-2.0.
-public class ColumnType
-{
-    public enum Base {
-        INTEGER,
-        IDENTIFIER,
-        DATE,
-        DECIMAL,
-        VARCHAR,
-        CHAR,
-        TIME
-    }
-
+public class ColumnType {
     private final Base base;
     private final Optional<Integer> precision;
     private final Optional<Integer> scale;
-
-    private ColumnType(Base base, Optional<Integer> precision, Optional<Integer> scale)
-    {
+    private ColumnType(Base base, Optional<Integer> precision, Optional<Integer> scale) {
         if (base == VARCHAR) {
             checkState(precision.isPresent());
         }
@@ -54,39 +41,32 @@ public class ColumnType
         this.scale = scale;
     }
 
-    ColumnType(Base base, int precision, int scale)
-    {
+    ColumnType(Base base, int precision, int scale) {
         this(base, Optional.of(precision), Optional.of(scale));
     }
 
-    ColumnType(Base base, int precision)
-    {
+    ColumnType(Base base, int precision) {
         this(base, Optional.of(precision), Optional.empty());
     }
 
-    ColumnType(Base base)
-    {
+    ColumnType(Base base) {
         this(base, Optional.empty(), Optional.empty());
     }
 
-    public Base getBase()
-    {
+    public Base getBase() {
         return base;
     }
 
-    public Optional<Integer> getPrecision()
-    {
+    public Optional<Integer> getPrecision() {
         return precision;
     }
 
-    public Optional<Integer> getScale()
-    {
+    public Optional<Integer> getScale() {
         return scale;
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -100,8 +80,17 @@ public class ColumnType
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(base, precision, scale);
+    }
+
+    public enum Base {
+        INTEGER,
+        IDENTIFIER,
+        DATE,
+        DECIMAL,
+        VARCHAR,
+        CHAR,
+        TIME
     }
 }

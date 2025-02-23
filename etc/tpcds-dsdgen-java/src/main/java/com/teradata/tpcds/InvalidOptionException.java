@@ -14,15 +14,12 @@
 
 package com.teradata.tpcds;
 
-public class InvalidOptionException extends RuntimeException
-{
-    public InvalidOptionException(String optionName, String value)
-    {
+public class InvalidOptionException extends RuntimeException {
+    public InvalidOptionException(String optionName, String value) {
         this(optionName, value, "");
     }
 
-    public InvalidOptionException(String optionName, String value, String message)
-    {
+    public InvalidOptionException(String optionName, String value, String message) {
         super(String.format("Invalid value for %s: \'%s\'. %s", optionName, value, message));
     }
 }

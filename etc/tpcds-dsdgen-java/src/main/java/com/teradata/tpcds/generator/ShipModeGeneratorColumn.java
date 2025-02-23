@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.SHIP_MODE;
 
 public enum ShipModeGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     SM_SHIP_MODE_SK(252, 1),
     SM_SHIP_MODE_ID(253, 1),
     SM_TYPE(254, 1),
@@ -32,27 +31,23 @@ public enum ShipModeGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    ShipModeGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    ShipModeGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return SHIP_MODE;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

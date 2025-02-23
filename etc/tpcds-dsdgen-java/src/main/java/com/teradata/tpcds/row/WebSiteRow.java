@@ -20,37 +20,11 @@ import com.teradata.tpcds.type.Decimal;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_CITY;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_COUNTRY;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_COUNTY;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_GMT_OFFSET;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_STATE;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_STREET_NAME1;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_STREET_NUM;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_STREET_TYPE;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_SUITE_NUM;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS_ZIP;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_CLASS;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_CLOSE_DATE;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_COMPANY_ID;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_COMPANY_NAME;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MANAGER;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MARKET_CLASS;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MARKET_DESC;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MARKET_ID;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MARKET_MANAGER;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_NAME;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_OPEN_DATE;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_REC_END_DATE_ID;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_REC_START_DATE_ID;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_SITE_ID;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_SITE_SK;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_TAX_PERCENTAGE;
+import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.*;
 import static java.lang.String.format;
 
 public class WebSiteRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long webSiteSk;
     private final String webSiteId;
     private final long webRecStartDateId;
@@ -70,24 +44,23 @@ public class WebSiteRow
     private final Decimal webTaxPercentage;
 
     public WebSiteRow(long nullBitMap,
-            long webSiteSk,
-            String webSiteId,
-            long webRecStartDateId,
-            long webRecEndDateId,
-            String webName,
-            long webOpenDate,
-            long webCloseDate,
-            String webClass,
-            String webManager,
-            int webMarketId,
-            String webMarketClass,
-            String webMarketDesc,
-            String webMarketManager,
-            int webCompanyId,
-            String webCompanyName,
-            Address webAddress,
-            Decimal webTaxPercentage)
-    {
+                      long webSiteSk,
+                      String webSiteId,
+                      long webRecStartDateId,
+                      long webRecEndDateId,
+                      String webName,
+                      long webOpenDate,
+                      long webCloseDate,
+                      String webClass,
+                      String webManager,
+                      int webMarketId,
+                      String webMarketClass,
+                      String webMarketDesc,
+                      String webMarketManager,
+                      int webCompanyId,
+                      String webCompanyName,
+                      Address webAddress,
+                      Decimal webTaxPercentage) {
         super(nullBitMap, WEB_SITE_SK);
         this.webSiteSk = webSiteSk;
         this.webSiteId = webSiteId;
@@ -108,74 +81,60 @@ public class WebSiteRow
         this.webTaxPercentage = webTaxPercentage;
     }
 
-    public String getWebName()
-    {
+    public String getWebName() {
         return webName;
     }
 
-    public long getWebOpenDate()
-    {
+    public long getWebOpenDate() {
         return webOpenDate;
     }
 
-    public long getWebCloseDate()
-    {
+    public long getWebCloseDate() {
         return webCloseDate;
     }
 
-    public String getWebClass()
-    {
+    public String getWebClass() {
         return webClass;
     }
 
-    public String getWebManager()
-    {
+    public String getWebManager() {
         return webManager;
     }
 
-    public int getWebMarketId()
-    {
+    public int getWebMarketId() {
         return webMarketId;
     }
 
-    public String getWebMarketClass()
-    {
+    public String getWebMarketClass() {
         return webMarketClass;
     }
 
-    public String getWebMarketDesc()
-    {
+    public String getWebMarketDesc() {
         return webMarketDesc;
     }
 
-    public String getWebMarketManager()
-    {
+    public String getWebMarketManager() {
         return webMarketManager;
     }
 
-    public int getWebCompanyId()
-    {
+    public int getWebCompanyId() {
         return webCompanyId;
     }
 
-    public String getWebCompanyName()
-    {
+    public String getWebCompanyName() {
         return webCompanyName;
     }
 
-    public Address getWebAddress()
-    {
+    public Address getWebAddress() {
         return webAddress;
     }
 
-    public Decimal getWebTaxPercentage()
-    {
+    public Decimal getWebTaxPercentage() {
         return webTaxPercentage;
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(webSiteSk, WEB_SITE_SK),
                 getStringOrNull(webSiteId, WEB_SITE_ID),
                 getDateStringOrNullFromJulianDays(webRecStartDateId, WEB_REC_START_DATE_ID),

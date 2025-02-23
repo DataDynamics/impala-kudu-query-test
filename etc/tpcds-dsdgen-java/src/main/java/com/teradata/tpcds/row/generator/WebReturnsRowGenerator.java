@@ -23,50 +23,29 @@ import com.teradata.tpcds.type.Pricing;
 
 import static com.teradata.tpcds.JoinKeyUtils.generateJoinKey;
 import static com.teradata.tpcds.Nulls.createNullBitMap;
-import static com.teradata.tpcds.Table.CUSTOMER;
-import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
-import static com.teradata.tpcds.Table.CUSTOMER_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.DATE_DIM;
-import static com.teradata.tpcds.Table.HOUSEHOLD_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.REASON;
-import static com.teradata.tpcds.Table.TIME_DIM;
-import static com.teradata.tpcds.Table.WEB_RETURNS;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_NULLS;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REASON_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REFUNDED_ADDR_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REFUNDED_CDEMO_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REFUNDED_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REFUNDED_HDEMO_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_RETURNED_DATE_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_RETURNED_TIME_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_RETURNING_CUSTOMER_SK;
+import static com.teradata.tpcds.Table.*;
+import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.*;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static com.teradata.tpcds.type.Pricing.generatePricingForReturnsTable;
 import static java.util.Collections.emptyList;
 
 public class WebReturnsRowGenerator
-        extends AbstractRowGenerator
-{
-    public WebReturnsRowGenerator()
-    {
+        extends AbstractRowGenerator {
+    public WebReturnsRowGenerator() {
         super(WEB_RETURNS);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         RowGeneratorResult salesAndReturnsResult = parentRowGenerator.generateRowAndChildRows(rowNumber, session, null, this);
         if (salesAndReturnsResult.getRowAndChildRows().size() == 2) {
             return new RowGeneratorResult(ImmutableList.of(salesAndReturnsResult.getRowAndChildRows().get(1)), salesAndReturnsResult.shouldEndRow());
-        }
-        else {
+        } else {
             return new RowGeneratorResult(emptyList(), salesAndReturnsResult.shouldEndRow());  // no return occurred for given sale
         }
     }
 
-    public WebReturnsRow generateRow(Session session, WebSalesRow salesRow)
-    {
+    public WebReturnsRow generateRow(Session session, WebSalesRow salesRow) {
         long nullBitMap = createNullBitMap(WEB_RETURNS, getRandomNumberStream(WR_NULLS));
 
         // fields taken from the original sale

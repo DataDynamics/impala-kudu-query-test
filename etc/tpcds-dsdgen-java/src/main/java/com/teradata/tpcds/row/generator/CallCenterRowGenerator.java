@@ -21,7 +21,6 @@ import com.teradata.tpcds.row.CallCenterRow;
 import com.teradata.tpcds.type.Decimal;
 
 import javax.annotation.concurrent.NotThreadSafe;
-
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -29,42 +28,21 @@ import static com.teradata.tpcds.Nulls.createNullBitMap;
 import static com.teradata.tpcds.SlowlyChangingDimensionUtils.computeScdKey;
 import static com.teradata.tpcds.SlowlyChangingDimensionUtils.getValueForSlowlyChangingDimension;
 import static com.teradata.tpcds.Table.CALL_CENTER;
-import static com.teradata.tpcds.distribution.CallCenterDistributions.getCallCenterAtIndex;
-import static com.teradata.tpcds.distribution.CallCenterDistributions.getNumberOfCallCenters;
-import static com.teradata.tpcds.distribution.CallCenterDistributions.pickRandomCallCenterClass;
-import static com.teradata.tpcds.distribution.CallCenterDistributions.pickRandomCallCenterHours;
+import static com.teradata.tpcds.distribution.CallCenterDistributions.*;
 import static com.teradata.tpcds.distribution.EnglishDistributions.SYLLABLES_DISTRIBUTION;
 import static com.teradata.tpcds.distribution.NamesDistributions.FirstNamesWeights.GENERAL_FREQUENCY;
 import static com.teradata.tpcds.distribution.NamesDistributions.FirstNamesWeights.MALE_FREQUENCY;
 import static com.teradata.tpcds.distribution.NamesDistributions.pickRandomFirstName;
 import static com.teradata.tpcds.distribution.NamesDistributions.pickRandomLastName;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_ADDRESS;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_CLASS;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_COMPANY;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_EMPLOYEES;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_HOURS;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_MANAGER;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_MARKET_CLASS;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_MARKET_DESC;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_MARKET_ID;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_MARKET_MANAGER;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_NULLS;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_OPEN_DATE_ID;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_SCD;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_SQ_FT;
-import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.CC_TAX_PERCENTAGE;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateRandomText;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomDecimal;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateWord;
+import static com.teradata.tpcds.generator.CallCenterGeneratorColumn.*;
+import static com.teradata.tpcds.random.RandomValueGenerator.*;
 import static com.teradata.tpcds.type.Address.makeAddressForColumn;
 import static com.teradata.tpcds.type.Date.JULIAN_DATA_START_DATE;
 import static java.lang.String.format;
 
 @NotThreadSafe
 public class CallCenterRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private static final Decimal MIN_TAX_PERCENTAGE = new Decimal(0, 2);  // 0.00
     private static final Decimal MAX_TAX_PERCENTAGE = new Decimal(12, 2); // 0.12
     private static final int WIDTH_CC_DIVISION_NAME = 50;
@@ -75,14 +53,12 @@ public class CallCenterRowGenerator
 
     private Optional<CallCenterRow> previousRow = Optional.empty();
 
-    public CallCenterRowGenerator()
-    {
+    public CallCenterRowGenerator() {
         super(CALL_CENTER);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         CallCenterRow.Builder builder = new CallCenterRow.Builder();
         builder.setNullBitMap(createNullBitMap(CALL_CENTER, getRandomNumberStream(CC_NULLS)));
         builder.setCcCallCenterSk(rowNumber);
@@ -111,8 +87,7 @@ public class CallCenterRowGenerator
             }
             builder.setCcName(ccName);
             builder.setCcAddress(makeAddressForColumn(CALL_CENTER, getRandomNumberStream(CC_ADDRESS), scaling));
-        }
-        else {
+        } else {
             checkState(previousRow.isPresent(), "previousRow has not yet been initialized");
             builder.setCcOpenDateId(previousRow.get().getCcOpenDateId());
             builder.setCcName(previousRow.get().getCcName());

@@ -20,32 +20,16 @@ import com.teradata.tpcds.type.Date;
 import java.util.EnumMap;
 import java.util.Map;
 
-import static com.teradata.tpcds.Table.CATALOG_SALES;
-import static com.teradata.tpcds.Table.INVENTORY;
-import static com.teradata.tpcds.Table.ITEM;
-import static com.teradata.tpcds.Table.STORE_SALES;
-import static com.teradata.tpcds.Table.S_INVENTORY;
-import static com.teradata.tpcds.Table.WAREHOUSE;
-import static com.teradata.tpcds.Table.WEB_SALES;
-import static com.teradata.tpcds.distribution.CalendarDistribution.Weights.SALES;
-import static com.teradata.tpcds.distribution.CalendarDistribution.Weights.SALES_LEAP_YEAR;
-import static com.teradata.tpcds.distribution.CalendarDistribution.Weights.UNIFORM;
-import static com.teradata.tpcds.distribution.CalendarDistribution.Weights.UNIFORM_LEAP_YEAR;
-import static com.teradata.tpcds.distribution.CalendarDistribution.getIndexForDate;
-import static com.teradata.tpcds.distribution.CalendarDistribution.getMaxWeight;
-import static com.teradata.tpcds.distribution.CalendarDistribution.getWeightForDayNumber;
-import static com.teradata.tpcds.type.Date.JULIAN_DATE_MAXIMUM;
-import static com.teradata.tpcds.type.Date.JULIAN_DATE_MINIMUM;
-import static com.teradata.tpcds.type.Date.fromJulianDays;
-import static com.teradata.tpcds.type.Date.isLeapYear;
+import static com.teradata.tpcds.Table.*;
+import static com.teradata.tpcds.distribution.CalendarDistribution.Weights.*;
+import static com.teradata.tpcds.distribution.CalendarDistribution.*;
+import static com.teradata.tpcds.type.Date.*;
 
-public class Scaling
-{
+public class Scaling {
     private final double scale;
     private final Map<Table, Long> tableToRowCountMap = new EnumMap<>(Table.class);
 
-    public Scaling(double scale)
-    {
+    public Scaling(double scale) {
         this.scale = scale;
 
         for (Table table : Table.values()) {
@@ -61,8 +45,7 @@ public class Scaling
         }
     }
 
-    public long getRowCount(Table table)
-    {
+    public long getRowCount(Table table) {
         if (table == INVENTORY) {
             return scaleInventory();
         }
@@ -73,8 +56,7 @@ public class Scaling
         return tableToRowCountMap.get(table);
     }
 
-    public long getIdCount(Table table)
-    {
+    public long getIdCount(Table table) {
         long rowCount = getRowCount(table);
         if (table.keepsHistory()) {
             long uniqueCount = (rowCount / 6) * 3;
@@ -98,8 +80,7 @@ public class Scaling
         return rowCount;
     }
 
-    private long scaleInventory()
-    {
+    private long scaleInventory() {
         int nDays;
         nDays = JULIAN_DATE_MAXIMUM - JULIAN_DATE_MINIMUM;
         nDays += 7;  // ndays + 1 + 6.  I'm not sure what this addition is about.
@@ -108,13 +89,11 @@ public class Scaling
         return getIdCount(ITEM) * getRowCount(WAREHOUSE) * nDays;
     }
 
-    public double getScale()
-    {
+    public double getScale() {
         return scale;
     }
 
-    public long getRowCountForDate(Table table, long julianDate)
-    {
+    public long getRowCountForDate(Table table, long julianDate) {
         long rowCount;
         switch (table) {
             case STORE_SALES:
@@ -147,8 +126,7 @@ public class Scaling
                 if (isLeapYear(date.getYear())) {
                     weights = UNIFORM_LEAP_YEAR;
                 }
-            }
-            else {
+            } else {
                 weights = SALES;
                 if (isLeapYear(date.getYear())) {
                     weights = SALES_LEAP_YEAR;

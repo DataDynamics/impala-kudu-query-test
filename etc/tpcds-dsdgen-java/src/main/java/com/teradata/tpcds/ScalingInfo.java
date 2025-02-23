@@ -20,16 +20,14 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
-public class ScalingInfo
-{
+public class ScalingInfo {
     private static final double[] DEFINED_SCALES = {0, 1, 10, 100, 300, 1000, 3000, 10000, 30000, 100000};
     private int multiplier;
     private ScalingModel scalingModel;
     private Map<Double, Integer> scalesToRowCountsMap;
     private int updatePercentage;
 
-    public ScalingInfo(int multiplier, ScalingModel scalingModel, int[] rowCountsPerScale, int updatePercentage)
-    {
+    public ScalingInfo(int multiplier, ScalingModel scalingModel, int[] rowCountsPerScale, int updatePercentage) {
         checkArgument(multiplier >= 0, "multiplier is not greater than or equal to 0");
         checkArgument(updatePercentage >= 0, "updatePrecentage is not greater than or equal to zero");
         this.multiplier = multiplier;
@@ -44,13 +42,22 @@ public class ScalingInfo
         }
     }
 
-    public int getMultiplier()
-    {
+    private static int getScaleSlot(double scale) {
+        for (int i = 0; i < DEFINED_SCALES.length; i++) {
+            if (scale <= DEFINED_SCALES[i]) {
+                return i;
+            }
+        }
+
+        // shouldn't be able to get here because we checked the scale argument;
+        throw new TpcdsException("scale was greater than max scale");
+    }
+
+    public int getMultiplier() {
         return multiplier;
     }
 
-    public long getRowCountForScale(double scale)
-    {
+    public long getRowCountForScale(double scale) {
         checkArgument(scale <= 100000, "scale must be less than 100000");
         if (scalesToRowCountsMap.containsKey(scale)) {
             return scalesToRowCountsMap.get(scale);
@@ -69,13 +76,11 @@ public class ScalingInfo
         }
     }
 
-    private long computeCountUsingStaticScale()
-    {
+    private long computeCountUsingStaticScale() {
         return getRowCountForScale(1);
     }
 
-    private long computeCountUsingLogScale(double scale)
-    {
+    private long computeCountUsingLogScale(double scale) {
         int scaleSlot = getScaleSlot(scale);
         long delta = getRowCountForScale(DEFINED_SCALES[scaleSlot]) - getRowCountForScale(DEFINED_SCALES[scaleSlot - 1]);
         float floatOffset = (float) (scale - DEFINED_SCALES[scaleSlot - 1]) / (float) (DEFINED_SCALES[scaleSlot] - DEFINED_SCALES[scaleSlot - 1]);
@@ -83,28 +88,14 @@ public class ScalingInfo
         long baseRowCount;
         if (scale < 1.0) {
             baseRowCount = getRowCountForScale(DEFINED_SCALES[0]);
-        }
-        else {
+        } else {
             baseRowCount = getRowCountForScale(DEFINED_SCALES[1]);
         }
         long count = (int) (floatOffset * (float) delta) + baseRowCount;
         return count == 0 ? 1 : count;
     }
 
-    private static int getScaleSlot(double scale)
-    {
-        for (int i = 0; i < DEFINED_SCALES.length; i++) {
-            if (scale <= DEFINED_SCALES[i]) {
-                return i;
-            }
-        }
-
-        // shouldn't be able to get here because we checked the scale argument;
-        throw new TpcdsException("scale was greater than max scale");
-    }
-
-    private long computeCountUsingLinearScale(double scale)
-    {
+    private long computeCountUsingLinearScale(double scale) {
         long rowCount = 0;
         double targetGB = scale;
 
@@ -126,8 +117,7 @@ public class ScalingInfo
         return rowCount;
     }
 
-    public enum ScalingModel
-    {
+    public enum ScalingModel {
         STATIC,
         LINEAR,
         LOGARITHMIC

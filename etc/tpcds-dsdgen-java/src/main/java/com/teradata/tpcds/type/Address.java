@@ -25,21 +25,14 @@ import static com.teradata.tpcds.PseudoTableScalingInfos.ACTIVE_COUNTIES;
 import static com.teradata.tpcds.distribution.AddressDistributions.CitiesWeights.UNIFIED_STEP_FUNCTION;
 import static com.teradata.tpcds.distribution.AddressDistributions.StreetNamesWeights.DEFAULT;
 import static com.teradata.tpcds.distribution.AddressDistributions.StreetNamesWeights.HALF_EMPTY;
-import static com.teradata.tpcds.distribution.AddressDistributions.getCityAtIndex;
-import static com.teradata.tpcds.distribution.AddressDistributions.pickRandomCity;
-import static com.teradata.tpcds.distribution.AddressDistributions.pickRandomStreetName;
-import static com.teradata.tpcds.distribution.AddressDistributions.pickRandomStreetType;
+import static com.teradata.tpcds.distribution.AddressDistributions.*;
 import static com.teradata.tpcds.distribution.FipsCountyDistribution.FipsWeights.UNIFORM;
-import static com.teradata.tpcds.distribution.FipsCountyDistribution.getCountyAtIndex;
-import static com.teradata.tpcds.distribution.FipsCountyDistribution.getGmtOffsetAtIndex;
-import static com.teradata.tpcds.distribution.FipsCountyDistribution.getStateAbbreviationAtIndex;
-import static com.teradata.tpcds.distribution.FipsCountyDistribution.getZipPrefixAtIndex;
+import static com.teradata.tpcds.distribution.FipsCountyDistribution.*;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
-public class Address
-{
+public class Address {
     private final String suiteNumber;
     private final int streetNumber;
     private final String streetName1;
@@ -53,17 +46,16 @@ public class Address
     private final int gmtOffset;
 
     public Address(String suiteNumber,
-            int streetNumber,
-            String streetName1,
-            String streetName2,
-            String streetType,
-            String city,
-            String county,
-            String state,
-            String country,
-            int zip,
-            int gmtOffset)
-    {
+                   int streetNumber,
+                   String streetName1,
+                   String streetName2,
+                   String streetType,
+                   String city,
+                   String county,
+                   String state,
+                   String country,
+                   int zip,
+                   int gmtOffset) {
         requireNonNull(suiteNumber, "suiteNumber is null");
         checkArgument(streetNumber >= 1 && streetNumber <= 1000, "streetNumber is not between 1 and 1000");
         requireNonNull(streetName1, "streetName1 is null");
@@ -85,8 +77,7 @@ public class Address
         this.gmtOffset = gmtOffset;
     }
 
-    public static Address makeAddressForColumn(Table table, RandomNumberStream randomNumberStream, Scaling scaling)
-    {
+    public static Address makeAddressForColumn(Table table, RandomNumberStream randomNumberStream, Scaling scaling) {
         AddressBuilder builder = new AddressBuilder();
         builder.setStreetNumber(generateUniformRandomInt(1, 1000, randomNumberStream));
         builder.setStreetName1(pickRandomStreetName(DEFAULT, randomNumberStream));
@@ -96,8 +87,7 @@ public class Address
         int randomInt = generateUniformRandomInt(1, 100, randomNumberStream);
         if (randomInt % 2 == 1) {  // if i is odd, suiteNumber is a number
             builder.setSuiteNumber(format("Suite %d", (randomInt / 2) * 10));
-        }
-        else { // if i is even, suiteNumber is a letter
+        } else { // if i is even, suiteNumber is a letter
             builder.setSuiteNumber(format("Suite %c", ((randomInt / 2) % 25) + 'A'));
         }
 
@@ -107,8 +97,7 @@ public class Address
             int maxCities = (int) ACTIVE_CITIES.getRowCountForScale(scaling.getScale());
             randomInt = generateUniformRandomInt(0, (maxCities > rowCount) ? rowCount - 1 : maxCities - 1, randomNumberStream);
             city = getCityAtIndex(randomInt);
-        }
-        else {
+        } else {
             city = pickRandomCity(UNIFIED_STEP_FUNCTION, randomNumberStream);
         }
         builder.setCity(city);
@@ -119,8 +108,7 @@ public class Address
             int maxCounties = (int) ACTIVE_COUNTIES.getRowCountForScale(scaling.getScale());
             regionNumber = generateUniformRandomInt(0, (maxCounties > rowCount) ? rowCount - 1 : maxCounties - 1, randomNumberStream);
             builder.setCounty(getCountyAtIndex(regionNumber));
-        }
-        else {
+        } else {
             regionNumber = FipsCountyDistribution.pickRandomIndex(UNIFORM, randomNumberStream);
             String county = getCountyAtIndex(regionNumber);
             builder.setCounty(county);
@@ -145,8 +133,7 @@ public class Address
         return builder.build();
     }
 
-    private static int computeCityHash(String name)
-    {
+    private static int computeCityHash(String name) {
         int hashValue = 0;
         int result = 0;
         for (int i = 0; i < name.length(); i++) {
@@ -165,68 +152,55 @@ public class Address
         return result;
     }
 
-    public int getStreetNumber()
-    {
+    public int getStreetNumber() {
         return streetNumber;
     }
 
-    public String getStreetName()
-    {
+    public String getStreetName() {
         return format("%s %s", streetName1, streetName2);
     }
 
-    public String getSuiteNumber()
-    {
+    public String getSuiteNumber() {
         return suiteNumber;
     }
 
-    public String getStreetType()
-    {
+    public String getStreetType() {
         return streetType;
     }
 
-    public String getCity()
-    {
+    public String getCity() {
         return city;
     }
 
-    public String getCounty()
-    {
+    public String getCounty() {
         return county;
     }
 
-    public String getState()
-    {
+    public String getState() {
         return state;
     }
 
-    public int getZip()
-    {
+    public int getZip() {
         return zip;
     }
 
-    public String getCountry()
-    {
+    public String getCountry() {
         return country;
     }
 
-    public int getGmtOffset()
-    {
+    public int getGmtOffset() {
         return gmtOffset;
     }
 
-    public String getStreetName1()
-    {
+    public String getStreetName1() {
         return streetName1;
     }
 
-    public String getStreetName2()
-    {
+    public String getStreetName2() {
         return streetName2;
     }
 
-    public static class AddressBuilder
-    {
+    public static class AddressBuilder {
         private String suiteNumber;
         private int streetNumber;
         private String streetName1;
@@ -239,74 +213,62 @@ public class Address
         private int zip;
         private int gmtOffset;
 
-        public AddressBuilder setSuiteNumber(String suiteNumber)
-        {
+        public AddressBuilder setSuiteNumber(String suiteNumber) {
             this.suiteNumber = suiteNumber;
             return this;
         }
 
-        public AddressBuilder setStreetNumber(int streetNumber)
-        {
+        public AddressBuilder setStreetNumber(int streetNumber) {
             this.streetNumber = streetNumber;
             return this;
         }
 
-        public AddressBuilder setStreetName1(String streetName1)
-        {
+        public AddressBuilder setStreetName1(String streetName1) {
             this.streetName1 = streetName1;
             return this;
         }
 
-        public AddressBuilder setStreetName2(String streetName2)
-        {
+        public AddressBuilder setStreetName2(String streetName2) {
             this.streetName2 = streetName2;
             return this;
         }
 
-        public AddressBuilder setStreetType(String streetType)
-        {
+        public AddressBuilder setStreetType(String streetType) {
             this.streetType = streetType;
             return this;
         }
 
-        public AddressBuilder setCity(String city)
-        {
+        public AddressBuilder setCity(String city) {
             this.city = city;
             return this;
         }
 
-        public AddressBuilder setCounty(String county)
-        {
+        public AddressBuilder setCounty(String county) {
             this.county = county;
             return this;
         }
 
-        public AddressBuilder setState(String state)
-        {
+        public AddressBuilder setState(String state) {
             this.state = state;
             return this;
         }
 
-        public AddressBuilder setCountry(String country)
-        {
+        public AddressBuilder setCountry(String country) {
             this.country = country;
             return this;
         }
 
-        public AddressBuilder setZip(int zip)
-        {
+        public AddressBuilder setZip(int zip) {
             this.zip = zip;
             return this;
         }
 
-        public AddressBuilder setGmtOffset(int gmtOffset)
-        {
+        public AddressBuilder setGmtOffset(int gmtOffset) {
             this.gmtOffset = gmtOffset;
             return this;
         }
 
-        public Address build()
-        {
+        public Address build() {
             return new Address(suiteNumber, streetNumber, streetName1, streetName2, streetType, city, county, state, country, zip, gmtOffset);
         }
     }

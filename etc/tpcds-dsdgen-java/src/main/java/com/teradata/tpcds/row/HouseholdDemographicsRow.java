@@ -17,23 +17,17 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.HouseholdDemographicsGeneratorColumn.HD_BUY_POTENTIAL;
-import static com.teradata.tpcds.generator.HouseholdDemographicsGeneratorColumn.HD_DEMO_SK;
-import static com.teradata.tpcds.generator.HouseholdDemographicsGeneratorColumn.HD_DEP_COUNT;
-import static com.teradata.tpcds.generator.HouseholdDemographicsGeneratorColumn.HD_INCOME_BAND_ID;
-import static com.teradata.tpcds.generator.HouseholdDemographicsGeneratorColumn.HD_VEHICLE_COUNT;
+import static com.teradata.tpcds.generator.HouseholdDemographicsGeneratorColumn.*;
 
 public class HouseholdDemographicsRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long hdDemoSk;
     private final long hdIncomeBandId;
     private final String hdBuyPotential;
     private final int hdDepCount;
     private final int hdVehicleCount;
 
-    public HouseholdDemographicsRow(long nullBitMap, long hdDemoSk, long hdIncomeBandId, String hdBuyPotential, int hdDepCount, int hdVehicleCount)
-    {
+    public HouseholdDemographicsRow(long nullBitMap, long hdDemoSk, long hdIncomeBandId, String hdBuyPotential, int hdDepCount, int hdVehicleCount) {
         super(nullBitMap, HD_DEMO_SK);
         this.hdDemoSk = hdDemoSk;
         this.hdIncomeBandId = hdIncomeBandId;
@@ -43,8 +37,7 @@ public class HouseholdDemographicsRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(hdDemoSk, HD_DEMO_SK),
                 getStringOrNullForKey(hdIncomeBandId, HD_INCOME_BAND_ID),
                 getStringOrNull(hdBuyPotential, HD_BUY_POTENTIAL),

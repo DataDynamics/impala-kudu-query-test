@@ -33,29 +33,14 @@ import static com.teradata.tpcds.distribution.NamesDistributions.FirstNamesWeigh
 import static com.teradata.tpcds.distribution.NamesDistributions.FirstNamesWeights.MALE_FREQUENCY;
 import static com.teradata.tpcds.distribution.NamesDistributions.pickRandomFirstName;
 import static com.teradata.tpcds.distribution.NamesDistributions.pickRandomLastName;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_CLOSED_DATE_ID;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_EMPLOYEES;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_FLOOR_SPACE;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_HOURS;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_MANAGER;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_MARKET_DESC;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_MARKET_ID;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_MARKET_MANAGER;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_NULLS;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_SCD;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_TAX_PERCENTAGE;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateRandomText;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomDecimal;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateWord;
+import static com.teradata.tpcds.generator.StoreGeneratorColumn.*;
+import static com.teradata.tpcds.random.RandomValueGenerator.*;
 import static com.teradata.tpcds.type.Address.makeAddressForColumn;
 import static com.teradata.tpcds.type.Date.JULIAN_DATE_MINIMUM;
 import static java.lang.String.format;
 
 public class StoreRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private static final int ROW_SIZE_S_MARKET_DESC = 100;
     private static final Decimal STORE_MIN_TAX_PERCENTAGE = new Decimal(0, 2);
     private static final Decimal STORE_MAX_TAX_PERCENTAGE = new Decimal(11, 2);
@@ -66,14 +51,12 @@ public class StoreRowGenerator
 
     private Optional<StoreRow> previousRow = Optional.empty();
 
-    public StoreRowGenerator()
-    {
+    public StoreRowGenerator() {
         super(STORE);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(STORE, getRandomNumberStream(W_STORE_NULLS));
         long storeSk = rowNumber;
 
@@ -100,8 +83,7 @@ public class StoreRowGenerator
         long closedDateId;
         if (percentage < STORE_CLOSED_PCT) {
             closedDateId = JULIAN_DATE_MINIMUM + daysOpen;
-        }
-        else {
+        } else {
             closedDateId = -1;
         }
         if (previousRow.isPresent()) {

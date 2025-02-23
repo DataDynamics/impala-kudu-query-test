@@ -16,14 +16,13 @@ package com.teradata.tpcds.distribution;
 
 import static com.teradata.tpcds.distribution.StringValuesDistribution.buildStringValuesDistribution;
 
-public final class ReturnReasonsDistribution
-{
-    private ReturnReasonsDistribution() {}
-
+public final class ReturnReasonsDistribution {
     private static final StringValuesDistribution RETURN_REASONS_DISTRIBUTION = buildStringValuesDistribution("return_reasons.dst", 1, 6);
 
-    public static String getReturnReasonAtIndex(int index)
-    {
+    private ReturnReasonsDistribution() {
+    }
+
+    public static String getReturnReasonAtIndex(int index) {
         return RETURN_REASONS_DISTRIBUTION.getValueAtIndex(0, index);
     }
 }

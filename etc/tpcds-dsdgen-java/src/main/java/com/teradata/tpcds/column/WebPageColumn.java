@@ -16,15 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.WEB_PAGE;
-import static com.teradata.tpcds.column.ColumnTypes.DATE;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum WebPageColumn
-        implements Column
-{
+        implements Column {
     WP_WEB_PAGE_SK(IDENTIFIER),
     WP_WEB_PAGE_ID(character(16)),
     WP_REC_START_DATE(DATE),
@@ -42,32 +37,27 @@ public enum WebPageColumn
 
     private final ColumnType type;
 
-    WebPageColumn(ColumnType type)
-    {
+    WebPageColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return WEB_PAGE;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

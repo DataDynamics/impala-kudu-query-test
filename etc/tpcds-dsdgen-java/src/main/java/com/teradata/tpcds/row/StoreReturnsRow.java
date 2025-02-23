@@ -19,30 +19,10 @@ import com.teradata.tpcds.type.Pricing;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_ADDR_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_CDEMO_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_HDEMO_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_ITEM_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_EXT_SHIP_COST;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_EXT_TAX;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_FEE;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_NET_LOSS;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_NET_PAID;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_NET_PAID_INC_TAX;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_QUANTITY;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_REFUNDED_CASH;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_REVERSED_CHARGE;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING_STORE_CREDIT;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_REASON_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_RETURNED_DATE_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_RETURNED_TIME_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_STORE_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_TICKET_NUMBER;
+import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.*;
 
 public class StoreReturnsRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long srReturnedDateSk;
     private final long srReturnedTimeSk;
     private final long srItemSk;
@@ -56,18 +36,17 @@ public class StoreReturnsRow
     private final Pricing srPricing;
 
     public StoreReturnsRow(long nullBitMap,
-            long srReturnedDateSk,
-            long srReturnedTimeSk,
-            long srItemSk,
-            long srCustomerSk,
-            long srCdemoSk,
-            long srHdemoSk,
-            long srAddrSk,
-            long srStoreSk,
-            long srReasonSk,
-            long srTicketNumber,
-            Pricing srPricing)
-    {
+                           long srReturnedDateSk,
+                           long srReturnedTimeSk,
+                           long srItemSk,
+                           long srCustomerSk,
+                           long srCdemoSk,
+                           long srHdemoSk,
+                           long srAddrSk,
+                           long srStoreSk,
+                           long srReasonSk,
+                           long srTicketNumber,
+                           Pricing srPricing) {
         super(nullBitMap, SR_RETURNED_DATE_SK);
         this.srReturnedDateSk = srReturnedDateSk;
         this.srReturnedTimeSk = srReturnedTimeSk;
@@ -83,8 +62,7 @@ public class StoreReturnsRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(srReturnedDateSk, SR_RETURNED_DATE_SK),
                 getStringOrNullForKey(srReturnedTimeSk, SR_RETURNED_TIME_SK),
                 getStringOrNullForKey(srItemSk, SR_ITEM_SK),

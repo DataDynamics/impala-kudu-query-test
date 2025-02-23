@@ -14,8 +14,7 @@
 
 package com.teradata.tpcds.random;
 
-public interface RandomNumberStream
-{
+public interface RandomNumberStream {
     long nextRandom();
 
     double nextRandomDouble();

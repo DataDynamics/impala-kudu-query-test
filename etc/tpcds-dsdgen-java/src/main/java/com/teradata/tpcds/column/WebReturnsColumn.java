@@ -15,13 +15,10 @@ package com.teradata.tpcds.column;
 
 import com.teradata.tpcds.Table;
 
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum WebReturnsColumn
-        implements Column
-{
+        implements Column {
     WR_RETURNED_DATE_SK(IDENTIFIER),
     WR_RETURNED_TIME_SK(IDENTIFIER),
     WR_ITEM_SK(IDENTIFIER),
@@ -49,32 +46,27 @@ public enum WebReturnsColumn
 
     private final ColumnType type;
 
-    WebReturnsColumn(ColumnType type)
-    {
+    WebReturnsColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return Table.WEB_RETURNS;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

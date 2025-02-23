@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.INVENTORY;
 
 public enum InventoryGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     INV_DATE_SK(198, 1),
     INV_ITEM_SK(199, 1),
     INV_WAREHOUSE_SK(200, 1),
@@ -30,27 +29,23 @@ public enum InventoryGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    InventoryGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    InventoryGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return INVENTORY;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

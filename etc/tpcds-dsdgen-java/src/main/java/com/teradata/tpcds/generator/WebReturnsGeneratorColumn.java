@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.WEB_RETURNS;
 
 public enum WebReturnsGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     WR_RETURNED_DATE_SK(383, 32),
     WR_RETURNED_TIME_SK(384, 32),
     WR_ITEM_SK(385, 16),
@@ -51,27 +50,23 @@ public enum WebReturnsGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    WebReturnsGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    WebReturnsGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return WEB_RETURNS;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

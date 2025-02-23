@@ -21,7 +21,6 @@ import com.teradata.tpcds.row.WebSalesRow;
 import com.teradata.tpcds.type.Pricing;
 
 import javax.annotation.concurrent.NotThreadSafe;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,48 +29,14 @@ import static com.teradata.tpcds.Nulls.createNullBitMap;
 import static com.teradata.tpcds.Permutations.getPermutationEntry;
 import static com.teradata.tpcds.Permutations.makePermutation;
 import static com.teradata.tpcds.SlowlyChangingDimensionUtils.matchSurrogateKey;
-import static com.teradata.tpcds.Table.CUSTOMER;
-import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
-import static com.teradata.tpcds.Table.CUSTOMER_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.DATE_DIM;
-import static com.teradata.tpcds.Table.HOUSEHOLD_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.ITEM;
-import static com.teradata.tpcds.Table.PROMOTION;
-import static com.teradata.tpcds.Table.SHIP_MODE;
-import static com.teradata.tpcds.Table.TIME_DIM;
-import static com.teradata.tpcds.Table.WAREHOUSE;
-import static com.teradata.tpcds.Table.WEB_PAGE;
-import static com.teradata.tpcds.Table.WEB_SALES;
-import static com.teradata.tpcds.Table.WEB_SITE;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WR_IS_RETURNED;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_BILL_ADDR_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_BILL_CDEMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_BILL_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_BILL_HDEMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_ITEM_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_NULLS;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_ORDER_NUMBER;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PERMUTATION;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PROMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_ADDR_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_CDEMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_DATE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_HDEMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_MODE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SOLD_DATE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SOLD_TIME_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_WAREHOUSE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_WEB_PAGE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_WEB_SITE_SK;
+import static com.teradata.tpcds.Table.*;
+import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.*;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static com.teradata.tpcds.type.Pricing.generatePricingForSalesTable;
 
 @NotThreadSafe
 public class WebSalesRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     public static final int GIFT_PERCENTAGE = 7;
     public static final int RETURN_PERCENTAGE = 10;
 
@@ -85,14 +50,12 @@ public class WebSalesRowGenerator
     private OrderInfo orderInfo;
     private int itemIndex;
 
-    public WebSalesRowGenerator()
-    {
+    public WebSalesRowGenerator() {
         super(WEB_SALES);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         Scaling scaling = session.getScaling();
         int itemCount = (int) scaling.getIdCount(ITEM);
         if (itemPermutation == null) {
@@ -160,8 +123,7 @@ public class WebSalesRowGenerator
         return new RowGeneratorResult(generatedRows, remainingLineItems == 0);
     }
 
-    private OrderInfo generateOrderInfo(long rowNumber, Session session)
-    {
+    private OrderInfo generateOrderInfo(long rowNumber, Session session) {
         Scaling scaling = session.getScaling();
 
         long wsSoldDateSk = generateJoinKey(WS_SOLD_DATE_SK, getRandomNumberStream(WS_SOLD_DATE_SK), DATE_DIM, 1, scaling);
@@ -199,8 +161,7 @@ public class WebSalesRowGenerator
                 wsOrderNumber);
     }
 
-    private static class OrderInfo
-    {
+    private static class OrderInfo {
         private final long wsSoldDateSk;
         private final long wsSoldTimeSk;
         private final long wsBillCustomerSk;
@@ -214,17 +175,16 @@ public class WebSalesRowGenerator
         private final long wsOrderNumber;
 
         public OrderInfo(long wsSoldDateSk,
-                long wsSoldTimeSk,
-                long wsBillCustomerSk,
-                long wsBillCdemoSk,
-                long wsBillHdemoSk,
-                long wsBillAddrSk,
-                long wsShipCustomerSk,
-                long wsShipCdemoSk,
-                long wsShipHdemoSk,
-                long wsShipAddrSk,
-                long wsOrderNumber)
-        {
+                         long wsSoldTimeSk,
+                         long wsBillCustomerSk,
+                         long wsBillCdemoSk,
+                         long wsBillHdemoSk,
+                         long wsBillAddrSk,
+                         long wsShipCustomerSk,
+                         long wsShipCdemoSk,
+                         long wsShipHdemoSk,
+                         long wsShipAddrSk,
+                         long wsOrderNumber) {
             this.wsSoldDateSk = wsSoldDateSk;
             this.wsSoldTimeSk = wsSoldTimeSk;
             this.wsBillCustomerSk = wsBillCustomerSk;

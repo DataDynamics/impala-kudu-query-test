@@ -30,51 +30,44 @@ import static com.teradata.tpcds.Parallel.splitWork;
 import static java.util.Objects.requireNonNull;
 
 public class Results
-        implements Iterable<List<List<String>>>
-{
+        implements Iterable<List<List<String>>> {
     private final Table table;
     private final long startingRowNumber;
     private final long rowCount;
     private final Session session;
 
-    public Results(Table table, long startingRowNumber, long rowCount, Session session)
-    {
+    public Results(Table table, long startingRowNumber, long rowCount, Session session) {
         this.table = table;
         this.startingRowNumber = startingRowNumber;
         this.rowCount = rowCount;
         this.session = session;
     }
 
-    public static Results constructResults(Table table, Session session)
-    {
+    public static Results constructResults(Table table, Session session) {
         ChunkBoundaries chunkBoundaries = splitWork(table, session);
         return new Results(table, chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), session);
     }
 
-    public static Results constructResults(Table table, long startingRowNumber, long endingRowNumber, Session session)
-    {
+    public static Results constructResults(Table table, long startingRowNumber, long endingRowNumber, Session session) {
         return new Results(table, startingRowNumber, endingRowNumber, session);
     }
 
     @Override
-    public Iterator<List<List<String>>> iterator()
-    {
+    public Iterator<List<List<String>>> iterator() {
         return new ResultsIterator(table, startingRowNumber, rowCount, session);
     }
 
     private static class ResultsIterator
-            extends AbstractIterator<List<List<String>>>
-    {
+            extends AbstractIterator<List<List<String>>> {
         private final long endingRowNumber;
         private final Table table;
         private final Session session;
-        private long rowNumber;
         private final RowGenerator rowGenerator;
         private final RowGenerator parentRowGenerator;
         private final RowGenerator childRowGenerator;
+        private long rowNumber;
 
-        public ResultsIterator(Table table, long startingRowNumber, long endingRowNumber, Session session)
-        {
+        public ResultsIterator(Table table, long startingRowNumber, long endingRowNumber, Session session) {
             requireNonNull(table, "table is null");
             requireNonNull(session, "session is null");
             checkArgument(startingRowNumber >= 1, "starting row number is less than 1: %s", startingRowNumber);
@@ -88,15 +81,14 @@ public class Results
                 this.rowGenerator = table.getRowGeneratorClass().getDeclaredConstructor().newInstance();
                 this.parentRowGenerator = table.isChild() ? table.getParent().getRowGeneratorClass().getDeclaredConstructor().newInstance() : null;
                 this.childRowGenerator = table.hasChild() ? table.getChild().getRowGeneratorClass().getDeclaredConstructor().newInstance() : null;
-            }
-            catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException e) {
+            } catch (NoSuchMethodException | InstantiationException | InvocationTargetException |
+                     IllegalAccessException e) {
                 throw new TpcdsException(e.toString());
             }
             skipRowsUntilStartingRowNumber(startingRowNumber);
         }
 
-        private void skipRowsUntilStartingRowNumber(long startingRowNumber)
-        {
+        private void skipRowsUntilStartingRowNumber(long startingRowNumber) {
             rowGenerator.skipRowsUntilStartingRowNumber(startingRowNumber);
             if (parentRowGenerator != null) {
                 parentRowGenerator.skipRowsUntilStartingRowNumber(startingRowNumber);
@@ -107,8 +99,7 @@ public class Results
         }
 
         @Override
-        protected List<List<String>> computeNext()
-        {
+        protected List<List<String>> computeNext() {
             if (rowNumber > endingRowNumber) {
                 return endOfData();
             }
@@ -128,8 +119,7 @@ public class Results
             return tableRows;
         }
 
-        private void rowStop()
-        {
+        private void rowStop() {
             rowGenerator.consumeRemainingSeedsForRow();
             if (parentRowGenerator != null) {
                 parentRowGenerator.consumeRemainingSeedsForRow();

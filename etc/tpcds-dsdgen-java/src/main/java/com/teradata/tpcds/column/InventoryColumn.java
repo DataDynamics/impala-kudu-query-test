@@ -20,8 +20,7 @@ import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
 import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
 
 public enum InventoryColumn
-        implements Column
-{
+        implements Column {
     INV_DATE_SK(IDENTIFIER),
     INV_ITEM_SK(IDENTIFIER),
     INV_WAREHOUSE_SK(IDENTIFIER),
@@ -29,32 +28,27 @@ public enum InventoryColumn
 
     private final ColumnType type;
 
-    InventoryColumn(ColumnType type)
-    {
+    InventoryColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return INVENTORY;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

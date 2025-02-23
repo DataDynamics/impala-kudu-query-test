@@ -19,12 +19,11 @@ import com.teradata.tpcds.random.RandomNumberStream;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 
-public final class Permutations
-{
-    private Permutations() {}
+public final class Permutations {
+    private Permutations() {
+    }
 
-    public static int[] makePermutation(int size, RandomNumberStream stream)
-    {
+    public static int[] makePermutation(int size, RandomNumberStream stream) {
         int[] numberSet = new int[size];
         for (int i = 0; i < numberSet.length; i++) {
             numberSet[i] = i;
@@ -39,8 +38,7 @@ public final class Permutations
         return numberSet;
     }
 
-    public static int getPermutationEntry(int[] permuation, int index)
-    {
+    public static int getPermutationEntry(int[] permuation, int index) {
         checkArgument(index >= 1, "index is not greater than or equal to 1: %s", index);
         return permuation[index - 1] + 1;
     }

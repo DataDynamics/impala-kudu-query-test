@@ -16,27 +16,23 @@ package com.teradata.tpcds.column;
 // This class was derived from the TpchColumnTypes class in the following repo
 // https://github.com/airlift/tpch. The license for that class can be found here
 // https://www.apache.org/licenses/LICENSE-2.0.
-public class ColumnTypes
-{
-    private ColumnTypes() {}
-
+public class ColumnTypes {
     public static final ColumnType INTEGER = new ColumnType(ColumnType.Base.INTEGER);
     public static final ColumnType IDENTIFIER = new ColumnType(ColumnType.Base.IDENTIFIER);
     public static final ColumnType DATE = new ColumnType(ColumnType.Base.DATE);
     public static final ColumnType TIME = new ColumnType(ColumnType.Base.TIME);
+    private ColumnTypes() {
+    }
 
-    public static ColumnType varchar(int precision)
-    {
+    public static ColumnType varchar(int precision) {
         return new ColumnType(ColumnType.Base.VARCHAR, precision);
     }
 
-    public static ColumnType character(int precision)
-    {
+    public static ColumnType character(int precision) {
         return new ColumnType(ColumnType.Base.CHAR, precision);
     }
 
-    public static ColumnType decimal(int precision, int scale)
-    {
+    public static ColumnType decimal(int precision, int scale) {
         return new ColumnType(ColumnType.Base.DECIMAL, precision, scale);
     }
 }

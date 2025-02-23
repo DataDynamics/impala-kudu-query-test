@@ -17,8 +17,7 @@ package com.teradata.tpcds.distribution;
 import static com.teradata.tpcds.distribution.IntValuesDistribution.buildIntValuesDistribution;
 import static com.teradata.tpcds.distribution.StringValuesDistribution.buildStringValuesDistribution;
 
-public final class DemographicsDistributions
-{
+public final class DemographicsDistributions {
     public static final StringValuesDistribution GENDER_DISTRIBUTION = buildStringValuesDistribution("genders.dst", 1, 1);
     public static final StringValuesDistribution MARITAL_STATUS_DISTRIBUTION = buildStringValuesDistribution("marital_statuses.dst", 1, 1);
     public static final StringValuesDistribution EDUCATION_DISTRIBUTION = buildStringValuesDistribution("education.dst", 1, 4);
@@ -29,55 +28,46 @@ public final class DemographicsDistributions
     public static final IntValuesDistribution DEP_COUNT_DISTRIBUTION = buildIntValuesDistribution("dep_count.dst", 1, 1);
     public static final IntValuesDistribution VEHICLE_COUNT_DISTRIBUTION = buildIntValuesDistribution("vehicle_count.dst", 1, 1);
 
-    private DemographicsDistributions() {}
+    private DemographicsDistributions() {
+    }
 
-    public static String getGenderForIndexModSize(long index)
-    {
+    public static String getGenderForIndexModSize(long index) {
         return GENDER_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 
-    public static String getMaritalStatusForIndexModSize(long index)
-    {
+    public static String getMaritalStatusForIndexModSize(long index) {
         return MARITAL_STATUS_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 
-    public static String getEducationForIndexModSize(long index)
-    {
+    public static String getEducationForIndexModSize(long index) {
         return EDUCATION_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 
-    public static Integer getPurchaseBandForIndexModSize(long index)
-    {
+    public static Integer getPurchaseBandForIndexModSize(long index) {
         return PURCHASE_BAND_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 
-    public static String getCreditRatingForIndexModSize(long index)
-    {
+    public static String getCreditRatingForIndexModSize(long index) {
         return CREDIT_RATING_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 
-    public static String getBuyPotentialForIndexModSize(long index)
-    {
+    public static String getBuyPotentialForIndexModSize(long index) {
         return BUY_POTENTIAL_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 
-    public static Integer getDepCountForIndexModSize(long index)
-    {
+    public static Integer getDepCountForIndexModSize(long index) {
         return DEP_COUNT_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 
-    public static Integer getVehicleCountForIndexModSize(long index)
-    {
+    public static Integer getVehicleCountForIndexModSize(long index) {
         return VEHICLE_COUNT_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 
-    public static Integer getIncomeBandLowerBoundAtIndex(int index)
-    {
+    public static Integer getIncomeBandLowerBoundAtIndex(int index) {
         return INCOME_BAND_DISTRIBUTION.getValueAtIndex(0, index);
     }
 
-    public static Integer getIncomeBandUpperBoundAtIndex(int index)
-    {
+    public static Integer getIncomeBandUpperBoundAtIndex(int index) {
         return INCOME_BAND_DISTRIBUTION.getValueAtIndex(1, index);
     }
 }

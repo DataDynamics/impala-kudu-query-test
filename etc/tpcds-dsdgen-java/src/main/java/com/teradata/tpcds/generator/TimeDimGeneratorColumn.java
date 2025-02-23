@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.TIME_DIM;
 
 public enum TimeDimGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     T_TIME_SK(340, 1),
     T_TIME_ID(341, 1),
     T_TIME(342, 1),
@@ -36,27 +35,23 @@ public enum TimeDimGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    TimeDimGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    TimeDimGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return TIME_DIM;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

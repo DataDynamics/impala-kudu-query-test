@@ -16,7 +16,6 @@ package com.teradata.tpcds.row;
 
 import java.util.List;
 
-public interface TableRow
-{
+public interface TableRow {
     List<String> getValues();
 }

@@ -20,40 +20,34 @@ import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
 import static com.teradata.tpcds.column.ColumnTypes.character;
 
 public enum ReasonColumn
-        implements Column
-{
+        implements Column {
     R_REASON_SK(IDENTIFIER),
     R_REASON_ID(character(16)),
     R_REASON_DESC(character(100));
 
     private final ColumnType type;
 
-    ReasonColumn(ColumnType type)
-    {
+    ReasonColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return REASON;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

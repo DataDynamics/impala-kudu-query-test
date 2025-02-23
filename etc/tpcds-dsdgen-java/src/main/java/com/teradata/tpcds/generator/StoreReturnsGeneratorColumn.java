@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.STORE_RETURNS;
 
 public enum StoreReturnsGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     SR_RETURNED_DATE_SK(292, 32),
     SR_RETURNED_TIME_SK(293, 32),
     SR_ITEM_SK(294, 16),
@@ -47,27 +46,23 @@ public enum StoreReturnsGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    StoreReturnsGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    StoreReturnsGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return STORE_RETURNS;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

@@ -20,8 +20,7 @@ import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
 import static com.teradata.tpcds.column.ColumnTypes.character;
 
 public enum ShipModeColumn
-        implements Column
-{
+        implements Column {
     SM_SHIP_MODE_SK(IDENTIFIER),
     SM_SHIP_MODE_ID(character(16)),
     SM_TYPE(character(30)),
@@ -31,32 +30,27 @@ public enum ShipModeColumn
 
     private final ColumnType type;
 
-    ShipModeColumn(ColumnType type)
-    {
+    ShipModeColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return SHIP_MODE;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

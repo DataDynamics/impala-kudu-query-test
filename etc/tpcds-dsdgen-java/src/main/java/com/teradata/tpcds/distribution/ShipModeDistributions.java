@@ -16,26 +16,23 @@ package com.teradata.tpcds.distribution;
 
 import static com.teradata.tpcds.distribution.StringValuesDistribution.buildStringValuesDistribution;
 
-public class ShipModeDistributions
-{
+public class ShipModeDistributions {
     public static final StringValuesDistribution SHIP_MODE_CARRIER_DISTRIBUTION = buildStringValuesDistribution("ship_mode_carrier.dst", 1, 1);
     public static final StringValuesDistribution SHIP_MODE_CODE_DISTRIBUTION = buildStringValuesDistribution("ship_mode_code.dst", 1, 1);
     public static final StringValuesDistribution SHIP_MODE_TYPE_DISTRIBUTION = buildStringValuesDistribution("ship_mode_type.dst", 1, 1);
 
-    private ShipModeDistributions() {}
+    private ShipModeDistributions() {
+    }
 
-    public static String getShipModeCarrierAtIndex(int index)
-    {
+    public static String getShipModeCarrierAtIndex(int index) {
         return SHIP_MODE_CARRIER_DISTRIBUTION.getValueAtIndex(0, index);
     }
 
-    public static String getShipModeCodeForIndexModSize(long index)
-    {
+    public static String getShipModeCodeForIndexModSize(long index) {
         return SHIP_MODE_CODE_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 
-    public static String getShipModeTypeForIndexModSize(long index)
-    {
+    public static String getShipModeTypeForIndexModSize(long index) {
         return SHIP_MODE_TYPE_DISTRIBUTION.getValueForIndexModSize(index, 0);
     }
 }

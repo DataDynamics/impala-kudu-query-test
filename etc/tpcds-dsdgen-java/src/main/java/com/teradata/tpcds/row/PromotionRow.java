@@ -19,29 +19,10 @@ import com.teradata.tpcds.type.Decimal;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_CATALOG;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_DEMO;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_DETAILS;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_DMAIL;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_EMAIL;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_EVENT;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_PRESS;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_RADIO;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_TV;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_COST;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_DISCOUNT_ACTIVE;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_END_DATE_ID;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_ITEM_SK;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_PROMO_ID;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_PROMO_NAME;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_PROMO_SK;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_PURPOSE;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_RESPONSE_TARGET;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_START_DATE_ID;
+import static com.teradata.tpcds.generator.PromotionGeneratorColumn.*;
 
 public class PromotionRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long pPromoSk;
     private final String pPromoId;
     private final long pStartDateId;
@@ -63,26 +44,25 @@ public class PromotionRow
     private final boolean pDiscountActive;
 
     public PromotionRow(long nullBitMap,
-            long pPromoSk,
-            String pPromoId,
-            long pStartDateId,
-            long pEndDateId,
-            long pItemSk,
-            Decimal pCost,
-            int pResponseTarget,
-            String pPromoName,
-            boolean pChannelDmail,
-            boolean pChannelEmail,
-            boolean pChannelCatalog,
-            boolean pChannelTv,
-            boolean pChannelRadio,
-            boolean pChannelPress,
-            boolean pChannelEvent,
-            boolean pChannelDemo,
-            String pChannelDetails,
-            String pPurpose,
-            boolean pDiscountActive)
-    {
+                        long pPromoSk,
+                        String pPromoId,
+                        long pStartDateId,
+                        long pEndDateId,
+                        long pItemSk,
+                        Decimal pCost,
+                        int pResponseTarget,
+                        String pPromoName,
+                        boolean pChannelDmail,
+                        boolean pChannelEmail,
+                        boolean pChannelCatalog,
+                        boolean pChannelTv,
+                        boolean pChannelRadio,
+                        boolean pChannelPress,
+                        boolean pChannelEvent,
+                        boolean pChannelDemo,
+                        String pChannelDetails,
+                        String pPurpose,
+                        boolean pDiscountActive) {
         super(nullBitMap, P_PROMO_SK);
         this.pPromoSk = pPromoSk;
         this.pPromoId = pPromoId;
@@ -106,8 +86,7 @@ public class PromotionRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(pPromoSk, P_PROMO_SK),
                 getStringOrNull(pPromoId, P_PROMO_ID),
                 getStringOrNullForKey(pStartDateId, P_START_DATE_ID),

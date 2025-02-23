@@ -25,16 +25,13 @@ import static com.teradata.tpcds.distribution.HoursDistribution.getHourInfoForHo
 import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_NULLS;
 
 public class TimeDimRowGenerator
-        extends AbstractRowGenerator
-{
-    public TimeDimRowGenerator()
-    {
+        extends AbstractRowGenerator {
+    public TimeDimRowGenerator() {
         super(TIME_DIM);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(TIME_DIM, getRandomNumberStream(T_NULLS));
         long tTimeSk = rowNumber - 1;
         String tTimeId = makeBusinessKey(rowNumber);

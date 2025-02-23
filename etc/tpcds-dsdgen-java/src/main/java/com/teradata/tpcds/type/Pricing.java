@@ -26,23 +26,10 @@ import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING;
 import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomDecimal;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
-import static com.teradata.tpcds.row.generator.CatalogSalesRowGenerator.CS_DISCOUNT_MAX;
-import static com.teradata.tpcds.row.generator.CatalogSalesRowGenerator.CS_MARKUP_MAX;
-import static com.teradata.tpcds.row.generator.CatalogSalesRowGenerator.CS_QUANTITY_MAX;
-import static com.teradata.tpcds.row.generator.CatalogSalesRowGenerator.CS_WHOLESALE_MAX;
-import static com.teradata.tpcds.type.Decimal.NINE_PERCENT;
-import static com.teradata.tpcds.type.Decimal.ONE;
-import static com.teradata.tpcds.type.Decimal.ONE_HALF;
-import static com.teradata.tpcds.type.Decimal.ONE_HUNDRED;
-import static com.teradata.tpcds.type.Decimal.ZERO;
-import static com.teradata.tpcds.type.Decimal.add;
-import static com.teradata.tpcds.type.Decimal.divide;
-import static com.teradata.tpcds.type.Decimal.multiply;
-import static com.teradata.tpcds.type.Decimal.negate;
-import static com.teradata.tpcds.type.Decimal.subtract;
+import static com.teradata.tpcds.row.generator.CatalogSalesRowGenerator.*;
+import static com.teradata.tpcds.type.Decimal.*;
 
-public class Pricing
-{
+public class Pricing {
     public static final int QUANTITY_MIN = 1;
     public static final Decimal MARKUP_MIN = new Decimal(0, 2);
     public static final Decimal DISCOUNT_MIN = new Decimal(0, 2);
@@ -78,29 +65,28 @@ public class Pricing
     private final Decimal netLoss;
 
     private Pricing(Decimal wholesaleCost,
-            Decimal listPrice,
-            Decimal salesPrice,
-            int quantity,
-            Decimal extDiscountAmount,
-            Decimal extSalesPrice,
-            Decimal extWholesaleCost,
-            Decimal extListPrice,
-            Decimal taxPercent,
-            Decimal extTax,
-            Decimal couponAmount,
-            Decimal shipCost,
-            Decimal extShipCost,
-            Decimal netPaid,
-            Decimal netPaidIncludingTax,
-            Decimal netPaidIncludingShipping,
-            Decimal netPaidIncludingShippingAndTax,
-            Decimal netProfit,
-            Decimal refundedCash,
-            Decimal reversedCharge,
-            Decimal storeCredit,
-            Decimal fee,
-            Decimal netLoss)
-    {
+                    Decimal listPrice,
+                    Decimal salesPrice,
+                    int quantity,
+                    Decimal extDiscountAmount,
+                    Decimal extSalesPrice,
+                    Decimal extWholesaleCost,
+                    Decimal extListPrice,
+                    Decimal taxPercent,
+                    Decimal extTax,
+                    Decimal couponAmount,
+                    Decimal shipCost,
+                    Decimal extShipCost,
+                    Decimal netPaid,
+                    Decimal netPaidIncludingTax,
+                    Decimal netPaidIncludingShipping,
+                    Decimal netPaidIncludingShippingAndTax,
+                    Decimal netProfit,
+                    Decimal refundedCash,
+                    Decimal reversedCharge,
+                    Decimal storeCredit,
+                    Decimal fee,
+                    Decimal netLoss) {
         this.wholesaleCost = wholesaleCost;
         this.listPrice = listPrice;
         this.salesPrice = salesPrice;
@@ -126,8 +112,7 @@ public class Pricing
         this.netLoss = netLoss;
     }
 
-    public static Pricing generatePricingForSalesTable(GeneratorColumn column, RandomNumberStream randomNumberStream)
-    {
+    public static Pricing generatePricingForSalesTable(GeneratorColumn column, RandomNumberStream randomNumberStream) {
         if (!LIMITS_PER_COLUMN.containsKey(column)) {
             throw new TpcdsException("No price limits for column: " + column);
         }
@@ -155,8 +140,7 @@ public class Pricing
         Decimal couponAmount;
         if (couponUsage <= 20) { // 20% of sales employ a coupon
             couponAmount = multiply(extSalesPrice, coupon);
-        }
-        else {
+        } else {
             couponAmount = ZERO;
         }
 
@@ -204,8 +188,7 @@ public class Pricing
                 netLoss);
     }
 
-    public static Pricing generatePricingForReturnsTable(GeneratorColumn column, RandomNumberStream randomNumberStream, int quantity, Pricing basePricing)
-    {
+    public static Pricing generatePricingForReturnsTable(GeneratorColumn column, RandomNumberStream randomNumberStream, int quantity, Pricing basePricing) {
         Decimal wholesaleCost = basePricing.wholesaleCost;
         Decimal listPrice = basePricing.listPrice;
         Decimal salesPrice = basePricing.salesPrice;
@@ -276,153 +259,124 @@ public class Pricing
                 netLoss);
     }
 
-    public Decimal getNetLoss()
-    {
+    public Decimal getNetLoss() {
         return netLoss;
     }
 
-    public Decimal getExtDiscountAmount()
-    {
+    public Decimal getExtDiscountAmount() {
         return extDiscountAmount;
     }
 
-    public Decimal getExtSalesPrice()
-    {
+    public Decimal getExtSalesPrice() {
         return extSalesPrice;
     }
 
-    public Decimal getExtWholesaleCost()
-    {
+    public Decimal getExtWholesaleCost() {
         return extWholesaleCost;
     }
 
-    public Decimal getExtListPrice()
-    {
+    public Decimal getExtListPrice() {
         return extListPrice;
     }
 
-    public Decimal getTaxPercent()
-    {
+    public Decimal getTaxPercent() {
         return taxPercent;
     }
 
-    public Decimal getExtTax()
-    {
+    public Decimal getExtTax() {
         return extTax;
     }
 
-    public Decimal getCouponAmount()
-    {
+    public Decimal getCouponAmount() {
         return couponAmount;
     }
 
-    public Decimal getShipCost()
-    {
+    public Decimal getShipCost() {
         return shipCost;
     }
 
-    public Decimal getExtShipCost()
-    {
+    public Decimal getExtShipCost() {
         return extShipCost;
     }
 
-    public Decimal getNetPaid()
-    {
+    public Decimal getNetPaid() {
         return netPaid;
     }
 
-    public Decimal getNetPaidIncludingTax()
-    {
+    public Decimal getNetPaidIncludingTax() {
         return netPaidIncludingTax;
     }
 
-    public Decimal getNetPaidIncludingShipping()
-    {
+    public Decimal getNetPaidIncludingShipping() {
         return netPaidIncludingShipping;
     }
 
-    public Decimal getNetPaidIncludingShippingAndTax()
-    {
+    public Decimal getNetPaidIncludingShippingAndTax() {
         return netPaidIncludingShippingAndTax;
     }
 
-    public Decimal getNetProfit()
-    {
+    public Decimal getNetProfit() {
         return netProfit;
     }
 
-    public Decimal getRefundedCash()
-    {
+    public Decimal getRefundedCash() {
         return refundedCash;
     }
 
-    public Decimal getReversedCharge()
-    {
+    public Decimal getReversedCharge() {
         return reversedCharge;
     }
 
-    public Decimal getStoreCredit()
-    {
+    public Decimal getStoreCredit() {
         return storeCredit;
     }
 
-    public Decimal getFee()
-    {
+    public Decimal getFee() {
         return fee;
     }
 
-    public int getQuantity()
-    {
+    public int getQuantity() {
         return quantity;
     }
 
-    public Decimal getWholesaleCost()
-    {
+    public Decimal getWholesaleCost() {
         return wholesaleCost;
     }
 
-    public Decimal getListPrice()
-    {
+    public Decimal getListPrice() {
         return listPrice;
     }
 
-    public Decimal getSalesPrice()
-    {
+    public Decimal getSalesPrice() {
         return salesPrice;
     }
 
-    private static class Limits
-    {
+    private static class Limits {
         private final int maxQuantitySold;
         private final Decimal maxMarkup;
         private final Decimal maxDiscount;
         private final Decimal maxWholesaleCost;
 
-        Limits(int maxQuantitySold, Decimal maxMarkup, Decimal maxDiscount, Decimal maxWholesaleCost)
-        {
+        Limits(int maxQuantitySold, Decimal maxMarkup, Decimal maxDiscount, Decimal maxWholesaleCost) {
             this.maxQuantitySold = maxQuantitySold;
             this.maxMarkup = maxMarkup;
             this.maxDiscount = maxDiscount;
             this.maxWholesaleCost = maxWholesaleCost;
         }
 
-        Decimal getMaxDiscount()
-        {
+        Decimal getMaxDiscount() {
             return maxDiscount;
         }
 
-        int getMaxQuantitySold()
-        {
+        int getMaxQuantitySold() {
             return maxQuantitySold;
         }
 
-        Decimal getMaxMarkup()
-        {
+        Decimal getMaxMarkup() {
             return maxMarkup;
         }
 
-        Decimal getMaxWholesaleCost()
-        {
+        Decimal getMaxWholesaleCost() {
             return maxWholesaleCost;
         }
     }

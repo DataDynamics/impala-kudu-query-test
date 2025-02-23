@@ -18,31 +18,27 @@ import com.teradata.tpcds.random.RandomNumberStream;
 
 import static com.teradata.tpcds.distribution.StringValuesDistribution.buildStringValuesDistribution;
 
-public final class CallCenterDistributions
-{
+public final class CallCenterDistributions {
     private static final StringValuesDistribution CALL_CENTERS_DISTRIBUTION = buildStringValuesDistribution("call_centers.dst", 1, 2);
     private static final StringValuesDistribution CALL_CENTER_CLASSES_DISTRIBUTION = buildStringValuesDistribution("call_center_classes.dst", 1, 1);
     private static final StringValuesDistribution CALL_CENTER_HOURS_DISTRIBUTION = buildStringValuesDistribution("call_center_hours.dst", 1, 1);
 
-    private CallCenterDistributions() {}
+    private CallCenterDistributions() {
+    }
 
-    public static String getCallCenterAtIndex(int i)
-    {
+    public static String getCallCenterAtIndex(int i) {
         return CALL_CENTERS_DISTRIBUTION.getValueAtIndex(0, i);
     }
 
-    public static int getNumberOfCallCenters()
-    {
+    public static int getNumberOfCallCenters() {
         return CALL_CENTERS_DISTRIBUTION.getSize();
     }
 
-    public static String pickRandomCallCenterClass(RandomNumberStream stream)
-    {
+    public static String pickRandomCallCenterClass(RandomNumberStream stream) {
         return CALL_CENTER_CLASSES_DISTRIBUTION.pickRandomValue(0, 0, stream);
     }
 
-    public static String pickRandomCallCenterHours(RandomNumberStream stream)
-    {
+    public static String pickRandomCallCenterHours(RandomNumberStream stream) {
         return CALL_CENTER_HOURS_DISTRIBUTION.pickRandomValue(0, 0, stream);
     }
 }

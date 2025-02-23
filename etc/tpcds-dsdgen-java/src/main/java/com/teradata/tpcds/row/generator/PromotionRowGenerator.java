@@ -24,20 +24,12 @@ import static com.teradata.tpcds.JoinKeyUtils.generateJoinKey;
 import static com.teradata.tpcds.Nulls.createNullBitMap;
 import static com.teradata.tpcds.Table.PROMOTION;
 import static com.teradata.tpcds.distribution.EnglishDistributions.SYLLABLES_DISTRIBUTION;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_DETAILS;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_CHANNEL_DMAIL;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_END_DATE_ID;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_ITEM_SK;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_NULLS;
-import static com.teradata.tpcds.generator.PromotionGeneratorColumn.P_START_DATE_ID;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateRandomText;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateWord;
+import static com.teradata.tpcds.generator.PromotionGeneratorColumn.*;
+import static com.teradata.tpcds.random.RandomValueGenerator.*;
 import static com.teradata.tpcds.type.Date.JULIAN_DATE_MINIMUM;
 
 public class PromotionRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private static final int PROMO_START_MIN = -720;
     private static final int PROMO_START_MAX = 100;
     private static final int PROMO_LENGTH_MIN = 1;
@@ -46,14 +38,12 @@ public class PromotionRowGenerator
     private static final int PROMO_DETAIL_LENGTH_MIN = 20;
     private static final int PROMO_DETAIL_LENGTH_MAX = 60;
 
-    public PromotionRowGenerator()
-    {
+    public PromotionRowGenerator() {
         super(PROMOTION);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(PROMOTION, getRandomNumberStream(P_NULLS));
         long pPromoSk = rowNumber;
         String pPromoId = makeBusinessKey(rowNumber);

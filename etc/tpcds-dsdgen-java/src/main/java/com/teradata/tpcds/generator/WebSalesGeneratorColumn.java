@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.WEB_SALES;
 
 public enum WebSalesGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     WS_SOLD_DATE_SK(409, 2),
     WS_SOLD_TIME_SK(410, 2),
     WS_SHIP_DATE_SK(411, 16),
@@ -63,27 +62,23 @@ public enum WebSalesGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    WebSalesGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    WebSalesGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return WEB_SALES;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

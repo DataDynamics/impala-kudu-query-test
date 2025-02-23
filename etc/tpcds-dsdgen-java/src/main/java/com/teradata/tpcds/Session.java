@@ -16,18 +16,9 @@ package com.teradata.tpcds;
 
 import java.util.Optional;
 
-import static com.teradata.tpcds.Options.DEFAULT_DIRECTORY;
-import static com.teradata.tpcds.Options.DEFAULT_DO_NOT_TERMINATE;
-import static com.teradata.tpcds.Options.DEFAULT_NO_SEXISM;
-import static com.teradata.tpcds.Options.DEFAULT_NULL_STRING;
-import static com.teradata.tpcds.Options.DEFAULT_OVERWRITE;
-import static com.teradata.tpcds.Options.DEFAULT_PARALLELISM;
-import static com.teradata.tpcds.Options.DEFAULT_SCALE;
-import static com.teradata.tpcds.Options.DEFAULT_SEPARATOR;
-import static com.teradata.tpcds.Options.DEFAULT_SUFFIX;
+import static com.teradata.tpcds.Options.*;
 
-public class Session
-{
+public class Session {
     private final Scaling scaling;
     private final String targetDirectory;
     private final String suffix;
@@ -40,13 +31,11 @@ public class Session
     private final int chunkNumber;
     private final boolean overwrite;
 
-    public Session(double scale, String targetDirectory, String suffix, Optional<Table> table, String nullString, char separator, boolean doNotTerminate, boolean noSexism, int parallelism, boolean overwrite)
-    {
+    public Session(double scale, String targetDirectory, String suffix, Optional<Table> table, String nullString, char separator, boolean doNotTerminate, boolean noSexism, int parallelism, boolean overwrite) {
         this(scale, targetDirectory, suffix, table, nullString, separator, doNotTerminate, noSexism, parallelism, 1, overwrite);
     }
 
-    public Session(double scale, String targetDirectory, String suffix, Optional<Table> table, String nullString, char separator, boolean doNotTerminate, boolean noSexism, int parallelism, int chunkNumber, boolean overwrite)
-    {
+    public Session(double scale, String targetDirectory, String suffix, Optional<Table> table, String nullString, char separator, boolean doNotTerminate, boolean noSexism, int parallelism, int chunkNumber, boolean overwrite) {
         this.scaling = new Scaling(scale);
         this.targetDirectory = targetDirectory;
         this.suffix = suffix;
@@ -60,13 +49,11 @@ public class Session
         this.overwrite = overwrite;
     }
 
-    public static Session getDefaultSession()
-    {
+    public static Session getDefaultSession() {
         return new Options().toSession();
     }
 
-    public Session withTable(Table table)
-    {
+    public Session withTable(Table table) {
         return new Session(
                 this.scaling.getScale(),
                 this.targetDirectory,
@@ -82,8 +69,7 @@ public class Session
         );
     }
 
-    public Session withScale(double scale)
-    {
+    public Session withScale(double scale) {
         return new Session(
                 scale,
                 this.targetDirectory,
@@ -99,8 +85,7 @@ public class Session
         );
     }
 
-    public Session withParallelism(int parallelism)
-    {
+    public Session withParallelism(int parallelism) {
         return new Session(
                 this.scaling.getScale(),
                 this.targetDirectory,
@@ -116,8 +101,7 @@ public class Session
         );
     }
 
-    public Session withChunkNumber(int chunkNumber)
-    {
+    public Session withChunkNumber(int chunkNumber) {
         return new Session(
                 this.scaling.getScale(),
                 this.targetDirectory,
@@ -133,8 +117,7 @@ public class Session
         );
     }
 
-    public Session withNoSexism(boolean noSexism)
-    {
+    public Session withNoSexism(boolean noSexism) {
         return new Session(
                 this.scaling.getScale(),
                 this.targetDirectory,
@@ -150,71 +133,58 @@ public class Session
         );
     }
 
-    public Scaling getScaling()
-    {
+    public Scaling getScaling() {
         return scaling;
     }
 
-    public String getTargetDirectory()
-    {
+    public String getTargetDirectory() {
         return targetDirectory;
     }
 
-    public String getSuffix()
-    {
+    public String getSuffix() {
         return suffix;
     }
 
-    public boolean generateOnlyOneTable()
-    {
+    public boolean generateOnlyOneTable() {
         return table.isPresent();
     }
 
-    public Table getOnlyTableToGenerate()
-    {
+    public Table getOnlyTableToGenerate() {
         if (!table.isPresent()) {
             throw new TpcdsException("table not present");
         }
         return table.get();
     }
 
-    public String getNullString()
-    {
+    public String getNullString() {
         return nullString;
     }
 
-    public char getSeparator()
-    {
+    public char getSeparator() {
         return separator;
     }
 
-    public boolean terminateRowsWithSeparator()
-    {
+    public boolean terminateRowsWithSeparator() {
         return !doNotTerminate;
     }
 
-    public boolean isSexist()
-    {
+    public boolean isSexist() {
         return !noSexism;
     }
 
-    public int getParallelism()
-    {
+    public int getParallelism() {
         return parallelism;
     }
 
-    public int getChunkNumber()
-    {
+    public int getChunkNumber() {
         return chunkNumber;
     }
 
-    public boolean shouldOverwrite()
-    {
+    public boolean shouldOverwrite() {
         return overwrite;
     }
 
-    public String getCommandLineArguments()
-    {
+    public String getCommandLineArguments() {
         StringBuilder output = new StringBuilder();
         if (scaling.getScale() != DEFAULT_SCALE) {
             output.append("--scale ").append(scaling.getScale()).append(" ");

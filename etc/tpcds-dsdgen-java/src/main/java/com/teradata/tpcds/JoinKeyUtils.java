@@ -22,14 +22,11 @@ import com.teradata.tpcds.type.Date;
 import static com.teradata.tpcds.PseudoTableScalingInfos.CONCURRENT_WEB_SITES;
 import static com.teradata.tpcds.SlowlyChangingDimensionUtils.matchSurrogateKey;
 import static com.teradata.tpcds.Table.CATALOG_PAGE;
-import static com.teradata.tpcds.distribution.CalendarDistribution.Weights.SALES;
-import static com.teradata.tpcds.distribution.CalendarDistribution.Weights.SALES_LEAP_YEAR;
-import static com.teradata.tpcds.distribution.CalendarDistribution.Weights.UNIFORM_LEAP_YEAR;
+import static com.teradata.tpcds.distribution.CalendarDistribution.Weights.*;
 import static com.teradata.tpcds.distribution.CalendarDistribution.pickRandomDayOfYear;
 import static com.teradata.tpcds.distribution.CatalogPageDistributions.pickRandomCatalogPageType;
-import static com.teradata.tpcds.distribution.HoursDistribution.Weights.CATALOG_AND_WEB;
-import static com.teradata.tpcds.distribution.HoursDistribution.Weights.STORE;
 import static com.teradata.tpcds.distribution.HoursDistribution.Weights.UNIFORM;
+import static com.teradata.tpcds.distribution.HoursDistribution.Weights.*;
 import static com.teradata.tpcds.distribution.HoursDistribution.pickRandomHour;
 import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_CREATION_DATE_SK;
 import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_CLOSE_DATE;
@@ -39,25 +36,17 @@ import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRand
 import static com.teradata.tpcds.row.generator.CatalogPageRowGenerator.CATALOGS_PER_YEAR;
 import static com.teradata.tpcds.row.generator.CatalogSalesRowGenerator.CS_MAX_SHIP_DELAY;
 import static com.teradata.tpcds.row.generator.CatalogSalesRowGenerator.CS_MIN_SHIP_DELAY;
-import static com.teradata.tpcds.type.Date.DATE_MAXIMUM;
-import static com.teradata.tpcds.type.Date.DATE_MINIMUM;
-import static com.teradata.tpcds.type.Date.JULIAN_DATA_START_DATE;
-import static com.teradata.tpcds.type.Date.JULIAN_DATE_MAXIMUM;
-import static com.teradata.tpcds.type.Date.JULIAN_DATE_MINIMUM;
-import static com.teradata.tpcds.type.Date.JULIAN_TODAYS_DATE;
-import static com.teradata.tpcds.type.Date.isLeapYear;
-import static com.teradata.tpcds.type.Date.toJulianDays;
+import static com.teradata.tpcds.type.Date.*;
 import static java.lang.String.format;
 
-public final class JoinKeyUtils
-{
+public final class JoinKeyUtils {
     private static final int WEB_PAGES_PER_SITE = 123;
     private static final int WEB_DATE_STAGGER = 17;
 
-    private JoinKeyUtils() {}
+    private JoinKeyUtils() {
+    }
 
-    public static long generateJoinKey(GeneratorColumn fromColumn, RandomNumberStream randomNumberStream, Table toTable, long joinCount, Scaling scaling)
-    {
+    public static long generateJoinKey(GeneratorColumn fromColumn, RandomNumberStream randomNumberStream, Table toTable, long joinCount, Scaling scaling) {
         Table fromTable = fromColumn.getTable();
 
         switch (toTable) {
@@ -77,8 +66,7 @@ public final class JoinKeyUtils
         }
     }
 
-    private static long generateCatalogPageJoinKey(RandomNumberStream randomNumberStream, long julianDate, Scaling scaling)
-    {
+    private static long generateCatalogPageJoinKey(RandomNumberStream randomNumberStream, long julianDate, Scaling scaling) {
         int pagesPerCatalog = ((int) scaling.getRowCount(CATALOG_PAGE) / CATALOGS_PER_YEAR) / (DATE_MAXIMUM.getYear() - DATE_MINIMUM.getYear() + 2);
 
         String type = pickRandomCatalogPageType(randomNumberStream);
@@ -106,8 +94,7 @@ public final class JoinKeyUtils
         return count * pagesPerCatalog + page;
     }
 
-    private static long generateDateJoinKey(Table fromTable, RandomNumberStream randomNumberStream, GeneratorColumn fromColumn, long joinCount, int year, Scaling scaling)
-    {
+    private static long generateDateJoinKey(Table fromTable, RandomNumberStream randomNumberStream, GeneratorColumn fromColumn, long joinCount, int year, Scaling scaling) {
         int dayNumber;
         switch (fromTable) {
             case STORE_SALES:
@@ -141,8 +128,7 @@ public final class JoinKeyUtils
         }
     }
 
-    private static long generateWebJoinKey(GeneratorColumn fromColumn, RandomNumberStream randomNumberStream, long joinKey, Scaling scaling)
-    {
+    private static long generateWebJoinKey(GeneratorColumn fromColumn, RandomNumberStream randomNumberStream, long joinKey, Scaling scaling) {
         if (fromColumn == WP_CREATION_DATE_SK) {
             // Page creation has to happen outside of the page window, to assure a constant number of pages,
             // so it occurs in the gap between site creation and the site's actual activity. For sites that are replaced
@@ -174,23 +160,19 @@ public final class JoinKeyUtils
         throw new TpcdsException("invalid column for web join");
     }
 
-    private static long getWebSiteDuration(Scaling scaling)
-    {
+    private static long getWebSiteDuration(Scaling scaling) {
         return (JULIAN_DATE_MAXIMUM - JULIAN_DATE_MINIMUM) * CONCURRENT_WEB_SITES.getRowCountForScale(scaling.getScale());
     }
 
-    private static boolean isReplaced(long joinKey)
-    {
+    private static boolean isReplaced(long joinKey) {
         return (joinKey % 2) == 0;
     }
 
-    private static boolean isReplacement(long joinKey)
-    {
+    private static boolean isReplacement(long joinKey) {
         return (joinKey / 2 % 2) != 0;
     }
 
-    private static long generateDateReturnsJoinKey(Table fromTable, RandomNumberStream randomNumberStream, long joinCount)
-    {
+    private static long generateDateReturnsJoinKey(Table fromTable, RandomNumberStream randomNumberStream, long joinCount) {
         int min;
         int max;
         switch (fromTable) {
@@ -210,8 +192,7 @@ public final class JoinKeyUtils
         return joinCount + lag;
     }
 
-    private static long generateTimeJoinKey(Table fromTable, RandomNumberStream randomNumberStream)
-    {
+    private static long generateTimeJoinKey(Table fromTable, RandomNumberStream randomNumberStream) {
         int hour;
         switch (fromTable) {
             case STORE_SALES:
@@ -234,8 +215,7 @@ public final class JoinKeyUtils
         return (long) (hour * 3600 + seconds);
     }
 
-    private static long generateScdJoinKey(Table toTable, RandomNumberStream randomNumberStream, long julianDate, Scaling scaling)
-    {
+    private static long generateScdJoinKey(Table toTable, RandomNumberStream randomNumberStream, long julianDate, Scaling scaling) {
         // can't have a revision in the future
         if (julianDate > Date.JULIAN_DATA_END_DATE) {
             return -1;

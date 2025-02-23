@@ -24,16 +24,13 @@ import static com.teradata.tpcds.distribution.ReturnReasonsDistribution.getRetur
 import static com.teradata.tpcds.generator.ReasonGeneratorColumn.R_NULLS;
 
 public class ReasonRowGenerator
-        extends AbstractRowGenerator
-{
-    public ReasonRowGenerator()
-    {
+        extends AbstractRowGenerator {
+    public ReasonRowGenerator() {
         super(REASON);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(REASON, getRandomNumberStream(R_NULLS));
         long rReasonSk = rowNumber;
         String rReasonId = makeBusinessKey(rowNumber);

@@ -17,24 +17,10 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_ACCESS_DATE_SK;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_AUTOGEN_FLAG;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_CHAR_COUNT;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_CREATION_DATE_SK;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_IMAGE_COUNT;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_LINK_COUNT;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_MAX_AD_COUNT;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_PAGE_ID;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_PAGE_SK;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_REC_END_DATE_ID;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_REC_START_DATE_ID;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_TYPE;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_URL;
+import static com.teradata.tpcds.generator.WebPageGeneratorColumn.*;
 
 public class WebPageRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long wpPageSk;
     private final String wpPageId;
     private final long wpRecStartDateId;
@@ -51,21 +37,20 @@ public class WebPageRow
     private final int wpMaxAdCount;
 
     public WebPageRow(long nullBitMap,
-            long wpPageSk,
-            String wpPageId,
-            long wpRecStartDateId,
-            long wpRecEndDateId,
-            long wpCreationDateSk,
-            long wpAccessDateSk,
-            boolean wpAutogenFlag,
-            long wpCustomerSk,
-            String wpUrl,
-            String wpType,
-            int wpCharCount,
-            int wpLinkCount,
-            int wpImageCount,
-            int wpMaxAdCount)
-    {
+                      long wpPageSk,
+                      String wpPageId,
+                      long wpRecStartDateId,
+                      long wpRecEndDateId,
+                      long wpCreationDateSk,
+                      long wpAccessDateSk,
+                      boolean wpAutogenFlag,
+                      long wpCustomerSk,
+                      String wpUrl,
+                      String wpType,
+                      int wpCharCount,
+                      int wpLinkCount,
+                      int wpImageCount,
+                      int wpMaxAdCount) {
         super(nullBitMap, WP_PAGE_SK);
         this.wpPageSk = wpPageSk;
         this.wpPageId = wpPageId;
@@ -83,49 +68,40 @@ public class WebPageRow
         this.wpMaxAdCount = wpMaxAdCount;
     }
 
-    public long getWpCreationDateSk()
-    {
+    public long getWpCreationDateSk() {
         return wpCreationDateSk;
     }
 
-    public long getWpAccessDateSk()
-    {
+    public long getWpAccessDateSk() {
         return wpAccessDateSk;
     }
 
-    public boolean getWpAutogenFlag()
-    {
+    public boolean getWpAutogenFlag() {
         return wpAutogenFlag;
     }
 
-    public long getWpCustomerSk()
-    {
+    public long getWpCustomerSk() {
         return wpCustomerSk;
     }
 
-    public int getWpCharCount()
-    {
+    public int getWpCharCount() {
         return wpCharCount;
     }
 
-    public int getWpLinkCount()
-    {
+    public int getWpLinkCount() {
         return wpLinkCount;
     }
 
-    public int getWpImageCount()
-    {
+    public int getWpImageCount() {
         return wpImageCount;
     }
 
-    public int getWpMaxAdCount()
-    {
+    public int getWpMaxAdCount() {
         return wpMaxAdCount;
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(wpPageSk, WP_PAGE_SK),
                 getStringOrNull(wpPageId, WP_PAGE_ID),
                 getDateStringOrNullFromJulianDays(wpRecStartDateId, WP_REC_START_DATE_ID),

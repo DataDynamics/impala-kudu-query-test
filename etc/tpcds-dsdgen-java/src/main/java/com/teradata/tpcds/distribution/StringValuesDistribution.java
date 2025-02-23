@@ -27,19 +27,16 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.teradata.tpcds.distribution.DistributionUtils.getDistributionIterator;
 import static com.teradata.tpcds.distribution.DistributionUtils.getListFromCommaSeparatedValues;
 
-public class StringValuesDistribution
-{
+public class StringValuesDistribution {
     private final ImmutableList<ImmutableList<String>> valuesLists;
     private final ImmutableList<ImmutableList<Integer>> weightsLists;
 
-    public StringValuesDistribution(ImmutableList<ImmutableList<String>> valuesLists, ImmutableList<ImmutableList<Integer>> weightsLists)
-    {
+    public StringValuesDistribution(ImmutableList<ImmutableList<String>> valuesLists, ImmutableList<ImmutableList<Integer>> weightsLists) {
         this.valuesLists = valuesLists;
         this.weightsLists = weightsLists;
     }
 
-    public static StringValuesDistribution buildStringValuesDistribution(String valuesAndWeightsFilename, int numValueFields, int numWeightFields)
-    {
+    public static StringValuesDistribution buildStringValuesDistribution(String valuesAndWeightsFilename, int numValueFields, int numWeightFields) {
         Iterator<List<String>> iterator = getDistributionIterator(valuesAndWeightsFilename);
 
         List<ImmutableList.Builder<String>> valuesBuilders = new ArrayList<>(numValueFields);
@@ -83,38 +80,32 @@ public class StringValuesDistribution
         return new StringValuesDistribution(valuesLists, weightsLists);
     }
 
-    public String pickRandomValue(int valueListIndex, int weightListIndex, RandomNumberStream stream)
-    {
+    public String pickRandomValue(int valueListIndex, int weightListIndex, RandomNumberStream stream) {
         checkArgument(valueListIndex < valuesLists.size(), "index out of range, max value index is " + (valuesLists.size() - 1));
         checkArgument(weightListIndex < weightsLists.size(), "index out of range, max weight index is " + (weightsLists.size() - 1));
         return DistributionUtils.pickRandomValue(valuesLists.get(valueListIndex), weightsLists.get(weightListIndex), stream);
     }
 
-    public String getValueForIndexModSize(long index, int valueListIndex)
-    {
+    public String getValueForIndexModSize(long index, int valueListIndex) {
         checkArgument(valueListIndex < valuesLists.size(), "index out of range, max value index is " + (valuesLists.size() - 1));
         return DistributionUtils.getValueForIndexModSize(index, valuesLists.get(valueListIndex));
     }
 
-    public int pickRandomIndex(int weightListIndex, RandomNumberStream stream)
-    {
+    public int pickRandomIndex(int weightListIndex, RandomNumberStream stream) {
         checkArgument(weightListIndex < weightsLists.size(), "index out of range, max weight index is " + (weightsLists.size() - 1));
         return DistributionUtils.pickRandomIndex(weightsLists.get(weightListIndex), stream);
     }
 
-    public int getWeightForIndex(int index, int weightListIndex)
-    {
+    public int getWeightForIndex(int index, int weightListIndex) {
         checkArgument(weightListIndex < weightsLists.size(), "index out of range, max weight index is " + (weightsLists.size() - 1));
         return DistributionUtils.getWeightForIndex(index, weightsLists.get(weightListIndex));
     }
 
-    public int getSize()
-    {
+    public int getSize() {
         return valuesLists.get(0).size();
     }
 
-    public String getValueAtIndex(int valueListIndex, int valueIndex)
-    {
+    public String getValueAtIndex(int valueListIndex, int valueIndex) {
         return valuesLists.get(valueListIndex).get(valueIndex);
     }
 }

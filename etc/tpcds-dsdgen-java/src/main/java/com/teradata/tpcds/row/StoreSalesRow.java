@@ -19,32 +19,10 @@ import com.teradata.tpcds.type.Pricing;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_COUPON_AMT;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_EXT_LIST_PRICE;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_EXT_SALES_PRICE;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_EXT_TAX;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_EXT_WHOLESALE_COST;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_LIST_PRICE;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_NET_PAID;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_NET_PAID_INC_TAX;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_NET_PROFIT;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_QUANTITY;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_SALES_PRICE;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING_WHOLESALE_COST;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_ADDR_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_CDEMO_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_DATE_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_HDEMO_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_ITEM_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_PROMO_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_STORE_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_TIME_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_TICKET_NUMBER;
+import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.*;
 
 public class StoreSalesRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long ssSoldDateSk;
     private final long ssSoldTimeSk;
     private final long ssSoldItemSk;
@@ -58,18 +36,17 @@ public class StoreSalesRow
     private final Pricing ssPricing;
 
     public StoreSalesRow(long nullBitMap,
-            long ssSoldDateSk,
-            long ssSoldTimeSk,
-            long ssSoldItemSk,
-            long ssSoldCustomerSk,
-            long ssSoldCdemoSk,
-            long ssSoldHdemoSk,
-            long ssSoldAddrSk,
-            long ssSoldStoreSk,
-            long ssSoldPromoSk,
-            long ssTicketNumber,
-            Pricing ssPricing)
-    {
+                         long ssSoldDateSk,
+                         long ssSoldTimeSk,
+                         long ssSoldItemSk,
+                         long ssSoldCustomerSk,
+                         long ssSoldCdemoSk,
+                         long ssSoldHdemoSk,
+                         long ssSoldAddrSk,
+                         long ssSoldStoreSk,
+                         long ssSoldPromoSk,
+                         long ssTicketNumber,
+                         Pricing ssPricing) {
         super(nullBitMap, SS_SOLD_DATE_SK);
         this.ssSoldDateSk = ssSoldDateSk;
         this.ssSoldTimeSk = ssSoldTimeSk;
@@ -85,8 +62,7 @@ public class StoreSalesRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(ssSoldDateSk, SS_SOLD_DATE_SK),
                 getStringOrNullForKey(ssSoldTimeSk, SS_SOLD_TIME_SK),
                 getStringOrNullForKey(ssSoldItemSk, SS_SOLD_ITEM_SK),
@@ -112,28 +88,23 @@ public class StoreSalesRow
                 getStringOrNull(ssPricing.getNetProfit(), SS_PRICING_NET_PROFIT));
     }
 
-    public long getSsTicketNumber()
-    {
+    public long getSsTicketNumber() {
         return ssTicketNumber;
     }
 
-    public long getSsSoldItemSk()
-    {
+    public long getSsSoldItemSk() {
         return ssSoldItemSk;
     }
 
-    public long getSsSoldCustomerSk()
-    {
+    public long getSsSoldCustomerSk() {
         return ssSoldCustomerSk;
     }
 
-    public long getSsSoldDateSk()
-    {
+    public long getSsSoldDateSk() {
         return ssSoldDateSk;
     }
 
-    public Pricing getSsPricing()
-    {
+    public Pricing getSsPricing() {
         return ssPricing;
     }
 }

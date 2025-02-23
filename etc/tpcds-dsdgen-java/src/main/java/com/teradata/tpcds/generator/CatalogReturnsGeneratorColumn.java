@@ -21,8 +21,7 @@ import com.teradata.tpcds.random.RandomNumberStreamImpl;
 import static com.teradata.tpcds.Table.CATALOG_RETURNS;
 
 public enum CatalogReturnsGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     CR_RETURNED_DATE_SK(46, 28),
     CR_RETURNED_TIME_SK(47, 28),
     CR_ITEM_SK(48, 14),
@@ -57,28 +56,24 @@ public enum CatalogReturnsGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    CatalogReturnsGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    CatalogReturnsGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.randomNumberStream = new RandomNumberStreamImpl(globalColumnNumber, seedsPerRow);
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CATALOG_RETURNS;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

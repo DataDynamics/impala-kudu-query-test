@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.WEB_SITE;
 
 public enum WebSiteGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     WEB_SITE_SK(447, 1),
     WEB_SITE_ID(448, 1),
     WEB_REC_START_DATE_ID(449, 1),
@@ -54,27 +53,23 @@ public enum WebSiteGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    WebSiteGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    WebSiteGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return WEB_SITE;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

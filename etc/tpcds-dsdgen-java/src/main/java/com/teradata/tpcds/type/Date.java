@@ -22,8 +22,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.lang.String.format;
 
-public class Date
-{
+public class Date {
     public static final int JULIAN_DATA_START_DATE = toJulianDays(new Date(1998, 1, 1)); // earliest date in the data set
     public static final int JULIAN_DATA_END_DATE = toJulianDays(new Date(2003, 12, 31)); // latest date in the data set
     public static final Date TODAYS_DATE = new Date(2003, 1, 8); // the generator's sense of "today"
@@ -43,8 +42,7 @@ public class Date
     private final int month;
     private final int day;
 
-    public Date(int year, int month, int day)
-    {
+    public Date(int year, int month, int day) {
         checkArgument(year > 0, "Year must be a positive value");
         checkArgument(month > 0 && month <= 12, "Month must be a number between 1 and 12 (inclusive)");
         checkArgument(day > 0 && day <= getDaysInMonth(month, year), "Day must be a positive value and cannot exceed the maximum number of days in the month");
@@ -54,8 +52,7 @@ public class Date
     }
 
     // Algorithm: Fleigel and Van Flandern (CACM, vol 11, #10, Oct. 1968, p. 657)
-    public static Date fromJulianDays(int julianDays)
-    {
+    public static Date fromJulianDays(int julianDays) {
         checkArgument(julianDays >= 0, "Days must be a positive value");
         int l = julianDays + 68569;
         int n = (4 * l) / 146097;
@@ -73,8 +70,7 @@ public class Date
     }
 
     // http://quasar.as.utexas.edu/BillInfo/JulianDatesG.html
-    public static int toJulianDays(Date date)
-    {
+    public static int toJulianDays(Date date) {
         int month = date.month;
         int year = date.year;
 
@@ -97,30 +93,17 @@ public class Date
                 daysBceInJulianEpoch + 1;
     }
 
-    public static boolean isLeapYear(int year)
-    {
+    public static boolean isLeapYear(int year) {
         // This is NOT a correct computation of leap years.
         // There is a bug in the C code that doesn't handle century years correctly.
         return year % 4 == 0;
     }
 
-    public static int getDaysInYear(int year)
-    {
+    public static int getDaysInYear(int year) {
         return isLeapYear(year) ? 366 : 365;
     }
 
-    public int getDay()
-    {
-        return day;
-    }
-
-    public int getYear()
-    {
-        return year;
-    }
-
-    private static int getDaysInMonth(int month, int year)
-    {
+    private static int getDaysInMonth(int month, int year) {
         Set<Integer> longMonths = ImmutableSet.of(1, 3, 5, 7, 8, 10, 12);
         Set<Integer> thirtyDayMonths = ImmutableSet.of(4, 6, 9, 11);
         if (longMonths.contains(month)) {
@@ -140,30 +123,25 @@ public class Date
     }
 
     // the ordinal reference into the calendar distribution for a given date
-    public static int getDayIndex(Date date)
-    {
+    public static int getDayIndex(Date date) {
         return getDaysThroughFirstOfMonth(date) + date.getDay();
     }
 
-    private static int getDaysThroughFirstOfMonth(Date date)
-    {
+    private static int getDaysThroughFirstOfMonth(Date date) {
         return isLeapYear(date.getYear()) ? MONTH_DAYS_LEAP_YEAR[date.getMonth()] : MONTH_DAYS[date.getMonth()];
     }
 
-    public static Date computeFirstDateOfMonth(Date date)
-    {
+    public static Date computeFirstDateOfMonth(Date date) {
         return new Date(date.year, date.month, 1);
     }
 
-    public static Date computeLastDateOfMonth(Date date)
-    {
+    public static Date computeLastDateOfMonth(Date date) {
         // copies a bug in the C code that adds all the days in the year
         // through the first of month instead of just the number of days in the month
         return fromJulianDays(toJulianDays(date) - date.day + getDaysThroughFirstOfMonth(date));
     }
 
-    public static Date computeSameDayLastYear(Date date)
-    {
+    public static Date computeSameDayLastYear(Date date) {
         int day = date.day;
         if (isLeapYear(date.year) && date.month == 2 && date.day == 29) {
             day = 28;
@@ -171,8 +149,7 @@ public class Date
         return new Date(date.year - 1, date.month, day);
     }
 
-    public static Date computeSameDayLastQuarter(Date date)
-    {
+    public static Date computeSameDayLastQuarter(Date date) {
         int quarter = (date.month - 1) / 3;  // zero-indexed quarter number
         int julianStartOfQuarter = toJulianDays(new Date(date.year, quarter * 3 + 1, 1));
         int julianDate = toJulianDays(date);
@@ -191,8 +168,7 @@ public class Date
     // to remember dates in the year that always fall on the same day as each
     // other.  The day of the week on which these dates fall is referred to as doomsday.
     // https://en.wikipedia.org/wiki/Doomsday_rule
-    public static int computeDayOfWeek(Date date)
-    {
+    public static int computeDayOfWeek(Date date) {
         // doomsdays for the first year of each century in a 400 year cycle
         int[] centuryAnchors = {3, 2, 0, 5};
 
@@ -236,14 +212,20 @@ public class Date
         return result % 7;
     }
 
+    public int getDay() {
+        return day;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return format("%4d-%02d-%02d", year, month, day);
     }
 
-    public int getMonth()
-    {
+    public int getMonth() {
         return month;
     }
 }

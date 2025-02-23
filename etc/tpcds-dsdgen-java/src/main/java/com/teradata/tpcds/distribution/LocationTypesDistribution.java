@@ -18,14 +18,13 @@ import com.teradata.tpcds.random.RandomNumberStream;
 
 import static com.teradata.tpcds.distribution.StringValuesDistribution.buildStringValuesDistribution;
 
-public final class LocationTypesDistribution
-{
+public final class LocationTypesDistribution {
     private static final StringValuesDistribution LOCATION_TYPES_DISTRIBUTION = buildStringValuesDistribution("location_types.dst", 1, 2);
 
-    private LocationTypesDistribution() {}
+    private LocationTypesDistribution() {
+    }
 
-    public static String pickRandomLocationType(RandomNumberStream stream, LocationTypeWeights locationTypeWeights)
-    {
+    public static String pickRandomLocationType(RandomNumberStream stream, LocationTypeWeights locationTypeWeights) {
         return LOCATION_TYPES_DISTRIBUTION.pickRandomValue(0, locationTypeWeights.ordinal(), stream);
     }
 

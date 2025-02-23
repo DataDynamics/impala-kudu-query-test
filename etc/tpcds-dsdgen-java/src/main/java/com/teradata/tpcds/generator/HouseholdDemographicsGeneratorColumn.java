@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.HOUSEHOLD_DEMOGRAPHICS;
 
 public enum HouseholdDemographicsGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     HD_DEMO_SK(188, 1),
     HD_INCOME_BAND_ID(189, 1),
     HD_BUY_POTENTIAL(190, 1),
@@ -31,27 +30,23 @@ public enum HouseholdDemographicsGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    HouseholdDemographicsGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    HouseholdDemographicsGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return HOUSEHOLD_DEMOGRAPHICS;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

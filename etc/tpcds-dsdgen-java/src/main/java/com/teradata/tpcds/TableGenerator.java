@@ -14,11 +14,7 @@
 
 package com.teradata.tpcds;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,24 +23,39 @@ import static com.teradata.tpcds.Results.constructResults;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
-public class TableGenerator
-{
+public class TableGenerator {
     private final Session session;
 
-    public TableGenerator(Session session)
-    {
+    public TableGenerator(Session session) {
         this.session = requireNonNull(session, "session is null");
     }
 
-    public void generateTable(Table table)
-    {
+    public static String formatRow(List<String> values, Session session) {
+        // replace nulls with the string representation for null
+        values = values.stream().map(value -> value != null ? value : session.getNullString()).collect(Collectors.toList());
+
+        StringBuilder stringBuilder = new StringBuilder();
+        char separator = session.getSeparator();
+        stringBuilder.append(values.get(0));
+        for (int i = 1; i < values.size(); i++) {
+            stringBuilder.append(separator);
+            stringBuilder.append(values.get(i));
+        }
+        if (session.terminateRowsWithSeparator()) {
+            stringBuilder.append(separator);
+        }
+        stringBuilder.append('\n');
+        return stringBuilder.toString();
+    }
+
+    public void generateTable(Table table) {
         // If this is a child table and not the only table being generated, it will be generated when its parent is generated, so move on.
         if (table.isChild() && !session.generateOnlyOneTable()) {
             return;
         }
 
         try (OutputStreamWriter parentWriter = addFileWriterForTable(table);
-                OutputStreamWriter childWriter = table.hasChild() && !session.generateOnlyOneTable() ? addFileWriterForTable(table.getChild()) : null) {
+             OutputStreamWriter childWriter = table.hasChild() && !session.generateOnlyOneTable() ? addFileWriterForTable(table.getChild()) : null) {
             Results results = constructResults(table, session);
             for (List<List<String>> parentAndChildRows : results) {
                 if (parentAndChildRows.size() > 0) {
@@ -55,15 +66,13 @@ public class TableGenerator
                     writeResults(childWriter, parentAndChildRows.get(1));
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new TpcdsException(e.getMessage());
         }
     }
 
     private OutputStreamWriter addFileWriterForTable(Table table)
-            throws IOException
-    {
+            throws IOException {
         String path = getPath(table);
         File file = new File(path);
         boolean newFileCreated = file.createNewFile();
@@ -71,8 +80,7 @@ public class TableGenerator
             if (session.shouldOverwrite()) {
                 // truncate the file
                 new FileOutputStream(path).close();
-            }
-            else {
+            } else {
                 throw new TpcdsException(format("File %s exists.  Remove it or run with the '--overwrite' option", path));
             }
         }
@@ -80,8 +88,7 @@ public class TableGenerator
         return new OutputStreamWriter(new FileOutputStream(path, true), StandardCharsets.ISO_8859_1);
     }
 
-    private String getPath(Table table)
-    {
+    private String getPath(Table table) {
         if (session.getParallelism() > 1) {
             return format("%s%s%s_%d_%d%s",
                     session.getTargetDirectory(),
@@ -101,27 +108,7 @@ public class TableGenerator
     }
 
     private void writeResults(Writer writer, List<String> values)
-            throws IOException
-    {
+            throws IOException {
         writer.write(formatRow(values, session));
-    }
-
-    public static String formatRow(List<String> values, Session session)
-    {
-        // replace nulls with the string representation for null
-        values = values.stream().map(value -> value != null ? value : session.getNullString()).collect(Collectors.toList());
-
-        StringBuilder stringBuilder = new StringBuilder();
-        char separator = session.getSeparator();
-        stringBuilder.append(values.get(0));
-        for (int i = 1; i < values.size(); i++) {
-            stringBuilder.append(separator);
-            stringBuilder.append(values.get(i));
-        }
-        if (session.terminateRowsWithSeparator()) {
-            stringBuilder.append(separator);
-        }
-        stringBuilder.append('\n');
-        return stringBuilder.toString();
     }
 }

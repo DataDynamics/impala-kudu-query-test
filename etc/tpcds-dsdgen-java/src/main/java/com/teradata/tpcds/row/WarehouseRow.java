@@ -19,33 +19,18 @@ import com.teradata.tpcds.type.Address;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_CITY;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_COUNTRY;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_COUNTY;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_GMT_OFFSET;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_STATE;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_STREET_NAME1;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_STREET_NUM;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_STREET_TYPE;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_SUITE_NUM;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_ADDRESS_ZIP;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_WAREHOUSE_ID;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_WAREHOUSE_NAME;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_WAREHOUSE_SK;
-import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.W_WAREHOUSE_SQ_FT;
+import static com.teradata.tpcds.generator.WarehouseGeneratorColumn.*;
 import static java.lang.String.format;
 
 public class WarehouseRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long wWarehouseSk;
     private final String wWarehouseId;
     private final String wWarehouseName;
     private final int wWarehouseSqFt;
     private final Address wAddress;
 
-    public WarehouseRow(long nullBitMap, long wWarehouseSk, String wWarehouseId, String wWarehouseName, int wWarehouseSqFt, Address wAddress)
-    {
+    public WarehouseRow(long nullBitMap, long wWarehouseSk, String wWarehouseId, String wWarehouseName, int wWarehouseSqFt, Address wAddress) {
         super(nullBitMap, W_WAREHOUSE_SK);
         this.wWarehouseSk = wWarehouseSk;
         this.wWarehouseId = wWarehouseId;
@@ -55,8 +40,7 @@ public class WarehouseRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(wWarehouseSk, W_WAREHOUSE_SK),
                 getStringOrNull(wWarehouseId, W_WAREHOUSE_ID),
                 getStringOrNull(wWarehouseName, W_WAREHOUSE_NAME),

@@ -23,24 +23,19 @@ import static com.teradata.tpcds.Table.CATALOG_PAGE;
 import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_DESCRIPTION;
 import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_NULLS;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateRandomText;
-import static com.teradata.tpcds.type.Date.DATE_MAXIMUM;
-import static com.teradata.tpcds.type.Date.DATE_MINIMUM;
-import static com.teradata.tpcds.type.Date.JULIAN_DATA_START_DATE;
+import static com.teradata.tpcds.type.Date.*;
 
 public class CatalogPageRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     public static final int CATALOGS_PER_YEAR = 18;
     private static final int WIDTH_CP_DESCRIPTION = 100;
 
-    public CatalogPageRowGenerator()
-    {
+    public CatalogPageRowGenerator() {
         super(CATALOG_PAGE);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long cpCatalogPageSk = rowNumber;
         String cpDepartment = "DEPARTMENT";
         long nullBitMap = createNullBitMap(CATALOG_PAGE, getRandomNumberStream(CP_NULLS));

@@ -68,7 +68,7 @@ public class GenTable extends Configured implements Tool {
 
         Path in = genInput(table, scale, parallel);
 
-        Path dsdgen = copyJar(new File("target/lib/dsdgen.jar"));
+        Path dsdgen = copyJar(new File("tpcds.jar"));
         URI dsuri = dsdgen.toUri();
         URI link = new URI(dsuri.getScheme(),
                     dsuri.getUserInfo(), dsuri.getHost(), 
@@ -135,13 +135,11 @@ public class GenTable extends Configured implements Tool {
         Path in = new Path("/tmp/"+table+"_"+scale+"-"+epoch);
         FileSystem fs = FileSystem.get(getConf());
         FSDataOutputStream out = fs.create(in);
-        for(int i = 1; i <= parallel; i++) {
           if(table.equals("all")) {
-            out.writeBytes(String.format("./dsdgen -dir $DIR -force Y -scale %d -parallel %d -child %d\n", scale, parallel, i));
+            out.writeBytes(String.format("/usr/bin/java -jar tpcds.jar -d $DIR --overwrite --scale %d -parallel %d\n", scale, parallel));
           } else {
-            out.writeBytes(String.format("./dsdgen -dir $DIR -table %s -force Y -scale %d -parallel %d -child %d\n", table, scale, parallel, i));
+            out.writeBytes(String.format("/usr/bin/java -jar tpcds.jar -d $DIR -table %s --overwrite --scale %d --parallelism %d\n", table, scale, parallel));
           }
-        }
         out.close();
         return in;
     }

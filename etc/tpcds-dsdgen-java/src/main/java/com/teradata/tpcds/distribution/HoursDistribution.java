@@ -15,7 +15,7 @@
 package com.teradata.tpcds.distribution;
 
 import com.google.common.collect.ImmutableList;
-import com.teradata.tpcds.distribution.DistributionUtils.WeightsBuilder;
+import com.teradata.tpcds.distribution.DistributionUtils.*;
 import com.teradata.tpcds.random.RandomNumberStream;
 
 import java.util.ArrayList;
@@ -23,13 +23,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
-import static com.teradata.tpcds.distribution.DistributionUtils.getDistributionIterator;
-import static com.teradata.tpcds.distribution.DistributionUtils.getListFromCommaSeparatedValues;
-import static com.teradata.tpcds.distribution.DistributionUtils.pickRandomValue;
+import static com.teradata.tpcds.distribution.DistributionUtils.*;
 import static java.lang.Integer.parseInt;
 
-public class HoursDistribution
-{
+public class HoursDistribution {
     private static final int NUM_WEIGHT_FIELDS = Weights.values().length;
     private static final String VALUES_AND_WEIGHTS_FILENAME = "hours.dst";
     private static final HoursDistribution HOURS_DISTRIBUTION = buildHoursDistribution();
@@ -41,8 +38,7 @@ public class HoursDistribution
     private final ImmutableList<String> meals;
     private final ImmutableList<ImmutableList<Integer>> weightsLists;
 
-    public HoursDistribution(ImmutableList<Integer> hours, ImmutableList<String> amPm, ImmutableList<String> shifts, ImmutableList<String> subShifts, ImmutableList<String> meals, ImmutableList<ImmutableList<Integer>> weightsLists)
-    {
+    public HoursDistribution(ImmutableList<Integer> hours, ImmutableList<String> amPm, ImmutableList<String> shifts, ImmutableList<String> subShifts, ImmutableList<String> meals, ImmutableList<ImmutableList<Integer>> weightsLists) {
         this.hours = hours;
         this.amPm = amPm;
         this.shifts = shifts;
@@ -51,8 +47,7 @@ public class HoursDistribution
         this.weightsLists = weightsLists;
     }
 
-    private static HoursDistribution buildHoursDistribution()
-    {
+    private static HoursDistribution buildHoursDistribution() {
         ImmutableList.Builder<Integer> hoursBuilder = ImmutableList.builder();
         ImmutableList.Builder<String> amPmBuilder = ImmutableList.builder();
         ImmutableList.Builder<String> shiftsBuilder = ImmutableList.builder();
@@ -92,56 +87,47 @@ public class HoursDistribution
         return new HoursDistribution(hoursBuilder.build(), amPmBuilder.build(), shiftsBuilder.build(), subShiftsBuilder.build(), mealsBuilder.build(), weightsListBuilder.build());
     }
 
-    public static int pickRandomHour(Weights weights, RandomNumberStream randomNumberStream)
-    {
+    public static int pickRandomHour(Weights weights, RandomNumberStream randomNumberStream) {
         return pickRandomValue(HOURS_DISTRIBUTION.hours, HOURS_DISTRIBUTION.weightsLists.get(weights.ordinal()), randomNumberStream);
     }
 
-    public static HourInfo getHourInfoForHour(int hour)
-    {
+    public static HourInfo getHourInfoForHour(int hour) {
         return new HourInfo(HOURS_DISTRIBUTION.amPm.get(hour), HOURS_DISTRIBUTION.shifts.get(hour), HOURS_DISTRIBUTION.subShifts.get(hour), HOURS_DISTRIBUTION.meals.get(hour));
     }
 
-    public static class HourInfo
-    {
+    public enum Weights {
+        UNIFORM,
+        STORE,
+        CATALOG_AND_WEB
+    }
+
+    public static class HourInfo {
         private final String amPm;
         private final String shift;
         private final String subShift;
         private final String meal;
 
-        public HourInfo(String amPm, String shift, String subShift, String meal)
-        {
+        public HourInfo(String amPm, String shift, String subShift, String meal) {
             this.amPm = amPm;
             this.shift = shift;
             this.subShift = subShift;
             this.meal = meal;
         }
 
-        public String getAmPm()
-        {
+        public String getAmPm() {
             return amPm;
         }
 
-        public String getShift()
-        {
+        public String getShift() {
             return shift;
         }
 
-        public String getSubShift()
-        {
+        public String getSubShift() {
             return subShift;
         }
 
-        public String getMeal()
-        {
+        public String getMeal() {
             return meal;
         }
-    }
-
-    public enum Weights
-    {
-        UNIFORM,
-        STORE,
-        CATALOG_AND_WEB
     }
 }

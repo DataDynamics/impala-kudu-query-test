@@ -19,28 +19,24 @@ import io.airlift.airline.Command;
 import io.airlift.airline.HelpOption;
 
 import javax.inject.Inject;
-
 import java.util.List;
 
 import static io.airlift.airline.SingleCommand.singleCommand;
 
 @Command(name = "dsdgen", description = "data generator for TPC-DS")
-public class Driver
-{
+public class Driver {
     @Inject
     public HelpOption helpOption;
 
     @Inject
     public Options options = new Options();
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Driver driver = singleCommand(Driver.class).parse(args);
         driver.run();
     }
 
-    private void run()
-    {
+    private void run() {
         if (helpOption.showHelpIfRequested()) {
             return;
         }
@@ -49,17 +45,16 @@ public class Driver
         List<Table> tablesToGenerate;
         if (session.generateOnlyOneTable()) {
             tablesToGenerate = ImmutableList.of(session.getOnlyTableToGenerate());
-        }
-        else {
+        } else {
             tablesToGenerate = Table.getBaseTables();
         }
 
         for (int i = 1; i <= session.getParallelism(); i++) {
             int chunkNumber = i;
             new Thread(() -> {
-                        TableGenerator tableGenerator = new TableGenerator(session.withChunkNumber(chunkNumber));
-                        tablesToGenerate.forEach(tableGenerator::generateTable);
-                    }).start();
+                TableGenerator tableGenerator = new TableGenerator(session.withChunkNumber(chunkNumber));
+                tablesToGenerate.forEach(tableGenerator::generateTable);
+            }).start();
         }
     }
 }

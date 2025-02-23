@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.ITEM;
 
 public enum ItemGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     I_ITEM_SK(203, 1),
     I_ITEM_ID(204, 1),
     I_REC_START_DATE_ID(205, 1),
@@ -50,27 +49,23 @@ public enum ItemGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    ItemGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    ItemGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return ITEM;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

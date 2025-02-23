@@ -19,12 +19,11 @@ import com.teradata.tpcds.random.RandomNumberStream;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomKey;
 
-public class Nulls
-{
-    private Nulls() {}
+public class Nulls {
+    private Nulls() {
+    }
 
-    public static long createNullBitMap(Table table, RandomNumberStream randomNumberStream)
-    {
+    public static long createNullBitMap(Table table, RandomNumberStream randomNumberStream) {
         int threshold = generateUniformRandomInt(0, 9999, randomNumberStream);
         long bitMap = generateUniformRandomKey(1, Integer.MAX_VALUE, randomNumberStream);
 

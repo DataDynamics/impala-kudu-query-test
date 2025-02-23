@@ -16,15 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.PROMOTION;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum PromotionColumn
-        implements Column
-{
+        implements Column {
     P_PROMO_SK(IDENTIFIER),
     P_PROMO_ID(character(16)),
     P_START_DATE_SK(IDENTIFIER),
@@ -47,32 +42,27 @@ public enum PromotionColumn
 
     private final ColumnType type;
 
-    PromotionColumn(ColumnType type)
-    {
+    PromotionColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return PROMOTION;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

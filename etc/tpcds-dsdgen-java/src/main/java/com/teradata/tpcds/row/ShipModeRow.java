@@ -17,16 +17,10 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.ShipModeGeneratorColumn.SM_CARRIER;
-import static com.teradata.tpcds.generator.ShipModeGeneratorColumn.SM_CODE;
-import static com.teradata.tpcds.generator.ShipModeGeneratorColumn.SM_CONTRACT;
-import static com.teradata.tpcds.generator.ShipModeGeneratorColumn.SM_SHIP_MODE_ID;
-import static com.teradata.tpcds.generator.ShipModeGeneratorColumn.SM_SHIP_MODE_SK;
-import static com.teradata.tpcds.generator.ShipModeGeneratorColumn.SM_TYPE;
+import static com.teradata.tpcds.generator.ShipModeGeneratorColumn.*;
 
 public class ShipModeRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long smShipModeSk;
     private final String smShipModeId;
     private final String smType;
@@ -34,8 +28,7 @@ public class ShipModeRow
     private final String smCarrier;
     private final String smContract;
 
-    public ShipModeRow(long nullBitMap, long smShipModeSk, String smShipModeId, String smType, String smCode, String smCarrier, String smContract)
-    {
+    public ShipModeRow(long nullBitMap, long smShipModeSk, String smShipModeId, String smType, String smCode, String smCarrier, String smContract) {
         super(nullBitMap, SM_SHIP_MODE_SK);
         this.smShipModeSk = smShipModeSk;
         this.smShipModeId = smShipModeId;
@@ -46,8 +39,7 @@ public class ShipModeRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(smShipModeSk, SM_SHIP_MODE_SK),
                 getStringOrNull(smShipModeId, SM_SHIP_MODE_ID),
                 getStringOrNull(smType, SM_TYPE),

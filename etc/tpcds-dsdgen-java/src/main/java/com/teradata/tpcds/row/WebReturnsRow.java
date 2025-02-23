@@ -19,34 +19,10 @@ import com.teradata.tpcds.type.Pricing;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_ITEM_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_ORDER_NUMBER;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_EXT_SHIP_COST;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_EXT_TAX;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_FEE;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_NET_LOSS;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_NET_PAID;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_NET_PAID_INC_TAX;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_QUANTITY;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_REFUNDED_CASH;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_REVERSED_CHARGE;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_PRICING_STORE_CREDIT;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REASON_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REFUNDED_ADDR_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REFUNDED_CDEMO_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REFUNDED_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_REFUNDED_HDEMO_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_RETURNED_DATE_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_RETURNED_TIME_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_RETURNING_ADDR_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_RETURNING_CDEMO_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_RETURNING_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_RETURNING_HDEMO_SK;
-import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.WR_WEB_PAGE_SK;
+import static com.teradata.tpcds.generator.WebReturnsGeneratorColumn.*;
 
 public class WebReturnsRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long wrReturnedDateSk;
     private final long wrReturnedTimeSk;
     private final long wrItemSk;
@@ -64,22 +40,21 @@ public class WebReturnsRow
     private final Pricing wrPricing;
 
     public WebReturnsRow(long nullBitMap,
-            long wrReturnedDateSk,
-            long wrReturnedTimeSk,
-            long wrItemSk,
-            long wrRefundedCustomerSk,
-            long wrRefundedCdemoSk,
-            long wrRefundedHdemoSk,
-            long wrRefundedAddrSk,
-            long wrReturningCustomerSk,
-            long wrReturningCgdemoSk,
-            long wrReturningHdemoSk,
-            long wrReturningAddrSk,
-            long wrWebPageSk,
-            long wrReasonSk,
-            long wrOrderNumber,
-            Pricing wrPricing)
-    {
+                         long wrReturnedDateSk,
+                         long wrReturnedTimeSk,
+                         long wrItemSk,
+                         long wrRefundedCustomerSk,
+                         long wrRefundedCdemoSk,
+                         long wrRefundedHdemoSk,
+                         long wrRefundedAddrSk,
+                         long wrReturningCustomerSk,
+                         long wrReturningCgdemoSk,
+                         long wrReturningHdemoSk,
+                         long wrReturningAddrSk,
+                         long wrWebPageSk,
+                         long wrReasonSk,
+                         long wrOrderNumber,
+                         Pricing wrPricing) {
         super(nullBitMap, WR_RETURNED_DATE_SK);
         this.wrReturnedDateSk = wrReturnedDateSk;
         this.wrReturnedTimeSk = wrReturnedTimeSk;
@@ -99,8 +74,7 @@ public class WebReturnsRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(wrReturnedDateSk, WR_RETURNED_DATE_SK),
                 getStringOrNullForKey(wrReturnedTimeSk, WR_RETURNED_TIME_SK),
                 getStringOrNullForKey(wrItemSk, WR_ITEM_SK),

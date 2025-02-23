@@ -19,33 +19,21 @@ import com.teradata.tpcds.row.CustomerDemographicsRow;
 
 import static com.teradata.tpcds.Nulls.createNullBitMap;
 import static com.teradata.tpcds.Table.CUSTOMER_DEMOGRAPHICS;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.CREDIT_RATING_DISTRIBUTION;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.EDUCATION_DISTRIBUTION;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.GENDER_DISTRIBUTION;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.MARITAL_STATUS_DISTRIBUTION;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.PURCHASE_BAND_DISTRIBUTION;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.getCreditRatingForIndexModSize;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.getEducationForIndexModSize;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.getGenderForIndexModSize;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.getMaritalStatusForIndexModSize;
-import static com.teradata.tpcds.distribution.DemographicsDistributions.getPurchaseBandForIndexModSize;
+import static com.teradata.tpcds.distribution.DemographicsDistributions.*;
 import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_NULLS;
 
 public class CustomerDemographicsRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private static final int MAX_CHILDREN = 7;
     private static final int MAX_EMPLOYED = 7;
     private static final int MAX_COLLEGE = 7;
 
-    public CustomerDemographicsRowGenerator()
-    {
+    public CustomerDemographicsRowGenerator() {
         super(CUSTOMER_DEMOGRAPHICS);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(CUSTOMER_DEMOGRAPHICS, getRandomNumberStream(CD_NULLS));
         long cDemoSk = rowNumber;
         long index = cDemoSk - 1;

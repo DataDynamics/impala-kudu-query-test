@@ -25,40 +25,24 @@ import static com.teradata.tpcds.JoinKeyUtils.generateJoinKey;
 import static com.teradata.tpcds.Nulls.createNullBitMap;
 import static com.teradata.tpcds.SlowlyChangingDimensionUtils.computeScdKey;
 import static com.teradata.tpcds.SlowlyChangingDimensionUtils.getValueForSlowlyChangingDimension;
-import static com.teradata.tpcds.Table.CUSTOMER;
-import static com.teradata.tpcds.Table.DATE_DIM;
-import static com.teradata.tpcds.Table.WEB_PAGE;
+import static com.teradata.tpcds.Table.*;
 import static com.teradata.tpcds.distribution.WebPageUseDistribution.pickRandomWebPageUseType;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_ACCESS_DATE_SK;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_AUTOGEN_FLAG;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_CHAR_COUNT;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_CREATION_DATE_SK;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_IMAGE_COUNT;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_LINK_COUNT;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_MAX_AD_COUNT;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_NULLS;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_SCD;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_TYPE;
-import static com.teradata.tpcds.generator.WebPageGeneratorColumn.WP_URL;
+import static com.teradata.tpcds.generator.WebPageGeneratorColumn.*;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateRandomUrl;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static com.teradata.tpcds.type.Date.JULIAN_TODAYS_DATE;
 
 public class WebPageRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private static final int WP_AUTOGEN_PERCENT = 30;
     private Optional<WebPageRow> previousRow = Optional.empty();
 
-    public WebPageRowGenerator()
-    {
+    public WebPageRowGenerator() {
         super(WEB_PAGE);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         Scaling scaling = session.getScaling();
 
         long nullBitMap = createNullBitMap(WEB_PAGE, getRandomNumberStream(WP_NULLS));

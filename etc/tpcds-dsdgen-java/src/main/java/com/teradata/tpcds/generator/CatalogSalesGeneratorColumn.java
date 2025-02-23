@@ -21,8 +21,7 @@ import com.teradata.tpcds.random.RandomNumberStreamImpl;
 import static com.teradata.tpcds.Table.CATALOG_SALES;
 
 public enum CatalogSalesGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     CS_SOLD_DATE_SK(75, 1),
     CS_SOLD_TIME_SK(76, 2),
     CS_SHIP_DATE_SK(77, 14),
@@ -67,28 +66,24 @@ public enum CatalogSalesGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    CatalogSalesGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    CatalogSalesGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.randomNumberStream = new RandomNumberStreamImpl(globalColumnNumber, seedsPerRow);
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CATALOG_SALES;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

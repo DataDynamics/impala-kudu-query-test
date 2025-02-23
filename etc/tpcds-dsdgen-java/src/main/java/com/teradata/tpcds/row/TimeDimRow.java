@@ -17,20 +17,10 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_AM_PM;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_HOUR;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_MEAL_TIME;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_MINUTE;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_SECOND;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_SHIFT;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_SUB_SHIFT;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_TIME;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_TIME_ID;
-import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.T_TIME_SK;
+import static com.teradata.tpcds.generator.TimeDimGeneratorColumn.*;
 
 public class TimeDimRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long tTimeSk;
     private final String tTimeId;
     private final int tTime;
@@ -42,8 +32,7 @@ public class TimeDimRow
     private final String tSubShift;
     private final String tMealTime;
 
-    public TimeDimRow(long nullBitMap, long tTimeSk, String tTimeId, int tTime, int tHour, int tMinute, int tSecond, String tAmPm, String tShift, String tSubShift, String tMealTime)
-    {
+    public TimeDimRow(long nullBitMap, long tTimeSk, String tTimeId, int tTime, int tHour, int tMinute, int tSecond, String tAmPm, String tShift, String tSubShift, String tMealTime) {
         super(nullBitMap, T_TIME_SK);
         this.tTimeSk = tTimeSk;
         this.tTimeId = tTimeId;
@@ -58,8 +47,7 @@ public class TimeDimRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(tTimeSk, T_TIME_SK),
                 getStringOrNull(tTimeId, T_TIME_ID),
                 getStringOrNull(tTime, T_TIME),

@@ -16,15 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.WAREHOUSE;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum WarehouseColumn
-        implements Column
-{
+        implements Column {
     W_WAREHOUSE_SK(IDENTIFIER),
     W_WAREHOUSE_ID(character(16)),
     W_WAREHOUSE_NAME(varchar(20)),
@@ -42,32 +37,27 @@ public enum WarehouseColumn
 
     private final ColumnType type;
 
-    WarehouseColumn(ColumnType type)
-    {
+    WarehouseColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return WAREHOUSE;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

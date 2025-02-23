@@ -18,8 +18,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.DBGEN_VERSION;
 
 public enum DbgenVersionGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     DV_VERSION(476, 1),
     DV_CREATE_DATE(477, 1),
     DV_CREATE_TIME(478, 1),
@@ -28,27 +27,23 @@ public enum DbgenVersionGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    DbgenVersionGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    DbgenVersionGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return DBGEN_VERSION;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

@@ -35,32 +35,11 @@ import static com.google.common.collect.Iterators.filter;
 import static com.google.common.collect.Iterators.transform;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 
-public final class DistributionUtils
-{
-    private DistributionUtils() {}
-
-    protected static final class WeightsBuilder
-    {
-        ImmutableList.Builder<Integer> weightsBuilder = ImmutableList.builder();
-        int previousWeight = 0;
-
-        public WeightsBuilder computeAndAddNextWeight(int weight)
-        {
-            checkArgument(weight >= 0, "Weight cannot be negative.");
-            int newWeight = previousWeight + weight;
-            weightsBuilder.add(newWeight);
-            previousWeight = newWeight;
-            return this;
-        }
-
-        public ImmutableList<Integer> build()
-        {
-            return weightsBuilder.build();
-        }
+public final class DistributionUtils {
+    private DistributionUtils() {
     }
 
-    protected static Iterator<List<String>> getDistributionIterator(String filename)
-    {
+    protected static Iterator<List<String>> getDistributionIterator(String filename) {
         URL resource = Resources.getResource(DistributionUtils.class, filename);
         checkState(resource != null, "Distribution file '%s' not found", filename);
         try {
@@ -70,26 +49,22 @@ public final class DistributionUtils
                         line = line.trim();
                         return !line.isEmpty() && !line.startsWith("--");
                     }), line -> ImmutableList.copyOf(Splitter.on(Pattern.compile("(?<!\\\\):")).trimResults().split(line)));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw Throwables.propagate(e);
         }
     }
 
-    protected static List<String> getListFromCommaSeparatedValues(String toSplit)
-    {
+    protected static List<String> getListFromCommaSeparatedValues(String toSplit) {
         List<String> values = Splitter.on(Pattern.compile("(?<!\\\\),")).trimResults().splitToList(toSplit);
         return values.stream().map(value -> value.replaceAll("\\\\", "")).collect(Collectors.toList());
     }
 
-    protected static <T> T pickRandomValue(List<T> values, List<Integer> weights, RandomNumberStream randomNumberStream)
-    {
+    protected static <T> T pickRandomValue(List<T> values, List<Integer> weights, RandomNumberStream randomNumberStream) {
         int weight = generateUniformRandomInt(1, weights.get(weights.size() - 1), randomNumberStream);
         return getValueForWeight(weight, values, weights);
     }
 
-    private static <T> T getValueForWeight(int weight, List<T> values, List<Integer> weights)
-    {
+    private static <T> T getValueForWeight(int weight, List<T> values, List<Integer> weights) {
         checkArgument(values.size() == weights.size());
         for (int index = 0; index < weights.size(); index++) {
             if (weight <= weights.get(index)) {
@@ -100,21 +75,18 @@ public final class DistributionUtils
         throw new TpcdsException("random weight was greater than max weight");
     }
 
-    protected static <T> T getValueForIndexModSize(long index, List<T> values)
-    {
+    protected static <T> T getValueForIndexModSize(long index, List<T> values) {
         int size = values.size();
         int indexModSize = (int) (index % size);
         return values.get(indexModSize);
     }
 
-    protected static int pickRandomIndex(List<Integer> weights, RandomNumberStream randomNumberStream)
-    {
+    protected static int pickRandomIndex(List<Integer> weights, RandomNumberStream randomNumberStream) {
         int weight = generateUniformRandomInt(1, weights.get(weights.size() - 1), randomNumberStream);
         return getIndexForWeight(weight, weights);
     }
 
-    private static int getIndexForWeight(int weight, List<Integer> weights)
-    {
+    private static int getIndexForWeight(int weight, List<Integer> weights) {
         for (int index = 0; index < weights.size(); index++) {
             if (weight <= weights.get(index)) {
                 return index;
@@ -124,9 +96,25 @@ public final class DistributionUtils
         throw new TpcdsException("random weight was greater than max weight");
     }
 
-    protected static int getWeightForIndex(int index, List<Integer> weights)
-    {
+    protected static int getWeightForIndex(int index, List<Integer> weights) {
         checkArgument(index < weights.size(), "index larger than distribution");
         return index == 0 ? weights.get(index) : weights.get(index) - weights.get(index - 1);  // reverse the accumulation of weights.
+    }
+
+    protected static final class WeightsBuilder {
+        ImmutableList.Builder<Integer> weightsBuilder = ImmutableList.builder();
+        int previousWeight = 0;
+
+        public WeightsBuilder computeAndAddNextWeight(int weight) {
+            checkArgument(weight >= 0, "Weight cannot be negative.");
+            int newWeight = previousWeight + weight;
+            weightsBuilder.add(newWeight);
+            previousWeight = newWeight;
+            return this;
+        }
+
+        public ImmutableList<Integer> build() {
+            return weightsBuilder.build();
+        }
     }
 }

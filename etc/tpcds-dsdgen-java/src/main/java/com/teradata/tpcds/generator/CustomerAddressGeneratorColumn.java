@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
 
 public enum CustomerAddressGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     CA_ADDRESS_SK(133, 1),
     CA_ADDRESS_ID(134, 1),
     CA_ADDRESS_STREET_NUM(135, 1),
@@ -41,27 +40,23 @@ public enum CustomerAddressGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    CustomerAddressGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    CustomerAddressGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CUSTOMER_ADDRESS;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

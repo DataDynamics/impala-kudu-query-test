@@ -17,38 +17,11 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_CURRENT_DAY;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_CURRENT_MONTH;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_CURRENT_QUARTER;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_CURRENT_WEEK;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_CURRENT_YEAR;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_DATE_ID;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_DATE_SK;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_DAY_NAME;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_DOM;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_DOW;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_FIRST_DOM;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_FOLLOWING_HOLIDAY;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_FY_QUARTER_SEQ;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_FY_WEEK_SEQ;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_FY_YEAR;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_HOLIDAY;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_LAST_DOM;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_MONTH_SEQ;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_MOY;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_QOY;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_QUARTER_NAME;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_QUARTER_SEQ;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_SAME_DAY_LQ;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_SAME_DAY_LY;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_WEEKEND;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_WEEK_SEQ;
-import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_YEAR;
+import static com.teradata.tpcds.generator.DateDimGeneratorColumn.*;
 import static java.lang.String.format;
 
 public class DateDimRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long dDateSk;
     private final String dDateId;
     private final int dMonthSeq;
@@ -77,33 +50,32 @@ public class DateDimRow
     private final boolean dCurrentYear;
 
     public DateDimRow(long nullBitMap,
-            long dDateSk,
-            String dDateId,
-            int dMonthSeq,
-            int dWeekSeq,
-            int dQuarterSeq,
-            int dYear,
-            int dDow,
-            int dMoy,
-            int dDom,
-            int dQoy,
-            int dFyYear,
-            int dFyQuarterSeq,
-            int dFyWeekSeq,
-            String dDayName,
-            boolean dHoliday,
-            boolean dWeekend,
-            boolean dFollowingHoliday,
-            int dFirstDom,
-            int dLastDom,
-            int dSameDayLy,
-            int dSameDayLq,
-            boolean dCurrentDay,
-            boolean dCurrentWeek,
-            boolean dCurrentMonth,
-            boolean dCurrentQuarter,
-            boolean dCurrentYear)
-    {
+                      long dDateSk,
+                      String dDateId,
+                      int dMonthSeq,
+                      int dWeekSeq,
+                      int dQuarterSeq,
+                      int dYear,
+                      int dDow,
+                      int dMoy,
+                      int dDom,
+                      int dQoy,
+                      int dFyYear,
+                      int dFyQuarterSeq,
+                      int dFyWeekSeq,
+                      String dDayName,
+                      boolean dHoliday,
+                      boolean dWeekend,
+                      boolean dFollowingHoliday,
+                      int dFirstDom,
+                      int dLastDom,
+                      int dSameDayLy,
+                      int dSameDayLq,
+                      boolean dCurrentDay,
+                      boolean dCurrentWeek,
+                      boolean dCurrentMonth,
+                      boolean dCurrentQuarter,
+                      boolean dCurrentYear) {
         super(nullBitMap, D_DATE_SK);
         this.dDateSk = dDateSk;
         this.dDateId = dDateId;
@@ -134,8 +106,7 @@ public class DateDimRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(dDateSk, D_DATE_SK),
                 getStringOrNull(dDateId, D_DATE_ID),
                 getDateStringOrNullFromJulianDays(dDateSk, D_DATE_SK),

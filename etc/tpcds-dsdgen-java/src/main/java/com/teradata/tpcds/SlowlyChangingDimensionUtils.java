@@ -18,17 +18,16 @@ import static com.teradata.tpcds.BusinessKeyGenerator.makeBusinessKey;
 import static com.teradata.tpcds.type.Date.JULIAN_DATA_END_DATE;
 import static com.teradata.tpcds.type.Date.JULIAN_DATA_START_DATE;
 
-public final class SlowlyChangingDimensionUtils
-{
+public final class SlowlyChangingDimensionUtils {
     private static final long ONE_HALF_DATE = JULIAN_DATA_START_DATE + (JULIAN_DATA_END_DATE - JULIAN_DATA_START_DATE) / 2;
     private static final long ONE_THIRD_PERIOD = (JULIAN_DATA_END_DATE - JULIAN_DATA_START_DATE) / 3;
     private static final long ONE_THIRD_DATE = JULIAN_DATA_START_DATE + ONE_THIRD_PERIOD;
     private static final long TWO_THIRDS_DATE = ONE_THIRD_DATE + ONE_THIRD_PERIOD;
 
-    private SlowlyChangingDimensionUtils() {}
+    private SlowlyChangingDimensionUtils() {
+    }
 
-    public static SlowlyChangingDimensionKey computeScdKey(Table table, long rowNumber)
-    {
+    public static SlowlyChangingDimensionKey computeScdKey(Table table, long rowNumber) {
         int modulo = (int) rowNumber % 6;
         long startDate;
         long endDate;
@@ -80,18 +79,15 @@ public final class SlowlyChangingDimensionUtils
         return new SlowlyChangingDimensionKey(businessKey, startDate, endDate, isNewKey);
     }
 
-    public static <T> T getValueForSlowlyChangingDimension(int fieldChangeFlag, boolean isNewKey, T oldValue, T newValue)
-    {
+    public static <T> T getValueForSlowlyChangingDimension(int fieldChangeFlag, boolean isNewKey, T oldValue, T newValue) {
         return shouldChangeDimension(fieldChangeFlag, isNewKey) ? newValue : oldValue;
     }
 
-    public static boolean shouldChangeDimension(int flags, boolean isNewKey)
-    {
+    public static boolean shouldChangeDimension(int flags, boolean isNewKey) {
         return flags % 2 == 0 || isNewKey;
     }
 
-    public static long matchSurrogateKey(long unique, long julianDate, Table table, Scaling scaling)
-    {
+    public static long matchSurrogateKey(long unique, long julianDate, Table table, Scaling scaling) {
         long surrogateKey = (unique / 3) * 6;
         switch ((int) (unique % 3)) { // number of revisions for the ID.
             case 1: // only one occurrence of this ID
@@ -123,8 +119,7 @@ public final class SlowlyChangingDimensionUtils
         return surrogateKey;
     }
 
-    public static class SlowlyChangingDimensionKey
-    {
+    public static class SlowlyChangingDimensionKey {
         // A slowly changing dimension table is a dimension table that contains relatively static data that changes
         // slowly but unpredictably. The TPCDS data set contains slowly changing dimensions that use the Type 2 methodology
         // for managing changes to such rows. In the type 2 methodology, historical data is tracked by creating a new
@@ -138,31 +133,26 @@ public final class SlowlyChangingDimensionUtils
         private final long endDate;
         private final boolean isNewBusinessKey;
 
-        public SlowlyChangingDimensionKey(String businessKey, long startDate, long endDate, boolean isNewBusinessKey)
-        {
+        public SlowlyChangingDimensionKey(String businessKey, long startDate, long endDate, boolean isNewBusinessKey) {
             this.businessKey = businessKey;
             this.startDate = startDate;
             this.endDate = endDate;
             this.isNewBusinessKey = isNewBusinessKey;
         }
 
-        public String getBusinessKey()
-        {
+        public String getBusinessKey() {
             return businessKey;
         }
 
-        public long getStartDate()
-        {
+        public long getStartDate() {
             return startDate;
         }
 
-        public long getEndDate()
-        {
+        public long getEndDate() {
             return endDate;
         }
 
-        public boolean isNewBusinessKey()
-        {
+        public boolean isNewBusinessKey() {
             return isNewBusinessKey;
         }
     }

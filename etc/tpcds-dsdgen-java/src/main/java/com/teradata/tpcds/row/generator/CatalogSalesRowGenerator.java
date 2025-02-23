@@ -23,7 +23,6 @@ import com.teradata.tpcds.type.Decimal;
 import com.teradata.tpcds.type.Pricing;
 
 import javax.annotation.concurrent.NotThreadSafe;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,46 +32,14 @@ import static com.teradata.tpcds.Parallel.skipDaysUntilFirstRowOfChunk;
 import static com.teradata.tpcds.Permutations.getPermutationEntry;
 import static com.teradata.tpcds.Permutations.makePermutation;
 import static com.teradata.tpcds.SlowlyChangingDimensionUtils.matchSurrogateKey;
-import static com.teradata.tpcds.Table.CALL_CENTER;
-import static com.teradata.tpcds.Table.CATALOG_PAGE;
-import static com.teradata.tpcds.Table.CATALOG_SALES;
-import static com.teradata.tpcds.Table.CUSTOMER;
-import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
-import static com.teradata.tpcds.Table.CUSTOMER_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.HOUSEHOLD_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.ITEM;
-import static com.teradata.tpcds.Table.PROMOTION;
-import static com.teradata.tpcds.Table.SHIP_MODE;
-import static com.teradata.tpcds.Table.TIME_DIM;
-import static com.teradata.tpcds.Table.WAREHOUSE;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CR_IS_RETURNED;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_BILL_ADDR_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_BILL_CDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_BILL_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_BILL_HDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_CALL_CENTER_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_CATALOG_PAGE_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_NULLS;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_ORDER_NUMBER;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PERMUTE;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PROMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_ADDR_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_CDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_DATE_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_HDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_MODE_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SOLD_ITEM_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SOLD_TIME_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_WAREHOUSE_SK;
+import static com.teradata.tpcds.Table.*;
+import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.*;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static com.teradata.tpcds.type.Pricing.generatePricingForSalesTable;
 
 @NotThreadSafe
 public class CatalogSalesRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     public static final int CS_QUANTITY_MAX = 100;
     public static final Decimal CS_MARKUP_MAX = new Decimal(200, 2);
     public static final Decimal CS_DISCOUNT_MAX = new Decimal(100, 2);
@@ -91,14 +58,12 @@ public class CatalogSalesRowGenerator
     private OrderInfo orderInfo = new OrderInfo(); // initialize with all zeros because one of the fields is used in generation of new orderInfos.
     private int ticketItemBase;
 
-    public CatalogSalesRowGenerator()
-    {
+    public CatalogSalesRowGenerator() {
         super(CATALOG_SALES);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         int itemCount = (int) session.getScaling().getIdCount(ITEM);
         if (itemPermutation == null) {
             itemPermutation = makePermutation(itemCount, getRandomNumberStream(CS_PERMUTE));
@@ -173,13 +138,11 @@ public class CatalogSalesRowGenerator
         return new RowGeneratorResult(generatedRows, isLastRowInOrder());
     }
 
-    private boolean isLastRowInOrder()
-    {
+    private boolean isLastRowInOrder() {
         return remainingLineItems == 0;
     }
 
-    private OrderInfo generateOrderInfo(long rowNumber, Session session)
-    {
+    private OrderInfo generateOrderInfo(long rowNumber, Session session) {
         Scaling scaling = session.getScaling();
 
         // move to a new date if the row number is ahead of the nextDateIndex
@@ -232,8 +195,7 @@ public class CatalogSalesRowGenerator
                 csOrderNumber);
     }
 
-    private class OrderInfo
-    {
+    private class OrderInfo {
         private final long csSoldDateSk;
         private final long csSoldTimeSk;
         private final long csCallCenterSk;
@@ -248,18 +210,17 @@ public class CatalogSalesRowGenerator
         private final long csOrderNumber;
 
         public OrderInfo(long csSoldDateSk,
-                long csSoldTimeSk,
-                long csCallCenterSk,
-                long csBillCustomerSk,
-                long csBillCdemoSk,
-                long csBillHdemoSk,
-                long csBillAddrSk,
-                long csShipCustomerSk,
-                long csShipCdemoSk,
-                long csShipHdemoSk,
-                long csShipAddrSk,
-                long csOrderNumber)
-        {
+                         long csSoldTimeSk,
+                         long csCallCenterSk,
+                         long csBillCustomerSk,
+                         long csBillCdemoSk,
+                         long csBillHdemoSk,
+                         long csBillAddrSk,
+                         long csShipCustomerSk,
+                         long csShipCdemoSk,
+                         long csShipHdemoSk,
+                         long csShipAddrSk,
+                         long csOrderNumber) {
             this.csSoldDateSk = csSoldDateSk;
             this.csSoldTimeSk = csSoldTimeSk;
             this.csCallCenterSk = csCallCenterSk;
@@ -274,68 +235,55 @@ public class CatalogSalesRowGenerator
             this.csOrderNumber = csOrderNumber;
         }
 
-        public OrderInfo()
-        {
+        public OrderInfo() {
             this(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
         }
 
-        public long getCsSoldDateSk()
-        {
+        public long getCsSoldDateSk() {
             return csSoldDateSk;
         }
 
-        public long getCsSoldTimeSk()
-        {
+        public long getCsSoldTimeSk() {
             return csSoldTimeSk;
         }
 
-        public long getCsCallCenterSk()
-        {
+        public long getCsCallCenterSk() {
             return csCallCenterSk;
         }
 
-        public long getCsBillCustomerSk()
-        {
+        public long getCsBillCustomerSk() {
             return csBillCustomerSk;
         }
 
-        public long getCsBillCdemoSk()
-        {
+        public long getCsBillCdemoSk() {
             return csBillCdemoSk;
         }
 
-        public long getCsBillHdemoSk()
-        {
+        public long getCsBillHdemoSk() {
             return csBillHdemoSk;
         }
 
-        public long getCsBillAddrSk()
-        {
+        public long getCsBillAddrSk() {
             return csBillAddrSk;
         }
 
-        public long getCsShipCustomerSk()
-        {
+        public long getCsShipCustomerSk() {
             return csShipCustomerSk;
         }
 
-        public long getCsShipCdemoSk()
-        {
+        public long getCsShipCdemoSk() {
             return csShipCdemoSk;
         }
 
-        public long getCsShipHdemoSk()
-        {
+        public long getCsShipHdemoSk() {
             return csShipHdemoSk;
         }
 
-        public long getCsShipAddrSk()
-        {
+        public long getCsShipAddrSk() {
             return csShipAddrSk;
         }
 
-        public long getCsOrderNumber()
-        {
+        public long getCsOrderNumber() {
             return csOrderNumber;
         }
     }

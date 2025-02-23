@@ -23,22 +23,17 @@ import static com.teradata.tpcds.Nulls.createNullBitMap;
 import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
 import static com.teradata.tpcds.distribution.LocationTypesDistribution.LocationTypeWeights.UNIFORM;
 import static com.teradata.tpcds.distribution.LocationTypesDistribution.pickRandomLocationType;
-import static com.teradata.tpcds.generator.CustomerAddressGeneratorColumn.CA_ADDRESS;
-import static com.teradata.tpcds.generator.CustomerAddressGeneratorColumn.CA_LOCATION_TYPE;
-import static com.teradata.tpcds.generator.CustomerAddressGeneratorColumn.CA_NULLS;
+import static com.teradata.tpcds.generator.CustomerAddressGeneratorColumn.*;
 import static com.teradata.tpcds.type.Address.makeAddressForColumn;
 
 public class CustomerAddressRowGenerator
-        extends AbstractRowGenerator
-{
-    public CustomerAddressRowGenerator()
-    {
+        extends AbstractRowGenerator {
+    public CustomerAddressRowGenerator() {
         super(CUSTOMER_ADDRESS);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(CUSTOMER_ADDRESS, getRandomNumberStream(CA_NULLS));
         long caAddrSk = rowNumber;
         String caAddrId = makeBusinessKey(rowNumber);

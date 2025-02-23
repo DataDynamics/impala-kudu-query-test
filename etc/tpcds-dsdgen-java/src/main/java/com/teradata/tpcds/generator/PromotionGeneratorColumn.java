@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.PROMOTION;
 
 public enum PromotionGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     P_PROMO_SK(228, 1),
     P_PROMO_ID(229, 1),
     P_START_DATE_ID(230, 1),
@@ -45,27 +44,23 @@ public enum PromotionGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    PromotionGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    PromotionGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return PROMOTION;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

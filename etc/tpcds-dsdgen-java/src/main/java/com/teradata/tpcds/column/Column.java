@@ -16,8 +16,7 @@ package com.teradata.tpcds.column;
 
 import com.teradata.tpcds.Table;
 
-public interface Column
-{
+public interface Column {
     Table getTable();
 
     String getName();

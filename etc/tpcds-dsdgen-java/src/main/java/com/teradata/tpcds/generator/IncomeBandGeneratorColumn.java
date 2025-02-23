@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.INCOME_BAND;
 
 public enum IncomeBandGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     IB_INCOME_BAND_ID(194, 1),
     IB_LOWER_BOUND(195, 1),
     IB_UPPER_BOUND(196, 1),
@@ -29,27 +28,23 @@ public enum IncomeBandGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    IncomeBandGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    IncomeBandGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return INCOME_BAND;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

@@ -17,33 +17,28 @@ package com.teradata.tpcds.random;
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class RandomNumberStreamImpl
-        implements RandomNumberStream
-{
+        implements RandomNumberStream {
     private static final int DEFAULT_SEED_BASE = 19620718;
     private static final int MULTIPLIER = 16807;
     private static final int QUOTIENT = 127773;   // the quotient MAX_INT / MULTIPLIER
     private static final int REMAINDER = 2836;    // the remainder MAX_INT % MULTIPLIER
-
-    private long seed;
     private final long initialSeed;
-    private int seedsUsed = 0;
     private final int seedsPerRow;
+    private long seed;
+    private int seedsUsed = 0;
 
-    public RandomNumberStreamImpl(int seedsPerRow)
-    {
+    public RandomNumberStreamImpl(int seedsPerRow) {
         checkArgument(seedsPerRow >= 0, "seedsPerRow must be >=0");
         this.initialSeed = 3;
         this.seed = 3;
         this.seedsPerRow = seedsPerRow;
     }
 
-    public RandomNumberStreamImpl(int globalColumnNumber, int seedsPerRow)
-    {
+    public RandomNumberStreamImpl(int globalColumnNumber, int seedsPerRow) {
         this(globalColumnNumber, DEFAULT_SEED_BASE, seedsPerRow);
     }
 
-    public RandomNumberStreamImpl(int globalColumnNumber, int seedBase, int seedsPerRow)
-    {
+    public RandomNumberStreamImpl(int globalColumnNumber, int seedBase, int seedsPerRow) {
         checkArgument(seedsPerRow >= 0, "seedsPerRow must be >=0");
         this.initialSeed = seedBase + globalColumnNumber * (Integer.MAX_VALUE / 799);
         this.seed = initialSeed;
@@ -52,8 +47,7 @@ public class RandomNumberStreamImpl
 
     @Override
     // https://en.wikipedia.org/wiki/Lehmer_random_number_generator
-    public long nextRandom()
-    {
+    public long nextRandom() {
         long nextSeed = seed;
         long divisionResult = nextSeed / QUOTIENT;
         long modResult = nextSeed % QUOTIENT;
@@ -68,14 +62,12 @@ public class RandomNumberStreamImpl
     }
 
     @Override
-    public double nextRandomDouble()
-    {
+    public double nextRandomDouble() {
         return (double) this.nextRandom() / (double) Integer.MAX_VALUE;
     }
 
     @Override
-    public void skipRows(long numberOfRows)
-    {
+    public void skipRows(long numberOfRows) {
         long numberOfValuesToSkip = numberOfRows * seedsPerRow;
         long nextSeed = initialSeed;
         long multiplier = MULTIPLIER;
@@ -91,27 +83,23 @@ public class RandomNumberStreamImpl
     }
 
     @Override
-    public void resetSeed()
-    {
+    public void resetSeed() {
         seed = initialSeed;
         seedsUsed = 0;
     }
 
     @Override
-    public int getSeedsUsed()
-    {
+    public int getSeedsUsed() {
         return seedsUsed;
     }
 
     @Override
-    public void resetSeedsUsed()
-    {
+    public void resetSeedsUsed() {
         seedsUsed = 0;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

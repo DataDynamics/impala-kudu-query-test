@@ -19,44 +19,10 @@ import com.teradata.tpcds.type.Pricing;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_BILL_ADDR_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_BILL_CDEMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_BILL_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_BILL_HDEMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_ITEM_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_ORDER_NUMBER;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_COUPON_AMT;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_EXT_DISCOUNT_AMT;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_EXT_LIST_PRICE;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_EXT_SALES_PRICE;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_EXT_SHIP_COST;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_EXT_TAX;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_EXT_WHOLESALE_COST;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_LIST_PRICE;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_NET_PAID;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_NET_PAID_INC_SHIP;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_NET_PAID_INC_SHIP_TAX;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_NET_PAID_INC_TAX;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_NET_PROFIT;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_QUANTITY;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_SALES_PRICE;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PRICING_WHOLESALE_COST;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_PROMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_ADDR_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_CDEMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_DATE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_HDEMO_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SHIP_MODE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SOLD_DATE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_SOLD_TIME_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_WAREHOUSE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_WEB_PAGE_SK;
-import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.WS_WEB_SITE_SK;
+import static com.teradata.tpcds.generator.WebSalesGeneratorColumn.*;
 
 public class WebSalesRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long wsSoldDateSk;
     private final long wsSoldTimeSk;
     private final long wsShipDateSk;
@@ -76,27 +42,27 @@ public class WebSalesRow
     private final long wsPromoSk;
     private final long wsOrderNumber;
     private final Pricing wsPricing;
+
     public WebSalesRow(long nullBitMap,
-            long wsSoldDateSk,
-            long wsSoldTimeSk,
-            long wsShipDateSk,
-            long wsItemSk,
-            long wsBillCustomerSk,
-            long wsBillCdemoSk,
-            long wsBillHdemoSk,
-            long wsBillAddrSk,
-            long wsShipCustomerSk,
-            long wsShipCdemoSk,
-            long wsShipHdemoSk,
-            long wsShipAddrSk,
-            long wsWebPageSk,
-            long wsWebSiteSk,
-            long wsShipModeSk,
-            long wsWarehouseSk,
-            long wsPromoSk,
-            long wsOrderNumber,
-            Pricing wsPricing)
-    {
+                       long wsSoldDateSk,
+                       long wsSoldTimeSk,
+                       long wsShipDateSk,
+                       long wsItemSk,
+                       long wsBillCustomerSk,
+                       long wsBillCdemoSk,
+                       long wsBillHdemoSk,
+                       long wsBillAddrSk,
+                       long wsShipCustomerSk,
+                       long wsShipCdemoSk,
+                       long wsShipHdemoSk,
+                       long wsShipAddrSk,
+                       long wsWebPageSk,
+                       long wsWebSiteSk,
+                       long wsShipModeSk,
+                       long wsWarehouseSk,
+                       long wsPromoSk,
+                       long wsOrderNumber,
+                       Pricing wsPricing) {
         super(nullBitMap, WS_SOLD_DATE_SK);
         this.wsSoldDateSk = wsSoldDateSk;
         this.wsSoldTimeSk = wsSoldTimeSk;
@@ -119,54 +85,44 @@ public class WebSalesRow
         this.wsPricing = wsPricing;
     }
 
-    public long getWsShipCdemoSk()
-    {
+    public long getWsShipCdemoSk() {
         return wsShipCdemoSk;
     }
 
-    public long getWsShipHdemoSk()
-    {
+    public long getWsShipHdemoSk() {
         return wsShipHdemoSk;
     }
 
-    public long getWsShipAddrSk()
-    {
+    public long getWsShipAddrSk() {
         return wsShipAddrSk;
     }
 
-    public Pricing getWsPricing()
-    {
+    public Pricing getWsPricing() {
         return wsPricing;
     }
 
-    public long getWsItemSk()
-    {
+    public long getWsItemSk() {
         return wsItemSk;
     }
 
-    public long getWsOrderNumber()
-    {
+    public long getWsOrderNumber() {
         return wsOrderNumber;
     }
 
-    public long getWsWebPageSk()
-    {
+    public long getWsWebPageSk() {
         return wsWebPageSk;
     }
 
-    public long getWsShipDateSk()
-    {
+    public long getWsShipDateSk() {
         return wsShipDateSk;
     }
 
-    public long getWsShipCustomerSk()
-    {
+    public long getWsShipCustomerSk() {
         return wsShipCustomerSk;
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(wsSoldDateSk, WS_SOLD_DATE_SK),
                 getStringOrNullForKey(wsSoldTimeSk, WS_SOLD_TIME_SK),
                 getStringOrNullForKey(wsShipDateSk, WS_SHIP_DATE_SK),

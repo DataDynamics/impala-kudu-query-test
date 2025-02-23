@@ -24,56 +24,34 @@ import com.teradata.tpcds.type.Pricing;
 
 import static com.teradata.tpcds.JoinKeyUtils.generateJoinKey;
 import static com.teradata.tpcds.Nulls.createNullBitMap;
-import static com.teradata.tpcds.Table.CUSTOMER;
-import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
-import static com.teradata.tpcds.Table.CUSTOMER_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.DATE_DIM;
-import static com.teradata.tpcds.Table.HOUSEHOLD_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.REASON;
-import static com.teradata.tpcds.Table.STORE;
-import static com.teradata.tpcds.Table.STORE_RETURNS;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_ADDR_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_CDEMO_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_HDEMO_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_NULLS;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_PRICING;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_REASON_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_RETURNED_DATE_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_RETURNED_TIME_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_STORE_SK;
-import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.SR_TICKET_NUMBER;
+import static com.teradata.tpcds.Table.*;
+import static com.teradata.tpcds.generator.StoreReturnsGeneratorColumn.*;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static com.teradata.tpcds.type.Pricing.generatePricingForReturnsTable;
 import static java.util.Collections.emptyList;
 
 public class StoreReturnsRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private static final int SR_SAME_CUSTOMER = 80;
 
-    public StoreReturnsRowGenerator()
-    {
+    public StoreReturnsRowGenerator() {
         super(STORE_RETURNS);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         // The store_returns table is a child of the store_sales table because you can only return things that have
         // already been purchased.  This method should only get called if we are generating the store_returns table
         // in isolation. Otherwise store_returns is generated during the generation of the store_sales table
         RowGeneratorResult salesAndReturnsResult = parentRowGenerator.generateRowAndChildRows(rowNumber, session, null, this);
         if (salesAndReturnsResult.getRowAndChildRows().size() == 2) {
             return new RowGeneratorResult(ImmutableList.of(salesAndReturnsResult.getRowAndChildRows().get(1)), salesAndReturnsResult.shouldEndRow());
-        }
-        else {
+        } else {
             return new RowGeneratorResult(emptyList(), salesAndReturnsResult.shouldEndRow());  // no return occurred for given sale
         }
     }
 
-    public TableRow generateRow(Session session, StoreSalesRow salesRow)
-    {
+    public TableRow generateRow(Session session, StoreSalesRow salesRow) {
         long nullBitMap = createNullBitMap(STORE_RETURNS, getRandomNumberStream(SR_NULLS));
 
         // some of the information in the return is taken from the original sale

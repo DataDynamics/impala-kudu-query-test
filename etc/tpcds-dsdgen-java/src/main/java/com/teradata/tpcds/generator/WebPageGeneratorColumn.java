@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.WEB_PAGE;
 
 public enum WebPageGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     WP_PAGE_SK(367, 1),
     WP_PAGE_ID(368, 1),
     WP_REC_START_DATE_ID(369, 1),
@@ -41,27 +40,23 @@ public enum WebPageGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    WebPageGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    WebPageGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return WEB_PAGE;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

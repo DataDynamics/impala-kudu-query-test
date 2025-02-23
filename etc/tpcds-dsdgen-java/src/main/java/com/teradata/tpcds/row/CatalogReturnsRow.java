@@ -19,37 +19,10 @@ import com.teradata.tpcds.type.Pricing;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_CALL_CENTER_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_CATALOG_PAGE_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_ITEM_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_ORDER_NUMBER;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_EXT_SHIP_COST;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_EXT_TAX;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_FEE;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_NET_LOSS;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_NET_PAID;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_NET_PAID_INC_TAX;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_QUANTITY;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_REFUNDED_CASH;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_REVERSED_CHARGE;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING_STORE_CREDIT;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_REASON_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_REFUNDED_ADDR_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_REFUNDED_CDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_REFUNDED_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_REFUNDED_HDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNED_DATE_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNED_TIME_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNING_ADDR_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNING_CDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNING_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNING_HDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_SHIP_MODE_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_WAREHOUSE_SK;
+import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.*;
 
 public class CatalogReturnsRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long crReturnedDateSk;
     private final long crReturnedTimeSk;
     private final long crItemSk;
@@ -70,25 +43,24 @@ public class CatalogReturnsRow
     private final Pricing crPricing;
 
     public CatalogReturnsRow(long crReturnedDateSk,
-            long crReturnedTimeSk,
-            long crItemSk,
-            long crRefundedCustomerSk,
-            long crRefundedCdemoSk,
-            long crRefundedHdemoSk,
-            long crRefundedAddrSk,
-            long crReturningCustomerSk,
-            long crReturningCdemoSk,
-            long crReturningHdemoSk,
-            long crReturningAddrSk,
-            long crCallCenterSk,
-            long crCatalogPageSk,
-            long crShipModeSk,
-            long crWarehouseSk,
-            long crReasonSk,
-            long crOrderNumber,
-            Pricing crPricing,
-            long nullBitMap)
-    {
+                             long crReturnedTimeSk,
+                             long crItemSk,
+                             long crRefundedCustomerSk,
+                             long crRefundedCdemoSk,
+                             long crRefundedHdemoSk,
+                             long crRefundedAddrSk,
+                             long crReturningCustomerSk,
+                             long crReturningCdemoSk,
+                             long crReturningHdemoSk,
+                             long crReturningAddrSk,
+                             long crCallCenterSk,
+                             long crCatalogPageSk,
+                             long crShipModeSk,
+                             long crWarehouseSk,
+                             long crReasonSk,
+                             long crOrderNumber,
+                             Pricing crPricing,
+                             long nullBitMap) {
         super(nullBitMap, CR_RETURNED_DATE_SK);
         this.crReturnedDateSk = crReturnedDateSk;
         this.crReturnedTimeSk = crReturnedTimeSk;
@@ -111,8 +83,7 @@ public class CatalogReturnsRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(crReturnedDateSk, CR_RETURNED_DATE_SK),
                 getStringOrNullForKey(crReturnedTimeSk, CR_RETURNED_TIME_SK),
                 getStringOrNullForKey(crItemSk, CR_ITEM_SK),

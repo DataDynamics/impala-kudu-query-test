@@ -17,19 +17,10 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_CREDIT_RATING;
-import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_DEMO_SK;
-import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_DEP_COLLEGE_COUNT;
-import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_DEP_COUNT;
-import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_DEP_EMPLOYED_COUNT;
-import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_EDUCATION_STATUS;
-import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_GENDER;
-import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_MARITAL_STATUS;
-import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.CD_PURCHASE_ESTIMATE;
+import static com.teradata.tpcds.generator.CustomerDemographicsGeneratorColumn.*;
 
 public class CustomerDemographicsRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long cdDemoSk;
     private final String cdGender;
     private final String cdMaritalStatus;
@@ -41,16 +32,15 @@ public class CustomerDemographicsRow
     private final int cdDepCollegeCount;
 
     public CustomerDemographicsRow(long nullBitMap,
-            long cdDemoSk,
-            String cdGender,
-            String cdMaritalStatus,
-            String cdEducationStatus,
-            int cdPurchaseEstimate,
-            String cdCreditRating,
-            int cdDepCount,
-            int cdDepEmployedCount,
-            int cdDepCollegeCount)
-    {
+                                   long cdDemoSk,
+                                   String cdGender,
+                                   String cdMaritalStatus,
+                                   String cdEducationStatus,
+                                   int cdPurchaseEstimate,
+                                   String cdCreditRating,
+                                   int cdDepCount,
+                                   int cdDepEmployedCount,
+                                   int cdDepCollegeCount) {
         super(nullBitMap, CD_DEMO_SK);
         this.cdDemoSk = cdDemoSk;
         this.cdGender = cdGender;
@@ -64,8 +54,7 @@ public class CustomerDemographicsRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(cdDemoSk, CD_DEMO_SK),
                 getStringOrNull(cdGender, CD_GENDER),
                 getStringOrNull(cdMaritalStatus, CD_MARITAL_STATUS),

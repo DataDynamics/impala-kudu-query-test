@@ -18,14 +18,13 @@ import com.teradata.tpcds.random.RandomNumberStream;
 
 import static com.teradata.tpcds.distribution.StringValuesDistribution.buildStringValuesDistribution;
 
-public final class CatalogPageDistributions
-{
+public final class CatalogPageDistributions {
     private static final StringValuesDistribution CATALOG_PAGE_TYPES_DISTRIBUTION = buildStringValuesDistribution("catalog_page_types.dst", 1, 2);
 
-    private CatalogPageDistributions() {}
+    private CatalogPageDistributions() {
+    }
 
-    public static String pickRandomCatalogPageType(RandomNumberStream stream)
-    {
+    public static String pickRandomCatalogPageType(RandomNumberStream stream) {
         // only the second set of weights is ever used for random picking
         return CATALOG_PAGE_TYPES_DISTRIBUTION.pickRandomValue(0, 1, stream);
     }

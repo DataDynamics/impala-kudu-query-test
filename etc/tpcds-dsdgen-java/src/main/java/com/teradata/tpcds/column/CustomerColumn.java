@@ -16,14 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.CUSTOMER;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum CustomerColumn
-        implements Column
-{
+        implements Column {
     C_CUSTOMER_SK(IDENTIFIER),
     C_CUSTOMER_ID(character(16)),
     C_CURRENT_CDEMO_SK(IDENTIFIER),
@@ -45,32 +41,27 @@ public enum CustomerColumn
 
     private final ColumnType type;
 
-    CustomerColumn(ColumnType type)
-    {
+    CustomerColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CUSTOMER;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

@@ -17,20 +17,18 @@ package com.teradata.tpcds;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.teradata.tpcds.type.Date.JULIAN_DATA_START_DATE;
 
-public final class Parallel
-{
-    private Parallel() {}
+public final class Parallel {
+    private Parallel() {
+    }
 
-    public static ChunkBoundaries splitWork(Table table, Session session)
-    {
+    public static ChunkBoundaries splitWork(Table table, Session session) {
         // Tables with fewer than 1000000 are not parallelized. Return no rows for chunks > 1
         long totalRows = session.getScaling().getRowCount(table);
         int chunk = session.getChunkNumber();
         if (totalRows < 1000000) {
             if (chunk > 1) {
                 return new ChunkBoundaries(1, 0);
-            }
-            else {
+            } else {
                 return new ChunkBoundaries(1, totalRows);
             }
         }
@@ -53,8 +51,7 @@ public final class Parallel
         return new ChunkBoundaries(firstRowOfChunk, firstRowOfChunk + rowCount - 1);
     }
 
-    public static DateNextIndexPair skipDaysUntilFirstRowOfChunk(Table table, Session session)
-    {
+    public static DateNextIndexPair skipDaysUntilFirstRowOfChunk(Table table, Session session) {
         // set initial conditions
         long julianDate = JULIAN_DATA_START_DATE;
         Scaling scaling = session.getScaling();
@@ -75,48 +72,40 @@ public final class Parallel
         return new DateNextIndexPair(julianDate, newDateIndex);
     }
 
-    public static class ChunkBoundaries
-    {
+    public static class ChunkBoundaries {
         private final long firstRow;
         private final long lastRow;
 
-        private ChunkBoundaries(long firstRow, long lastRow)
-        {
+        private ChunkBoundaries(long firstRow, long lastRow) {
             checkArgument(firstRow >= 0, "firstRow is negative");
             checkArgument(lastRow >= 0, "lastRow is negative");
             this.firstRow = firstRow;
             this.lastRow = lastRow;
         }
 
-        public long getFirstRow()
-        {
+        public long getFirstRow() {
             return firstRow;
         }
 
-        public long getLastRow()
-        {
+        public long getLastRow() {
             return lastRow;
         }
     }
 
-    public static final class DateNextIndexPair
-    {
+    public static final class DateNextIndexPair {
         private final long julianDate;
         private final long nextDateIndex;
 
-        public DateNextIndexPair(long julianDate, long nextDateIndex)
-        {
+        public DateNextIndexPair(long julianDate, long nextDateIndex) {
             this.julianDate = julianDate;
             this.nextDateIndex = nextDateIndex;
         }
 
-        public long getJulianDate()
-        {
+        public long getJulianDate() {
             return julianDate;
         }
 
-        public long getNextDateIndex()
-        {
+        public long getNextDateIndex() {
             return nextDateIndex;
         }
     }

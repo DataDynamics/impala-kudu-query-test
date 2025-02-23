@@ -23,12 +23,10 @@ import com.teradata.tpcds.random.RandomNumberStreamImpl;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 
 public abstract class AbstractRowGenerator
-        implements RowGenerator
-{
+        implements RowGenerator {
     private final ImmutableMap<GeneratorColumn, RandomNumberStream> randomNumberStreamMap;
 
-    public AbstractRowGenerator(Table table)
-    {
+    public AbstractRowGenerator(Table table) {
         ImmutableMap.Builder<GeneratorColumn, RandomNumberStream> mapBuilder = ImmutableMap.builder();
         for (GeneratorColumn column : table.getGeneratorColumns()) {
             mapBuilder.put(column, new RandomNumberStreamImpl(column.getGlobalColumnNumber(), column.getSeedsPerRow()));
@@ -37,8 +35,7 @@ public abstract class AbstractRowGenerator
     }
 
     @Override
-    public void consumeRemainingSeedsForRow()
-    {
+    public void consumeRemainingSeedsForRow() {
         for (RandomNumberStream randomNumberStream : randomNumberStreamMap.values()) {
             while (randomNumberStream.getSeedsUsed() < randomNumberStream.getSeedsPerRow()) {
                 generateUniformRandomInt(1, 100, randomNumberStream);
@@ -47,15 +44,13 @@ public abstract class AbstractRowGenerator
         }
     }
 
-    public void skipRowsUntilStartingRowNumber(long startingRowNumber)
-    {
+    public void skipRowsUntilStartingRowNumber(long startingRowNumber) {
         for (RandomNumberStream randomNumberStream : randomNumberStreamMap.values()) {
             randomNumberStream.skipRows((int) startingRowNumber - 1);  // casting long to int copies C code
         }
     }
 
-    public RandomNumberStream getRandomNumberStream(GeneratorColumn column)
-    {
+    public RandomNumberStream getRandomNumberStream(GeneratorColumn column) {
         return randomNumberStreamMap.get(column);
     }
 }

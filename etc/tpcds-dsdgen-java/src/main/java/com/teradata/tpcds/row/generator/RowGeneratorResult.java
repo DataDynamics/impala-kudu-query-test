@@ -19,29 +19,24 @@ import com.teradata.tpcds.row.TableRow;
 
 import java.util.List;
 
-public class RowGeneratorResult
-{
+public class RowGeneratorResult {
     private final List<TableRow> rowAndChildRows;
     private final boolean shouldEndRow;
 
-    public RowGeneratorResult(TableRow row)
-    {
+    public RowGeneratorResult(TableRow row) {
         this(ImmutableList.of(row), true);
     }
 
-    public RowGeneratorResult(List<TableRow> rowAndChildRows, boolean shouldEndRow)
-    {
+    public RowGeneratorResult(List<TableRow> rowAndChildRows, boolean shouldEndRow) {
         this.rowAndChildRows = rowAndChildRows;
         this.shouldEndRow = shouldEndRow;
     }
 
-    public List<TableRow> getRowAndChildRows()
-    {
+    public List<TableRow> getRowAndChildRows() {
         return rowAndChildRows;
     }
 
-    public boolean shouldEndRow()
-    {
+    public boolean shouldEndRow() {
         return shouldEndRow;
     }
 }

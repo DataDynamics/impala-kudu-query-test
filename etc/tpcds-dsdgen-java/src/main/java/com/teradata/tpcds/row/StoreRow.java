@@ -20,40 +20,11 @@ import com.teradata.tpcds.type.Decimal;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_CITY;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_COUNTRY;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_COUNTY;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_GMT_OFFSET;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_STATE;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_STREET_NAME1;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_STREET_NUM;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_STREET_TYPE;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_SUITE_NUM;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ADDRESS_ZIP;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_CLOSED_DATE_ID;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_COMPANY_ID;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_COMPANY_NAME;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_DIVISION_ID;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_DIVISION_NAME;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_EMPLOYEES;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_FLOOR_SPACE;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_GEOGRAPHY_CLASS;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_HOURS;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_ID;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_MANAGER;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_MARKET_DESC;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_MARKET_ID;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_MARKET_MANAGER;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_NAME;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_REC_END_DATE_ID;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_REC_START_DATE_ID;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_SK;
-import static com.teradata.tpcds.generator.StoreGeneratorColumn.W_STORE_TAX_PERCENTAGE;
+import static com.teradata.tpcds.generator.StoreGeneratorColumn.*;
 import static java.lang.String.format;
 
 public class StoreRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long storeSk;
     private final String storeId;
     private final long recStartDateId;
@@ -76,27 +47,26 @@ public class StoreRow
     private final Address address;
 
     public StoreRow(long nullBitMap,
-            long storeSk,
-            String storeId,
-            long recStartDateId,
-            long recEndDateId,
-            long closedDateId,
-            String storeName,
-            int employees,
-            int floorSpace,
-            String hours,
-            String storeManager,
-            int marketId,
-            Decimal dTaxPercentage,
-            String geographyClass,
-            String marketDesc,
-            String marketManager,
-            long divisionId,
-            String divisionName,
-            long companyId,
-            String companyName,
-            Address address)
-    {
+                    long storeSk,
+                    String storeId,
+                    long recStartDateId,
+                    long recEndDateId,
+                    long closedDateId,
+                    String storeName,
+                    int employees,
+                    int floorSpace,
+                    String hours,
+                    String storeManager,
+                    int marketId,
+                    Decimal dTaxPercentage,
+                    String geographyClass,
+                    String marketDesc,
+                    String marketManager,
+                    long divisionId,
+                    String divisionName,
+                    long companyId,
+                    String companyName,
+                    Address address) {
         super(nullBitMap, W_STORE_SK);
         this.storeSk = storeSk;
         this.storeId = storeId;
@@ -120,64 +90,52 @@ public class StoreRow
         this.address = address;
     }
 
-    public long getClosedDateId()
-    {
+    public long getClosedDateId() {
         return closedDateId;
     }
 
-    public String getStoreName()
-    {
+    public String getStoreName() {
         return storeName;
     }
 
-    public int getEmployees()
-    {
+    public int getEmployees() {
         return employees;
     }
 
-    public int getFloorSpace()
-    {
+    public int getFloorSpace() {
         return floorSpace;
     }
 
-    public String getHours()
-    {
+    public String getHours() {
         return hours;
     }
 
-    public String getStoreManager()
-    {
+    public String getStoreManager() {
         return storeManager;
     }
 
-    public int getMarketId()
-    {
+    public int getMarketId() {
         return marketId;
     }
 
-    public Decimal getdTaxPercentage()
-    {
+    public Decimal getdTaxPercentage() {
         return dTaxPercentage;
     }
 
-    public String getMarketDesc()
-    {
+    public String getMarketDesc() {
         return marketDesc;
     }
 
-    public String getMarketManager()
-    {
+    public String getMarketManager() {
         return marketManager;
     }
 
-    public Address getAddress()
-    {
+    public Address getAddress() {
         return address;
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(storeSk, W_STORE_SK),
                 getStringOrNull(storeId, W_STORE_ID),
                 getDateStringOrNullFromJulianDays(recStartDateId, W_STORE_REC_START_DATE_ID),

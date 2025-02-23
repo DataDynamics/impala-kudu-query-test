@@ -22,18 +22,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DbgenVersionRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private static final String DBGEN_VERSION = "2.0.0";
 
-    public DbgenVersionRowGenerator()
-    {
+    public DbgenVersionRowGenerator() {
         super(Table.DBGEN_VERSION);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         Calendar calendar = Calendar.getInstance();

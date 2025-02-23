@@ -16,16 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.WEB_SITE;
-import static com.teradata.tpcds.column.ColumnTypes.DATE;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum WebSiteColumn
-        implements Column
-{
+        implements Column {
     WEB_SITE_SK(IDENTIFIER),
     WEB_SITE_ID(character(16)),
     WEB_REC_START_DATE(DATE),
@@ -55,32 +49,27 @@ public enum WebSiteColumn
 
     private final ColumnType type;
 
-    WebSiteColumn(ColumnType type)
-    {
+    WebSiteColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return WEB_SITE;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

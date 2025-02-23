@@ -22,8 +22,7 @@ import java.util.List;
 import static com.teradata.tpcds.distribution.IntValuesDistribution.buildIntValuesDistribution;
 import static com.teradata.tpcds.distribution.StringValuesDistribution.buildStringValuesDistribution;
 
-public final class ItemsDistributions
-{
+public final class ItemsDistributions {
     public static final IntValuesDistribution ITEM_MANAGER_ID_DISTRIBUTION = buildIntValuesDistribution("item_manager_id.dst", 3, 4);
     public static final IntValuesDistribution ITEM_MANUFACT_ID_DISTRIBUTION = buildIntValuesDistribution("item_manufact_id.dst", 3, 4);
     public static final StringValuesDistribution SIZES_DISTRIBUTION = buildStringValuesDistribution("sizes.dst", 1, 3);
@@ -31,52 +30,45 @@ public final class ItemsDistributions
     public static final StringValuesDistribution UNITS_DISTRIBUTION = buildStringValuesDistribution("units.dst", 1, 1);
     public static final StringValuesDistribution BRAND_SYLLABLES_DISTRIBUTION = buildStringValuesDistribution("brand_syllables.dst", 1, 1);
 
-    private ItemsDistributions() {}
+    private ItemsDistributions() {
+    }
 
-    public static List<Integer> pickRandomManagerIdRange(IdWeights idWeights, RandomNumberStream stream)
-    {
+    public static List<Integer> pickRandomManagerIdRange(IdWeights idWeights, RandomNumberStream stream) {
         int index = ITEM_MANAGER_ID_DISTRIBUTION.pickRandomIndex(idWeights.ordinal(), stream);
         return ImmutableList.of(ITEM_MANAGER_ID_DISTRIBUTION.getValueAtIndex(1, index), ITEM_MANAGER_ID_DISTRIBUTION.getValueAtIndex(2, index));
     }
 
-    public static List<Integer> pickRandomManufactIdRange(IdWeights idWeights, RandomNumberStream stream)
-    {
+    public static List<Integer> pickRandomManufactIdRange(IdWeights idWeights, RandomNumberStream stream) {
         int index = ITEM_MANUFACT_ID_DISTRIBUTION.pickRandomIndex(idWeights.ordinal(), stream);
         return ImmutableList.of(ITEM_MANUFACT_ID_DISTRIBUTION.getValueAtIndex(1, index), ITEM_MANUFACT_ID_DISTRIBUTION.getValueAtIndex(2, index));
     }
 
-    public static String pickRandomSize(SizeWeights sizeWeights, RandomNumberStream stream)
-    {
+    public static String pickRandomSize(SizeWeights sizeWeights, RandomNumberStream stream) {
         return SIZES_DISTRIBUTION.pickRandomValue(0, sizeWeights.ordinal(), stream);
     }
 
-    public static String pickRandomColor(ColorsWeights colorsWeights, RandomNumberStream stream)
-    {
+    public static String pickRandomColor(ColorsWeights colorsWeights, RandomNumberStream stream) {
         return COLORS_DISTRIBUTION.pickRandomValue(0, colorsWeights.ordinal(), stream);
     }
 
-    public static String pickRandomUnit(RandomNumberStream stream)
-    {
+    public static String pickRandomUnit(RandomNumberStream stream) {
         return UNITS_DISTRIBUTION.pickRandomValue(0, 0, stream);
     }
 
-    public enum IdWeights
-    {
+    public enum IdWeights {
         UNIFIED,
         LOW,
         MEDIUM,
         HIGH
     }
 
-    public enum SizeWeights
-    {
+    public enum SizeWeights {
         UNIFIED,
         NO_SIZE,
         SIZED,
     }
 
-    public enum ColorsWeights
-    {
+    public enum ColorsWeights {
         UNIFORM,
         SKEWED,
         LOW_LIKELIHOOD,

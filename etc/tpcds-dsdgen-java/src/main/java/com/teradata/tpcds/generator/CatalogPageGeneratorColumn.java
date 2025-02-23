@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.CATALOG_PAGE;
 
 public enum CatalogPageGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     CP_CATALOG_PAGE_SK(35, 1),
     CP_CATALOG_PAGE_ID(36, 1),
     CP_START_DATE_ID(37, 1),
@@ -36,27 +35,23 @@ public enum CatalogPageGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    CatalogPageGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    CatalogPageGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CATALOG_PAGE;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

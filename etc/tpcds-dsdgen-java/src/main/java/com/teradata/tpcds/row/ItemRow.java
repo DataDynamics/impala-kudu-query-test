@@ -19,32 +19,10 @@ import com.teradata.tpcds.type.Decimal;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_BRAND;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_BRAND_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_CATEGORY;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_CATEGORY_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_CLASS;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_CLASS_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_COLOR;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_CONTAINER;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_CURRENT_PRICE;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_FORMULATION;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_ITEM_DESC;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_ITEM_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_ITEM_SK;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_MANAGER_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_MANUFACT;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_MANUFACT_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_PRODUCT_NAME;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_REC_END_DATE_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_REC_START_DATE_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_SIZE;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_UNITS;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_WHOLESALE_COST;
+import static com.teradata.tpcds.generator.ItemGeneratorColumn.*;
 
 public class ItemRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long iItemSk;
     private final String iItemId;
     private final long iRecStartDateId;
@@ -70,30 +48,29 @@ public class ItemRow
     private final long iPromoSk;
 
     public ItemRow(long nullBitMap,
-            long iItemSk,
-            String iItemId,
-            long iRecStartDateId,
-            long iRecEndDateId,
-            String iItemDesc,
-            Decimal iCurrentPrice,
-            Decimal iWholesaleCost,
-            long iBrandId,
-            String iBrand,
-            long iClassId,
-            String iClass,
-            long iCategoryId,
-            String iCategory,
-            long iManufactId,
-            String iManufact,
-            String iSize,
-            String iFormulation,
-            String iColor,
-            String iUnits,
-            String iContainer,
-            long iManagerId,
-            String iProductName,
-            long iPromoSk)
-    {
+                   long iItemSk,
+                   String iItemId,
+                   long iRecStartDateId,
+                   long iRecEndDateId,
+                   String iItemDesc,
+                   Decimal iCurrentPrice,
+                   Decimal iWholesaleCost,
+                   long iBrandId,
+                   String iBrand,
+                   long iClassId,
+                   String iClass,
+                   long iCategoryId,
+                   String iCategory,
+                   long iManufactId,
+                   String iManufact,
+                   String iSize,
+                   String iFormulation,
+                   String iColor,
+                   String iUnits,
+                   String iContainer,
+                   long iManagerId,
+                   String iProductName,
+                   long iPromoSk) {
         super(nullBitMap, I_ITEM_SK);
         this.iItemSk = iItemSk;
         this.iItemId = iItemId;
@@ -120,64 +97,52 @@ public class ItemRow
         this.iPromoSk = iPromoSk;
     }
 
-    public String getiItemDesc()
-    {
+    public String getiItemDesc() {
         return iItemDesc;
     }
 
-    public Decimal getiCurrentPrice()
-    {
+    public Decimal getiCurrentPrice() {
         return iCurrentPrice;
     }
 
-    public Decimal getiWholesaleCost()
-    {
+    public Decimal getiWholesaleCost() {
         return iWholesaleCost;
     }
 
-    public long getiBrandId()
-    {
+    public long getiBrandId() {
         return iBrandId;
     }
 
-    public long getiClassId()
-    {
+    public long getiClassId() {
         return iClassId;
     }
 
-    public long getiManufactId()
-    {
+    public long getiManufactId() {
         return iManufactId;
     }
 
-    public String getiManufact()
-    {
+    public String getiManufact() {
         return iManufact;
     }
 
-    public String getiSize()
-    {
+    public String getiSize() {
         return iSize;
     }
 
-    public String getiFormulation()
-    {
+    public String getiFormulation() {
         return iFormulation;
     }
 
-    public String getiColor()
-    {
+    public String getiColor() {
         return iColor;
     }
 
-    public String getiUnits()
-    {
+    public String getiUnits() {
         return iUnits;
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(iItemSk, I_ITEM_SK),
                 getStringOrNull(iItemId, I_ITEM_ID),
                 getDateStringOrNullFromJulianDays(iRecStartDateId, I_REC_START_DATE_ID),

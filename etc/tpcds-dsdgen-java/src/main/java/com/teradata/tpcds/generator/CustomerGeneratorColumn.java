@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.CUSTOMER;
 
 public enum CustomerGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     C_CUSTOMER_SK(114, 1),
     C_CUSTOMER_ID(115, 1),
     C_CURRENT_CDEMO_SK(116, 1),
@@ -44,27 +43,23 @@ public enum CustomerGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    CustomerGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    CustomerGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CUSTOMER;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

@@ -18,8 +18,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Integer.parseInt;
 import static java.util.Locale.ENGLISH;
 
-public class Decimal
-{
+public class Decimal {
     public static final Decimal ZERO = new Decimal(0, 2);
     public static final Decimal ONE_HALF = new Decimal(50, 2);
     public static final Decimal NINE_PERCENT = new Decimal(9, 2);
@@ -34,23 +33,20 @@ public class Decimal
     private final int precision;
     private final long number;
 
-    public Decimal(long number, int precision)
-    {
+    public Decimal(long number, int precision) {
         checkArgument(precision >= 0, "precision must be greater than or equal to zero");
         this.precision = precision;
         this.number = number;
     }
 
-    public static Decimal parseDecimal(String decimalString)
-    {
+    public static Decimal parseDecimal(String decimalString) {
         long number;
         int precision;
         int decimalPointIndex = decimalString.indexOf('.');
         if (decimalPointIndex == -1) {
             number = parseInt(decimalString);
             precision = 0;
-        }
-        else {
+        } else {
             String fractional = decimalString.substring(decimalPointIndex + 1);
             precision = fractional.length();
             number = parseInt(decimalString.substring(0, decimalPointIndex) + fractional);
@@ -58,22 +54,19 @@ public class Decimal
         return new Decimal(number, precision);
     }
 
-    public static Decimal add(Decimal decimal1, Decimal decimal2)
-    {
+    public static Decimal add(Decimal decimal1, Decimal decimal2) {
         int precision = decimal1.precision > decimal2.precision ? decimal1.precision : decimal2.precision;
         long number = decimal1.number + decimal2.number;  // This is not mathematically correct when the precisions aren't the same, but it's what the C code does
         return new Decimal(number, precision);
     }
 
-    public static Decimal subtract(Decimal decimal1, Decimal decimal2)
-    {
+    public static Decimal subtract(Decimal decimal1, Decimal decimal2) {
         int precision = decimal1.precision > decimal2.precision ? decimal1.precision : decimal2.precision;
         long number = decimal1.number - decimal2.number;  // again following C code
         return new Decimal(number, precision);
     }
 
-    public static Decimal multiply(Decimal decimal1, Decimal decimal2)
-    {
+    public static Decimal multiply(Decimal decimal1, Decimal decimal2) {
         int precision = decimal1.precision > decimal2.precision ? decimal1.precision : decimal2.precision;
         long number = decimal1.number * decimal2.number;
         for (int i = decimal1.precision + decimal2.precision; i > precision; i--) {
@@ -82,8 +75,7 @@ public class Decimal
         return new Decimal(number, precision);
     }
 
-    public static Decimal divide(Decimal decimal1, Decimal decimal2)
-    {
+    public static Decimal divide(Decimal decimal1, Decimal decimal2) {
         float f1 = (float) decimal1.number;
         int precision = decimal1.precision > decimal2.precision ? decimal1.precision : decimal2.precision;
         for (int i = decimal1.precision; i < precision; i++) {
@@ -103,29 +95,24 @@ public class Decimal
         return new Decimal(number, precision);
     }
 
-    public static Decimal negate(Decimal decimal)
-    {
+    public static Decimal negate(Decimal decimal) {
         return new Decimal(decimal.number * -1, decimal.precision);
     }
 
-    public static Decimal fromInteger(int from)
-    {
+    public static Decimal fromInteger(int from) {
         return new Decimal(from, 0);
     }
 
-    public int getPrecision()
-    {
+    public int getPrecision() {
         return precision;
     }
 
-    public long getNumber()
-    {
+    public long getNumber() {
         return number;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         // This loses all of the benefit of having exact numeric types
         // but it's what the C code does, so we have to follow it.
         // In particular this copies the behavior of print_decimal in print.c.

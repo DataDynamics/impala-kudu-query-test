@@ -28,8 +28,7 @@ import static com.teradata.tpcds.distribution.DistributionUtils.getDistributionI
 import static com.teradata.tpcds.distribution.DistributionUtils.getListFromCommaSeparatedValues;
 import static java.lang.Integer.parseInt;
 
-public final class CategoryClassDistributions
-{
+public final class CategoryClassDistributions {
     private static final List<CategoryClassDistribution> CATEGORY_CLASS_DISTRIBUTIONS =
             ImmutableList.of(buildCategoryClassDistribution("women_class.dst"),
                     buildCategoryClassDistribution("men_class.dst"),
@@ -42,29 +41,26 @@ public final class CategoryClassDistributions
                     buildCategoryClassDistribution("book_class.dst"),
                     buildCategoryClassDistribution("electronic_class.dst"));
 
-    public static CategoryClass pickRandomCategoryClass(int categoryId, RandomNumberStream stream)
-    {
+    private CategoryClassDistributions() {
+    }
+
+    public static CategoryClass pickRandomCategoryClass(int categoryId, RandomNumberStream stream) {
         checkArgument(categoryId < CATEGORY_CLASS_DISTRIBUTIONS.size(), "categoryId %s is not less than %s", categoryId, CATEGORY_CLASS_DISTRIBUTIONS.size());
         return CATEGORY_CLASS_DISTRIBUTIONS.get(categoryId).pickRandomCategoryClass(stream);
     }
 
-    private CategoryClassDistributions() {}
-
-    public static class CategoryClassDistribution
-    {
+    public static class CategoryClassDistribution {
         private final ImmutableList<String> names;
         private final ImmutableList<Integer> brandCounts;
         private final ImmutableList<Integer> weights;
 
-        public CategoryClassDistribution(ImmutableList<String> names, ImmutableList<Integer> brandCounts, ImmutableList<Integer> weights)
-        {
+        public CategoryClassDistribution(ImmutableList<String> names, ImmutableList<Integer> brandCounts, ImmutableList<Integer> weights) {
             this.names = names;
             this.brandCounts = brandCounts;
             this.weights = weights;
         }
 
-        public static CategoryClassDistribution buildCategoryClassDistribution(String filename)
-        {
+        public static CategoryClassDistribution buildCategoryClassDistribution(String filename) {
             ImmutableList.Builder<String> namesBuilder = ImmutableList.builder();
             ImmutableList.Builder<Integer> brandCountsBuilder = ImmutableList.builder();
             WeightsBuilder weightsBuilder = new WeightsBuilder();
@@ -90,38 +86,32 @@ public final class CategoryClassDistributions
                     weightsBuilder.build());
         }
 
-        public CategoryClass pickRandomCategoryClass(RandomNumberStream stream)
-        {
+        public CategoryClass pickRandomCategoryClass(RandomNumberStream stream) {
             int index = DistributionUtils.pickRandomIndex(weights, stream);
             return new CategoryClass(index + 1, names.get(index), brandCounts.get(index));
         }
     }
 
-    public static class CategoryClass
-    {
+    public static class CategoryClass {
         private final int id;
         private final String name;
         private final int brandCount;
 
-        public CategoryClass(int id, String name, int brandCount)
-        {
+        public CategoryClass(int id, String name, int brandCount) {
             this.id = id;
             this.name = name;
             this.brandCount = brandCount;
         }
 
-        public int getBrandCount()
-        {
+        public int getBrandCount() {
             return brandCount;
         }
 
-        public String getName()
-        {
+        public String getName() {
             return name;
         }
 
-        public long getId()
-        {
+        public long getId() {
             return id;
         }
     }

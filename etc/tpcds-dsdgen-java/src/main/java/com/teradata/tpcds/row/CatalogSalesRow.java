@@ -19,44 +19,10 @@ import com.teradata.tpcds.type.Pricing;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_BILL_ADDR_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_BILL_CDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_BILL_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_BILL_HDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_CALL_CENTER_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_CATALOG_PAGE_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_ORDER_NUMBER;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_COUPON_AMT;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_EXT_DISCOUNT_AMOUNT;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_EXT_LIST_PRICE;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_EXT_SALES_PRICE;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_EXT_SHIP_COST;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_EXT_TAX;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_EXT_WHOLESALE_COST;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_LIST_PRICE;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_NET_PAID;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_NET_PAID_INC_SHIP;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_NET_PAID_INC_SHIP_TAX;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_NET_PAID_INC_TAX;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_NET_PROFIT;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_QUANTITY;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_SALES_PRICE;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PRICING_WHOLESALE_COST;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_PROMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_ADDR_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_CDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_DATE_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_HDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SHIP_MODE_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SOLD_DATE_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SOLD_ITEM_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_SOLD_TIME_SK;
-import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.CS_WAREHOUSE_SK;
+import static com.teradata.tpcds.generator.CatalogSalesGeneratorColumn.*;
 
 public class CatalogSalesRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long csSoldDateSk;
     private final long csSoldTimeSk;
     private final long csShipDateSk;
@@ -78,26 +44,25 @@ public class CatalogSalesRow
     private final Pricing csPricing;
 
     public CatalogSalesRow(long csSoldDateSk,
-            long csSoldTimeSk,
-            long csShipDateSk,
-            long csBillCustomerSk,
-            long csBillCdemoSk,
-            long csBillHdemoSk,
-            long csBillAddrSk,
-            long csShipCustomerSk,
-            long csShipCdemoSk,
-            long csShipHdemoSk,
-            long csShipAddrSk,
-            long csCallCenterSk,
-            long csCatalogPageSk,
-            long csShipModeSk,
-            long csWarehouseSk,
-            long csSoldItemSk,
-            long csPromoSk,
-            long csOrderNumber,
-            Pricing csPricing,
-            long nullBitMap)
-    {
+                           long csSoldTimeSk,
+                           long csShipDateSk,
+                           long csBillCustomerSk,
+                           long csBillCdemoSk,
+                           long csBillHdemoSk,
+                           long csBillAddrSk,
+                           long csShipCustomerSk,
+                           long csShipCdemoSk,
+                           long csShipHdemoSk,
+                           long csShipAddrSk,
+                           long csCallCenterSk,
+                           long csCatalogPageSk,
+                           long csShipModeSk,
+                           long csWarehouseSk,
+                           long csSoldItemSk,
+                           long csPromoSk,
+                           long csOrderNumber,
+                           Pricing csPricing,
+                           long nullBitMap) {
         super(nullBitMap, CS_SOLD_DATE_SK);
         this.csSoldDateSk = csSoldDateSk;
         this.csSoldTimeSk = csSoldTimeSk;
@@ -121,8 +86,7 @@ public class CatalogSalesRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(csSoldDateSk, CS_SOLD_DATE_SK),
                 getStringOrNullForKey(csSoldTimeSk, CS_SOLD_TIME_SK),
                 getStringOrNullForKey(csShipDateSk, CS_SHIP_DATE_SK),
@@ -159,68 +123,55 @@ public class CatalogSalesRow
                 getStringOrNull(csPricing.getNetProfit(), CS_PRICING_NET_PROFIT));
     }
 
-    public Pricing getCsPricing()
-    {
+    public Pricing getCsPricing() {
         return csPricing;
     }
 
-    public long getCsSoldItemSk()
-    {
+    public long getCsSoldItemSk() {
         return csSoldItemSk;
     }
 
-    public long getCsCatalogPageSk()
-    {
+    public long getCsCatalogPageSk() {
         return csCatalogPageSk;
     }
 
-    public long getCsOrderNumber()
-    {
+    public long getCsOrderNumber() {
         return csOrderNumber;
     }
 
-    public long getCsBillCustomerSk()
-    {
+    public long getCsBillCustomerSk() {
         return csBillCustomerSk;
     }
 
-    public long getCsBillCdemoSk()
-    {
+    public long getCsBillCdemoSk() {
         return csBillCdemoSk;
     }
 
-    public long getCsBillHdemoSk()
-    {
+    public long getCsBillHdemoSk() {
         return csBillHdemoSk;
     }
 
-    public long getCsBillAddrSk()
-    {
+    public long getCsBillAddrSk() {
         return csBillAddrSk;
     }
 
-    public long getCsCallCenterSk()
-    {
+    public long getCsCallCenterSk() {
         return csCallCenterSk;
     }
 
-    public long getCsShipCustomerSk()
-    {
+    public long getCsShipCustomerSk() {
         return csShipCustomerSk;
     }
 
-    public long getCsShipCdemoSk()
-    {
+    public long getCsShipCdemoSk() {
         return csShipCdemoSk;
     }
 
-    public long getCsShipAddrSk()
-    {
+    public long getCsShipAddrSk() {
         return csShipAddrSk;
     }
 
-    public long getCsShipDateSk()
-    {
+    public long getCsShipDateSk() {
         return csShipDateSk;
     }
 }

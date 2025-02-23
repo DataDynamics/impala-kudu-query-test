@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.STORE;
 
 public enum StoreGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     W_STORE_SK(259, 1),
     W_STORE_ID(260, 1),
     W_STORE_REC_START_DATE_ID(261, 1),
@@ -58,27 +57,23 @@ public enum StoreGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    StoreGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    StoreGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return STORE;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

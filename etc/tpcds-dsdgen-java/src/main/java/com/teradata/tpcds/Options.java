@@ -18,8 +18,7 @@ import io.airlift.airline.Option;
 
 import java.util.Optional;
 
-public class Options
-{
+public class Options {
     public static final int DEFAULT_SCALE = 1;
     public static final String DEFAULT_DIRECTORY = ".";
     public static final String DEFAULT_SUFFIX = ".dat";
@@ -65,8 +64,19 @@ public class Options
     @Option(name = {"--overwrite"}, title = "overwrite", description = "Overwrite existing data files for tables")
     public boolean overwrite = DEFAULT_OVERWRITE;
 
-    public Session toSession()
-    {
+    private static Optional<Table> toTableOptional(String table) {
+        if (table == null) {
+            return Optional.empty();
+        }
+
+        try {
+            return Optional.of(Table.valueOf(table.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new InvalidOptionException("table", table);
+        }
+    }
+
+    public Session toSession() {
         validateProperties();
         return new Session(scale,
                 directory,
@@ -80,22 +90,7 @@ public class Options
                 overwrite);
     }
 
-    private static Optional<Table> toTableOptional(String table)
-    {
-        if (table == null) {
-            return Optional.empty();
-        }
-
-        try {
-            return Optional.of(Table.valueOf(table.toUpperCase()));
-        }
-        catch (IllegalArgumentException e) {
-            throw new InvalidOptionException("table", table);
-        }
-    }
-
-    private void validateProperties()
-    {
+    private void validateProperties() {
         if (scale < 0 || scale > 100000) {
             throw new InvalidOptionException("scale", Double.toString(scale), "Scale must be greater than 0 and less than 100000");
         }

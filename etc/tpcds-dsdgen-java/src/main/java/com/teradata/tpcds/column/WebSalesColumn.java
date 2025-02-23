@@ -17,13 +17,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.WEB_SALES;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum WebSalesColumn
-        implements Column
-{
+        implements Column {
     WS_SOLD_DATE_SK(IDENTIFIER),
     WS_SOLD_TIME_SK(IDENTIFIER),
     WS_SHIP_DATE_SK(IDENTIFIER),
@@ -61,32 +58,27 @@ public enum WebSalesColumn
 
     private final ColumnType type;
 
-    WebSalesColumn(ColumnType type)
-    {
+    WebSalesColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return WEB_SALES;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

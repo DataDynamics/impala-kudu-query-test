@@ -24,31 +24,16 @@ import static com.teradata.tpcds.Table.DATE_DIM;
 import static com.teradata.tpcds.distribution.CalendarDistribution.getIsHolidayFlagAtIndex;
 import static com.teradata.tpcds.distribution.CalendarDistribution.getQuarterAtIndex;
 import static com.teradata.tpcds.generator.DateDimGeneratorColumn.D_NULLS;
-import static com.teradata.tpcds.type.Date.CURRENT_QUARTER;
-import static com.teradata.tpcds.type.Date.CURRENT_WEEK;
-import static com.teradata.tpcds.type.Date.TODAYS_DATE;
-import static com.teradata.tpcds.type.Date.WEEKDAY_NAMES;
-import static com.teradata.tpcds.type.Date.computeDayOfWeek;
-import static com.teradata.tpcds.type.Date.computeFirstDateOfMonth;
-import static com.teradata.tpcds.type.Date.computeLastDateOfMonth;
-import static com.teradata.tpcds.type.Date.computeSameDayLastQuarter;
-import static com.teradata.tpcds.type.Date.computeSameDayLastYear;
-import static com.teradata.tpcds.type.Date.fromJulianDays;
-import static com.teradata.tpcds.type.Date.getDayIndex;
-import static com.teradata.tpcds.type.Date.isLeapYear;
-import static com.teradata.tpcds.type.Date.toJulianDays;
+import static com.teradata.tpcds.type.Date.*;
 
 public class DateDimRowGenerator
-        extends AbstractRowGenerator
-{
-    public DateDimRowGenerator()
-    {
+        extends AbstractRowGenerator {
+    public DateDimRowGenerator() {
         super(DATE_DIM);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(DATE_DIM, getRandomNumberStream(D_NULLS));
 
         Date baseDate = new Date(1900, 1, 1);
@@ -80,8 +65,7 @@ public class DateDimRowGenerator
             // Copying behavior of C code.
             int lastDayOfPreviousYear = 365 + (isLeapYear(dYear - 1) ? 1 : 0);
             dFollowingHoliday = getIsHolidayFlagAtIndex(lastDayOfPreviousYear) != 0;
-        }
-        else {
+        } else {
             dFollowingHoliday = getIsHolidayFlagAtIndex(dayIndex - 1) != 0;
         }
         int dFirstDom = toJulianDays(computeFirstDateOfMonth(date));

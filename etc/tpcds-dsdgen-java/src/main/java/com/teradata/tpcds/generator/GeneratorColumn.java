@@ -22,8 +22,7 @@ import com.teradata.tpcds.Table;
  * that are not user visible and will sometimes omit columns that are user visible
  * (because those get derived from other columns).
  */
-public interface GeneratorColumn
-{
+public interface GeneratorColumn {
     Table getTable();
 
     int getGlobalColumnNumber();

@@ -16,13 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.STORE_SALES;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum StoreSalesColumn
-        implements Column
-{
+        implements Column {
     SS_SOLD_DATE_SK(IDENTIFIER),
     SS_SOLD_TIME_SK(IDENTIFIER),
     SS_ITEM_SK(IDENTIFIER),
@@ -49,32 +46,27 @@ public enum StoreSalesColumn
 
     private final ColumnType type;
 
-    StoreSalesColumn(ColumnType type)
-    {
+    StoreSalesColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return STORE_SALES;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

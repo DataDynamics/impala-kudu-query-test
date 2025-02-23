@@ -16,16 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.CALL_CENTER;
-import static com.teradata.tpcds.column.ColumnTypes.DATE;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum CallCenterColumn
-        implements Column
-{
+        implements Column {
     CC_CALL_CENTER_SK(IDENTIFIER),
     CC_CALL_CENTER_ID(character(16)),
     CC_REC_START_DATE(DATE),
@@ -60,32 +54,27 @@ public enum CallCenterColumn
 
     private final ColumnType type;
 
-    CallCenterColumn(ColumnType type)
-    {
+    CallCenterColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CALL_CENTER;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

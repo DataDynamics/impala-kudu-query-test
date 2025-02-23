@@ -20,40 +20,34 @@ import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
 import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
 
 public enum IncomeBandColumn
-        implements Column
-{
+        implements Column {
     IB_INCOME_BAND_SK(IDENTIFIER),
     IB_LOWER_BOUND(INTEGER),
     IB_UPPER_BOUND(INTEGER);
 
     private final ColumnType type;
 
-    IncomeBandColumn(ColumnType type)
-    {
+    IncomeBandColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return INCOME_BAND;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

@@ -16,13 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.TIME_DIM;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum TimeDimColumn
-        implements Column
-{
+        implements Column {
     T_TIME_SK(IDENTIFIER),
     T_TIME_ID(character(16)),
     T_TIME(INTEGER),
@@ -36,32 +33,27 @@ public enum TimeDimColumn
 
     private final ColumnType type;
 
-    TimeDimColumn(ColumnType type)
-    {
+    TimeDimColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return TIME_DIM;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

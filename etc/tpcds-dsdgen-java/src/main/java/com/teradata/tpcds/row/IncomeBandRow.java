@@ -17,19 +17,15 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.IncomeBandGeneratorColumn.IB_INCOME_BAND_ID;
-import static com.teradata.tpcds.generator.IncomeBandGeneratorColumn.IB_LOWER_BOUND;
-import static com.teradata.tpcds.generator.IncomeBandGeneratorColumn.IB_UPPER_BOUND;
+import static com.teradata.tpcds.generator.IncomeBandGeneratorColumn.*;
 
 public class IncomeBandRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final int ibIncomeBandId;
     private final int ibLowerBound;
     private final int ibUpperBound;
 
-    public IncomeBandRow(long nullBitMap, int ibIncomeBandId, int ibLowerBound, int ibUpperBound)
-    {
+    public IncomeBandRow(long nullBitMap, int ibIncomeBandId, int ibLowerBound, int ibUpperBound) {
         super(nullBitMap, IB_INCOME_BAND_ID);
         this.ibIncomeBandId = ibIncomeBandId;
         this.ibLowerBound = ibLowerBound;
@@ -37,8 +33,7 @@ public class IncomeBandRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNull(ibIncomeBandId, IB_INCOME_BAND_ID),
                 getStringOrNull(ibLowerBound, IB_LOWER_BOUND),
                 getStringOrNull(ibUpperBound, IB_UPPER_BOUND));

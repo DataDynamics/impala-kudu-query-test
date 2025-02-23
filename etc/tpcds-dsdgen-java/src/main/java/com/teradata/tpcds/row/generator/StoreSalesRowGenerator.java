@@ -28,36 +28,13 @@ import static com.teradata.tpcds.Nulls.createNullBitMap;
 import static com.teradata.tpcds.Permutations.getPermutationEntry;
 import static com.teradata.tpcds.Permutations.makePermutation;
 import static com.teradata.tpcds.SlowlyChangingDimensionUtils.matchSurrogateKey;
-import static com.teradata.tpcds.Table.CUSTOMER;
-import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
-import static com.teradata.tpcds.Table.CUSTOMER_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.DATE_DIM;
-import static com.teradata.tpcds.Table.HOUSEHOLD_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.ITEM;
-import static com.teradata.tpcds.Table.PROMOTION;
-import static com.teradata.tpcds.Table.STORE;
-import static com.teradata.tpcds.Table.STORE_SALES;
-import static com.teradata.tpcds.Table.TIME_DIM;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SR_IS_RETURNED;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_NULLS;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PERMUTATION;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_PRICING;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_ADDR_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_CDEMO_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_DATE_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_HDEMO_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_ITEM_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_PROMO_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_STORE_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_SOLD_TIME_SK;
-import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.SS_TICKET_NUMBER;
+import static com.teradata.tpcds.Table.*;
+import static com.teradata.tpcds.generator.StoreSalesGeneratorColumn.*;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static com.teradata.tpcds.type.Pricing.generatePricingForSalesTable;
 
 public class StoreSalesRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private static final int SR_RETURN_PCT = 10;
 
     private int[] itemPermutation;
@@ -71,14 +48,12 @@ public class StoreSalesRowGenerator
     private OrderInfo orderInfo = new OrderInfo();
     private int itemIndex;
 
-    public StoreSalesRowGenerator()
-    {
+    public StoreSalesRowGenerator() {
         super(STORE_SALES);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         int itemCount = (int) session.getScaling().getIdCount(ITEM);
         if (itemPermutation == null) {
             itemPermutation = makePermutation(itemCount, getRandomNumberStream(SS_PERMUTATION));
@@ -128,8 +103,7 @@ public class StoreSalesRowGenerator
         return new RowGeneratorResult(generatedRows, isLastRowInOrder());
     }
 
-    public OrderInfo generateOrderInfo(long rowNumber, Session session)
-    {
+    public OrderInfo generateOrderInfo(long rowNumber, Session session) {
         // move to a new date if the row number is ahead of the nextDateIndex
         Scaling scaling = session.getScaling();
 
@@ -152,13 +126,11 @@ public class StoreSalesRowGenerator
                 ssTicketNumber);
     }
 
-    private boolean isLastRowInOrder()
-    {
+    private boolean isLastRowInOrder() {
         return remainingLineItems == 0;
     }
 
-    private class OrderInfo
-    {
+    private class OrderInfo {
         private final long ssSoldStoreSk;
         private final long ssSoldTimeSk;
         private final long ssSoldDateSk;
@@ -169,14 +141,13 @@ public class StoreSalesRowGenerator
         private final long ssTicketNumber;
 
         public OrderInfo(long ssSoldStoreSk,
-                long ssSoldTimeSk,
-                long ssSoldDateSk,
-                long ssSoldCustomerSk,
-                long ssSoldCdemoSk,
-                long ssSoldHdemoSk,
-                long ssSoldAddrSk,
-                long ssTicketNumber)
-        {
+                         long ssSoldTimeSk,
+                         long ssSoldDateSk,
+                         long ssSoldCustomerSk,
+                         long ssSoldCdemoSk,
+                         long ssSoldHdemoSk,
+                         long ssSoldAddrSk,
+                         long ssTicketNumber) {
             this.ssSoldStoreSk = ssSoldStoreSk;
             this.ssSoldTimeSk = ssSoldTimeSk;
             this.ssSoldDateSk = ssSoldDateSk;
@@ -187,48 +158,39 @@ public class StoreSalesRowGenerator
             this.ssTicketNumber = ssTicketNumber;
         }
 
-        public OrderInfo()
-        {
+        public OrderInfo() {
             this(0, 0, 0, 0, 0, 0, 0, 0);
         }
 
-        public long getSsTicketNumber()
-        {
+        public long getSsTicketNumber() {
             return ssTicketNumber;
         }
 
-        public long getSsSoldStoreSk()
-        {
+        public long getSsSoldStoreSk() {
             return ssSoldStoreSk;
         }
 
-        public long getSsSoldTimeSk()
-        {
+        public long getSsSoldTimeSk() {
             return ssSoldTimeSk;
         }
 
-        public long getSsSoldDateSk()
-        {
+        public long getSsSoldDateSk() {
             return ssSoldDateSk;
         }
 
-        public long getSsSoldCustomerSk()
-        {
+        public long getSsSoldCustomerSk() {
             return ssSoldCustomerSk;
         }
 
-        public long getSsSoldCdemoSk()
-        {
+        public long getSsSoldCdemoSk() {
             return ssSoldCdemoSk;
         }
 
-        public long getSsSoldHdemoSk()
-        {
+        public long getSsSoldHdemoSk() {
             return ssSoldHdemoSk;
         }
 
-        public long getSsSoldAddrSk()
-        {
+        public long getSsSoldAddrSk() {
             return ssSoldAddrSk;
         }
     }

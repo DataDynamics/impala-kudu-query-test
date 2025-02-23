@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.DATE_DIM;
 
 public enum DateDimGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     D_DATE_SK(159, 0),
     D_DATE_ID(160, 0),
     D_DATE(161, 0),
@@ -54,27 +53,23 @@ public enum DateDimGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    DateDimGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    DateDimGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return DATE_DIM;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

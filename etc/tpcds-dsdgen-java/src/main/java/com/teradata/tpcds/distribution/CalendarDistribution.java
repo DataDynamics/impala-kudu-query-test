@@ -15,7 +15,7 @@
 package com.teradata.tpcds.distribution;
 
 import com.google.common.collect.ImmutableList;
-import com.teradata.tpcds.distribution.DistributionUtils.WeightsBuilder;
+import com.teradata.tpcds.distribution.DistributionUtils.*;
 import com.teradata.tpcds.random.RandomNumberStream;
 import com.teradata.tpcds.type.Date;
 
@@ -24,15 +24,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
-import static com.teradata.tpcds.distribution.DistributionUtils.getDistributionIterator;
-import static com.teradata.tpcds.distribution.DistributionUtils.getListFromCommaSeparatedValues;
-import static com.teradata.tpcds.distribution.DistributionUtils.getWeightForIndex;
-import static com.teradata.tpcds.distribution.DistributionUtils.pickRandomValue;
+import static com.teradata.tpcds.distribution.DistributionUtils.*;
 import static com.teradata.tpcds.type.Date.isLeapYear;
 import static java.lang.Integer.parseInt;
 
-public class CalendarDistribution
-{
+public class CalendarDistribution {
     private static final int NUM_WEIGHT_FIELDS = Weights.values().length;
     private static final String VALUES_AND_WEIGHTS_FILENAME = "calendar.dst";
     private static final int[][] DAYS_BEFORE_MONTH = {{0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334}, {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335}};
@@ -43,16 +39,14 @@ public class CalendarDistribution
     private final ImmutableList<Integer> holidayFlags;
     private final ImmutableList<ImmutableList<Integer>> weightLists;
 
-    private CalendarDistribution(ImmutableList<Integer> daysOfYear, ImmutableList<Integer> quarters, ImmutableList<Integer> holidayFlags, ImmutableList<ImmutableList<Integer>> weightLists)
-    {
+    private CalendarDistribution(ImmutableList<Integer> daysOfYear, ImmutableList<Integer> quarters, ImmutableList<Integer> holidayFlags, ImmutableList<ImmutableList<Integer>> weightLists) {
         this.daysOfYear = daysOfYear;
         this.quarters = quarters;
         this.holidayFlags = holidayFlags;
         this.weightLists = weightLists;
     }
 
-    private static CalendarDistribution buildCalendarDistribution()
-    {
+    private static CalendarDistribution buildCalendarDistribution() {
         ImmutableList.Builder<Integer> daysOfYearBuilder = ImmutableList.builder();
         ImmutableList.Builder<Integer> quartersBuilder = ImmutableList.builder();
         ImmutableList.Builder<Integer> holidayFlagsBuilder = ImmutableList.builder();
@@ -93,44 +87,36 @@ public class CalendarDistribution
                 weightsListBuilder.build());
     }
 
-    public static int getIndexForDate(Date date)
-    {
+    public static int getIndexForDate(Date date) {
         return DAYS_BEFORE_MONTH[isLeapYear(date.getYear()) ? 1 : 0][date.getMonth() - 1] + date.getDay() - 1;
     }
 
-    public static int getQuarterAtIndex(int index)
-    {
+    public static int getQuarterAtIndex(int index) {
         return CALENDAR_DISTRIBUTION.quarters.get(index - 1); // number passed in is a 1-based index
     }
 
-    public static int getIsHolidayFlagAtIndex(int index)
-    {
+    public static int getIsHolidayFlagAtIndex(int index) {
         return CALENDAR_DISTRIBUTION.holidayFlags.get(index - 1); // number passed in is a 1-based index
     }
 
-    public static int getWeightForDayNumber(int dayNumber, Weights weights)
-    {
+    public static int getWeightForDayNumber(int dayNumber, Weights weights) {
         return getWeightForIndex(dayNumber, getWeights(weights));
     }
 
-    public static int getMaxWeight(Weights weights)
-    {
+    public static int getMaxWeight(Weights weights) {
         ImmutableList<Integer> weightsList = getWeights(weights);
         return weightsList.get(weightsList.size() - 1);
     }
 
-    public static int pickRandomDayOfYear(Weights weights, RandomNumberStream stream)
-    {
+    public static int pickRandomDayOfYear(Weights weights, RandomNumberStream stream) {
         return pickRandomValue(CALENDAR_DISTRIBUTION.daysOfYear, getWeights(weights), stream);
     }
 
-    private static ImmutableList<Integer> getWeights(Weights weights)
-    {
+    private static ImmutableList<Integer> getWeights(Weights weights) {
         return CALENDAR_DISTRIBUTION.weightLists.get(weights.ordinal());
     }
 
-    public enum Weights
-    {
+    public enum Weights {
         UNIFORM,
         UNIFORM_LEAP_YEAR,
         SALES,

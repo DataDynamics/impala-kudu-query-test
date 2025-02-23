@@ -17,19 +17,10 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_CATALOG_NUMBER;
-import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_CATALOG_PAGE_ID;
-import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_CATALOG_PAGE_NUMBER;
-import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_CATALOG_PAGE_SK;
-import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_DEPARTMENT;
-import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_DESCRIPTION;
-import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_END_DATE_ID;
-import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_START_DATE_ID;
-import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.CP_TYPE;
+import static com.teradata.tpcds.generator.CatalogPageGeneratorColumn.*;
 
 public class CatalogPageRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long cpCatalogPageSk;
     private final String cpCatalogPageId;
     private final long cpStartDateId;
@@ -49,8 +40,7 @@ public class CatalogPageRow
                           int cpCatalogPageNumber,
                           String cpDescription,
                           String cpType,
-                          long nullBitMap)
-    {
+                          long nullBitMap) {
         super(nullBitMap, CP_CATALOG_PAGE_SK);
         this.cpCatalogPageSk = cpCatalogPageSk;
         this.cpCatalogPageId = cpCatalogPageId;
@@ -64,16 +54,15 @@ public class CatalogPageRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(cpCatalogPageSk, CP_CATALOG_PAGE_SK),
-                            getStringOrNull(cpCatalogPageId, CP_CATALOG_PAGE_ID),
-                            getStringOrNullForKey(cpStartDateId, CP_START_DATE_ID),
-                            getStringOrNullForKey(cpEndDateId, CP_END_DATE_ID),
-                            getStringOrNull(cpDepartment, CP_DEPARTMENT),
-                            getStringOrNull(cpCatalogNumber, CP_CATALOG_NUMBER),
-                            getStringOrNull(cpCatalogPageNumber, CP_CATALOG_PAGE_NUMBER),
-                            getStringOrNull(cpDescription, CP_DESCRIPTION),
-                            getStringOrNull(cpType, CP_TYPE));
+                getStringOrNull(cpCatalogPageId, CP_CATALOG_PAGE_ID),
+                getStringOrNullForKey(cpStartDateId, CP_START_DATE_ID),
+                getStringOrNullForKey(cpEndDateId, CP_END_DATE_ID),
+                getStringOrNull(cpDepartment, CP_DEPARTMENT),
+                getStringOrNull(cpCatalogNumber, CP_CATALOG_NUMBER),
+                getStringOrNull(cpCatalogPageNumber, CP_CATALOG_PAGE_NUMBER),
+                getStringOrNull(cpDescription, CP_DESCRIPTION),
+                getStringOrNull(cpType, CP_TYPE));
     }
 }

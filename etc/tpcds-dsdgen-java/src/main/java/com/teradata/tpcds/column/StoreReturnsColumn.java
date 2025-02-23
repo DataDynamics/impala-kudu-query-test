@@ -16,13 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.STORE_RETURNS;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum StoreReturnsColumn
-        implements Column
-{
+        implements Column {
     SR_RETURNED_DATE_SK(IDENTIFIER),
     SR_RETURN_TIME_SK(IDENTIFIER),
     SR_ITEM_SK(IDENTIFIER),
@@ -46,32 +43,27 @@ public enum StoreReturnsColumn
 
     private final ColumnType type;
 
-    StoreReturnsColumn(ColumnType type)
-    {
+    StoreReturnsColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return STORE_RETURNS;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

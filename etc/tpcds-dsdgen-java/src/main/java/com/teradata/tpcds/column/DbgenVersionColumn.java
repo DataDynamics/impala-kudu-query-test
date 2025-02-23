@@ -16,13 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.DBGEN_VERSION;
-import static com.teradata.tpcds.column.ColumnTypes.DATE;
-import static com.teradata.tpcds.column.ColumnTypes.TIME;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum DbgenVersionColumn
-        implements Column
-{
+        implements Column {
     DV_VERSION(varchar(16)),
     DV_CREATE_DATE(DATE),
     DV_CREATE_TIME(TIME),
@@ -30,32 +27,27 @@ public enum DbgenVersionColumn
 
     private final ColumnType type;
 
-    DbgenVersionColumn(ColumnType type)
-    {
+    DbgenVersionColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return DBGEN_VERSION;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

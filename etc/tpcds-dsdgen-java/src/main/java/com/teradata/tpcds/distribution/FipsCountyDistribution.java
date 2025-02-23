@@ -26,12 +26,10 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.teradata.tpcds.distribution.DistributionUtils.getDistributionIterator;
 import static com.teradata.tpcds.distribution.DistributionUtils.getListFromCommaSeparatedValues;
 
-public class FipsCountyDistribution
-{
-    private static final FipsCountyDistribution FIPS_COUNTY_DISTRIBUTION = buildFipsCountyDistribution();
+public class FipsCountyDistribution {
     private static final String VALUES_AND_WEIGHTS_FILENAME = "fips.dst";
     private static final int NUM_WEIGHT_FIELDS = 6;
-
+    private static final FipsCountyDistribution FIPS_COUNTY_DISTRIBUTION = buildFipsCountyDistribution();
     private final ImmutableList<String> counties;
     private final ImmutableList<String> stateAbbreviations;
     private final ImmutableList<Integer> zipPrefixes;
@@ -39,11 +37,10 @@ public class FipsCountyDistribution
     private final ImmutableList<ImmutableList<Integer>> weightsLists;
 
     public FipsCountyDistribution(ImmutableList<String> counties,
-            ImmutableList<String> stateAbbreviations,
-            ImmutableList<Integer> zipPrefixes,
-            ImmutableList<Integer> gmtOffsets,
-            ImmutableList<ImmutableList<Integer>> weightsLists)
-    {
+                                  ImmutableList<String> stateAbbreviations,
+                                  ImmutableList<Integer> zipPrefixes,
+                                  ImmutableList<Integer> gmtOffsets,
+                                  ImmutableList<ImmutableList<Integer>> weightsLists) {
         this.counties = counties;
         this.stateAbbreviations = stateAbbreviations;
         this.zipPrefixes = zipPrefixes;
@@ -51,8 +48,7 @@ public class FipsCountyDistribution
         this.weightsLists = weightsLists;
     }
 
-    public static FipsCountyDistribution buildFipsCountyDistribution()
-    {
+    public static FipsCountyDistribution buildFipsCountyDistribution() {
         ImmutableList.Builder<String> countiesBuilder = ImmutableList.builder();
         ImmutableList.Builder<String> stateAbbreviationsBuilder = ImmutableList.builder();
         ImmutableList.Builder<Integer> zipPrefixesBuilder = ImmutableList.builder();
@@ -96,33 +92,27 @@ public class FipsCountyDistribution
                 weightsListBuilder.build());
     }
 
-    public static int pickRandomIndex(FipsWeights weights, RandomNumberStream stream)
-    {
+    public static int pickRandomIndex(FipsWeights weights, RandomNumberStream stream) {
         return DistributionUtils.pickRandomIndex(FIPS_COUNTY_DISTRIBUTION.weightsLists.get(weights.ordinal()), stream);
     }
 
-    public static String getCountyAtIndex(int index)
-    {
+    public static String getCountyAtIndex(int index) {
         return FIPS_COUNTY_DISTRIBUTION.counties.get(index);
     }
 
-    public static String getStateAbbreviationAtIndex(int index)
-    {
+    public static String getStateAbbreviationAtIndex(int index) {
         return FIPS_COUNTY_DISTRIBUTION.stateAbbreviations.get(index);
     }
 
-    public static int getZipPrefixAtIndex(int index)
-    {
+    public static int getZipPrefixAtIndex(int index) {
         return FIPS_COUNTY_DISTRIBUTION.zipPrefixes.get(index);
     }
 
-    public static int getGmtOffsetAtIndex(int index)
-    {
+    public static int getGmtOffsetAtIndex(int index) {
         return FIPS_COUNTY_DISTRIBUTION.gmtOffsets.get(index);
     }
 
-    public enum FipsWeights
-    {
+    public enum FipsWeights {
         UNIFORM,
         POPULATION,
         TIMEZONE,

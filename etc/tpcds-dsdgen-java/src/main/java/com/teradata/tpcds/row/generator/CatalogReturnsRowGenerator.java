@@ -24,58 +24,34 @@ import com.teradata.tpcds.type.Pricing;
 
 import static com.teradata.tpcds.JoinKeyUtils.generateJoinKey;
 import static com.teradata.tpcds.Nulls.createNullBitMap;
-import static com.teradata.tpcds.Table.CATALOG_RETURNS;
-import static com.teradata.tpcds.Table.CUSTOMER;
-import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
-import static com.teradata.tpcds.Table.CUSTOMER_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.DATE_DIM;
-import static com.teradata.tpcds.Table.HOUSEHOLD_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.REASON;
-import static com.teradata.tpcds.Table.SHIP_MODE;
-import static com.teradata.tpcds.Table.TIME_DIM;
-import static com.teradata.tpcds.Table.WAREHOUSE;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_NULLS;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_PRICING;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_REASON_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNED_DATE_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNED_TIME_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNING_ADDR_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNING_CDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNING_CUSTOMER_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_RETURNING_HDEMO_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_SHIP_MODE_SK;
-import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.CR_WAREHOUSE_SK;
+import static com.teradata.tpcds.Table.*;
+import static com.teradata.tpcds.generator.CatalogReturnsGeneratorColumn.*;
 import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
 import static com.teradata.tpcds.type.Pricing.generatePricingForReturnsTable;
 import static java.util.Collections.emptyList;
 
 public class CatalogReturnsRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     public static final int RETURN_PERCENT = 10;
 
-    public CatalogReturnsRowGenerator()
-    {
+    public CatalogReturnsRowGenerator() {
         super(CATALOG_RETURNS);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         // The catalog returns table is a child of the catalog_sales table because you can only return things that have
         // already been purchased.  This method should only get called if we are generating the catalog_returns table
         // in isolation. Otherwise catalog_returns is generated during the generation of the catalog_sales table
         RowGeneratorResult salesAndReturnsResult = parentRowGenerator.generateRowAndChildRows(rowNumber, session, null, this);
         if (salesAndReturnsResult.getRowAndChildRows().size() == 2) {
             return new RowGeneratorResult(ImmutableList.of(salesAndReturnsResult.getRowAndChildRows().get(1)), salesAndReturnsResult.shouldEndRow());
-        }
-        else {
+        } else {
             return new RowGeneratorResult(emptyList(), salesAndReturnsResult.shouldEndRow());  // no return occurred for given sale
         }
     }
 
-    public TableRow generateRow(Session session, CatalogSalesRow salesRow)
-    {
+    public TableRow generateRow(Session session, CatalogSalesRow salesRow) {
         long nullBitMap = createNullBitMap(CATALOG_RETURNS, getRandomNumberStream(CR_NULLS));
 
         // some of the fields are conditionally taken from the sale

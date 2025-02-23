@@ -17,21 +17,16 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.InventoryGeneratorColumn.INV_DATE_SK;
-import static com.teradata.tpcds.generator.InventoryGeneratorColumn.INV_ITEM_SK;
-import static com.teradata.tpcds.generator.InventoryGeneratorColumn.INV_QUANTITY_ON_HAND;
-import static com.teradata.tpcds.generator.InventoryGeneratorColumn.INV_WAREHOUSE_SK;
+import static com.teradata.tpcds.generator.InventoryGeneratorColumn.*;
 
 public class InventoryRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final long invDateSk;
     private final long invItemSk;
     private final long invWarehouseSk;
     private final int invQuantityOnHand;
 
-    public InventoryRow(long nullBitMap, long invDateSk, long invItemSk, long invWarehouseSk, int invQuantityOnHand)
-    {
+    public InventoryRow(long nullBitMap, long invDateSk, long invItemSk, long invWarehouseSk, int invQuantityOnHand) {
         super(nullBitMap, INV_DATE_SK);
         this.invDateSk = invDateSk;
         this.invItemSk = invItemSk;
@@ -40,8 +35,7 @@ public class InventoryRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNullForKey(invDateSk, INV_DATE_SK),
                 getStringOrNullForKey(invItemSk, INV_ITEM_SK),
                 getStringOrNullForKey(invWarehouseSk, INV_WAREHOUSE_SK),

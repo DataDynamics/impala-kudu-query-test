@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.WAREHOUSE;
 
 public enum WarehouseGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     W_WAREHOUSE_SK(351, 1),
     W_WAREHOUSE_ID(352, 1),
     W_WAREHOUSE_NAME(353, 80),
@@ -41,27 +40,23 @@ public enum WarehouseGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    WarehouseGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    WarehouseGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return WAREHOUSE;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

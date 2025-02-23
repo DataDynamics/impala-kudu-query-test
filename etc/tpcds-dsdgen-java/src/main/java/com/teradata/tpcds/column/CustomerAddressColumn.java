@@ -16,14 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
-import static com.teradata.tpcds.column.ColumnTypes.decimal;
-import static com.teradata.tpcds.column.ColumnTypes.varchar;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum CustomerAddressColumn
-        implements Column
-{
+        implements Column {
     CA_ADDRESS_SK(IDENTIFIER),
     CA_ADDRESS_ID(character(16)),
     CA_STREET_NUMBER(character(10)),
@@ -40,32 +36,27 @@ public enum CustomerAddressColumn
 
     private final ColumnType type;
 
-    CustomerAddressColumn(ColumnType type)
-    {
+    CustomerAddressColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CUSTOMER_ADDRESS;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }

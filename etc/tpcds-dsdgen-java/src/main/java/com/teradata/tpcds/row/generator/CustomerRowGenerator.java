@@ -22,51 +22,25 @@ import com.teradata.tpcds.type.Date;
 import static com.teradata.tpcds.BusinessKeyGenerator.makeBusinessKey;
 import static com.teradata.tpcds.JoinKeyUtils.generateJoinKey;
 import static com.teradata.tpcds.Nulls.createNullBitMap;
-import static com.teradata.tpcds.Table.CUSTOMER;
-import static com.teradata.tpcds.Table.CUSTOMER_ADDRESS;
-import static com.teradata.tpcds.Table.CUSTOMER_DEMOGRAPHICS;
-import static com.teradata.tpcds.Table.HOUSEHOLD_DEMOGRAPHICS;
+import static com.teradata.tpcds.Table.*;
 import static com.teradata.tpcds.distribution.AddressDistributions.pickRandomCountry;
 import static com.teradata.tpcds.distribution.NamesDistributions.FirstNamesWeights.FEMALE_FREQUENCY;
 import static com.teradata.tpcds.distribution.NamesDistributions.FirstNamesWeights.GENERAL_FREQUENCY;
 import static com.teradata.tpcds.distribution.NamesDistributions.SalutationsWeights.FEMALE;
 import static com.teradata.tpcds.distribution.NamesDistributions.SalutationsWeights.MALE;
-import static com.teradata.tpcds.distribution.NamesDistributions.getFirstNameFromIndex;
-import static com.teradata.tpcds.distribution.NamesDistributions.getWeightForIndex;
-import static com.teradata.tpcds.distribution.NamesDistributions.pickRandomIndex;
-import static com.teradata.tpcds.distribution.NamesDistributions.pickRandomLastName;
-import static com.teradata.tpcds.distribution.NamesDistributions.pickRandomSalutation;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_BIRTH_COUNTRY;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_BIRTH_DAY;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_CURRENT_ADDR_SK;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_CURRENT_CDEMO_SK;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_CURRENT_HDEMO_SK;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_EMAIL_ADDRESS;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_FIRST_NAME;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_FIRST_SALES_DATE_ID;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_LAST_NAME;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_LAST_REVIEW_DATE;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_NULLS;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_PREFERRED_CUST_FLAG;
-import static com.teradata.tpcds.generator.CustomerGeneratorColumn.C_SALUTATION;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateRandomEmail;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomDate;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
-import static com.teradata.tpcds.type.Date.JULIAN_TODAYS_DATE;
-import static com.teradata.tpcds.type.Date.fromJulianDays;
-import static com.teradata.tpcds.type.Date.toJulianDays;
+import static com.teradata.tpcds.distribution.NamesDistributions.*;
+import static com.teradata.tpcds.generator.CustomerGeneratorColumn.*;
+import static com.teradata.tpcds.random.RandomValueGenerator.*;
+import static com.teradata.tpcds.type.Date.*;
 
 public class CustomerRowGenerator
-        extends AbstractRowGenerator
-{
-    public CustomerRowGenerator()
-    {
+        extends AbstractRowGenerator {
+    public CustomerRowGenerator() {
         super(CUSTOMER);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long cCustomerSk = rowNumber;
         String cCustomerId = makeBusinessKey(rowNumber);
         int randomInt = generateUniformRandomInt(1, 100, getRandomNumberStream(C_PREFERRED_CUST_FLAG));

@@ -19,8 +19,7 @@ import com.teradata.tpcds.Table;
 import static com.teradata.tpcds.Table.CALL_CENTER;
 
 public enum CallCenterGeneratorColumn
-        implements GeneratorColumn
-{
+        implements GeneratorColumn {
     CC_CALL_CENTER_SK(1, 0),
     CC_CALL_CENTER_ID(2, 15),
     CC_REC_START_DATE_ID(3, 10),
@@ -59,27 +58,23 @@ public enum CallCenterGeneratorColumn
     private final int globalColumnNumber;
     private final int seedsPerRow;
 
-    CallCenterGeneratorColumn(int globalColumnNumber, int seedsPerRow)
-    {
+    CallCenterGeneratorColumn(int globalColumnNumber, int seedsPerRow) {
         this.globalColumnNumber = globalColumnNumber;
         this.seedsPerRow = seedsPerRow;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return CALL_CENTER;
     }
 
     @Override
-    public int getGlobalColumnNumber()
-    {
+    public int getGlobalColumnNumber() {
         return globalColumnNumber;
     }
 
     @Override
-    public int getSeedsPerRow()
-    {
+    public int getSeedsPerRow() {
         return seedsPerRow;
     }
 }

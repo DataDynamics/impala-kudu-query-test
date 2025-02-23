@@ -24,16 +24,13 @@ import static com.teradata.tpcds.distribution.DemographicsDistributions.getIncom
 import static com.teradata.tpcds.generator.IncomeBandGeneratorColumn.IB_NULLS;
 
 public class IncomeBandRowGenerator
-        extends AbstractRowGenerator
-{
-    public IncomeBandRowGenerator()
-    {
+        extends AbstractRowGenerator {
+    public IncomeBandRowGenerator() {
         super(INCOME_BAND);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(INCOME_BAND, getRandomNumberStream(IB_NULLS));
         int ibIncomeBandId = (int) rowNumber;
         int ibLowerBound = getIncomeBandLowerBoundAtIndex((int) rowNumber - 1);

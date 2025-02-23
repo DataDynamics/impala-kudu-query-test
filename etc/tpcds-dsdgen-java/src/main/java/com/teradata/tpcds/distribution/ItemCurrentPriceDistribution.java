@@ -29,8 +29,7 @@ import static com.teradata.tpcds.distribution.DistributionUtils.getListFromComma
 import static com.teradata.tpcds.type.Decimal.parseDecimal;
 import static java.lang.Integer.parseInt;
 
-public class ItemCurrentPriceDistribution
-{
+public class ItemCurrentPriceDistribution {
     private static final int NUM_WEIGHT_FIELDS = 4;
     private static final int NUM_VALUE_FIELDS = 3;
     private static final String VALUES_AND_WEIGHTS_FILENAME = "item_current_price.dst";
@@ -40,15 +39,13 @@ public class ItemCurrentPriceDistribution
     private final ImmutableList<Decimal> maxes;
     private final ImmutableList<ImmutableList<Integer>> weightLists;
 
-    private ItemCurrentPriceDistribution(ImmutableList<Decimal> mins, ImmutableList<Decimal> maxes, ImmutableList<ImmutableList<Integer>> weightLists)
-    {
+    private ItemCurrentPriceDistribution(ImmutableList<Decimal> mins, ImmutableList<Decimal> maxes, ImmutableList<ImmutableList<Integer>> weightLists) {
         this.mins = mins;
         this.maxes = maxes;
         this.weightLists = weightLists;
     }
 
-    private static ItemCurrentPriceDistribution buildICurrentPriceDistribution()
-    {
+    private static ItemCurrentPriceDistribution buildICurrentPriceDistribution() {
         ImmutableList.Builder<Decimal> minsBuilder = ImmutableList.builder();
         ImmutableList.Builder<Decimal> maxesBuilder = ImmutableList.builder();
 
@@ -86,8 +83,7 @@ public class ItemCurrentPriceDistribution
                 weightsListBuilder.build());
     }
 
-    public static List<Decimal> pickRandomCurrentPriceRange(RandomNumberStream randomNumberStream)
-    {
+    public static List<Decimal> pickRandomCurrentPriceRange(RandomNumberStream randomNumberStream) {
         int index = DistributionUtils.pickRandomIndex(I_CURRENT_PRICE_DISTRIBUTION.weightLists.get(0), randomNumberStream);
         return ImmutableList.of(I_CURRENT_PRICE_DISTRIBUTION.mins.get(index), I_CURRENT_PRICE_DISTRIBUTION.maxes.get(index));
     }

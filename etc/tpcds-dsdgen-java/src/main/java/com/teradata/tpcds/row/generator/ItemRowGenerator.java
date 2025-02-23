@@ -23,7 +23,6 @@ import com.teradata.tpcds.row.ItemRow;
 import com.teradata.tpcds.type.Decimal;
 
 import javax.annotation.concurrent.NotThreadSafe;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -38,43 +37,19 @@ import static com.teradata.tpcds.distribution.CategoriesDistribution.getHasSizeA
 import static com.teradata.tpcds.distribution.CategoryClassDistributions.pickRandomCategoryClass;
 import static com.teradata.tpcds.distribution.EnglishDistributions.SYLLABLES_DISTRIBUTION;
 import static com.teradata.tpcds.distribution.ItemCurrentPriceDistribution.pickRandomCurrentPriceRange;
-import static com.teradata.tpcds.distribution.ItemsDistributions.BRAND_SYLLABLES_DISTRIBUTION;
+import static com.teradata.tpcds.distribution.ItemsDistributions.*;
 import static com.teradata.tpcds.distribution.ItemsDistributions.ColorsWeights.SKEWED;
 import static com.teradata.tpcds.distribution.ItemsDistributions.IdWeights.UNIFIED;
 import static com.teradata.tpcds.distribution.ItemsDistributions.SizeWeights.NO_SIZE;
 import static com.teradata.tpcds.distribution.ItemsDistributions.SizeWeights.SIZED;
-import static com.teradata.tpcds.distribution.ItemsDistributions.pickRandomColor;
-import static com.teradata.tpcds.distribution.ItemsDistributions.pickRandomManufactIdRange;
-import static com.teradata.tpcds.distribution.ItemsDistributions.pickRandomSize;
-import static com.teradata.tpcds.distribution.ItemsDistributions.pickRandomUnit;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_CATEGORY;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_CLASS;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_COLOR;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_CURRENT_PRICE;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_FORMULATION;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_ITEM_DESC;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_MANAGER_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_MANUFACT_ID;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_NULLS;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_PROMO_SK;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_SCD;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_SIZE;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_UNITS;
-import static com.teradata.tpcds.generator.ItemGeneratorColumn.I_WHOLESALE_COST;
-import static com.teradata.tpcds.random.RandomValueGenerator.DIGITS;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateRandomCharset;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateRandomText;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomDecimal;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomKey;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateWord;
+import static com.teradata.tpcds.generator.ItemGeneratorColumn.*;
+import static com.teradata.tpcds.random.RandomValueGenerator.*;
 import static com.teradata.tpcds.type.Decimal.multiply;
 import static java.lang.String.format;
 
 @NotThreadSafe
 public class ItemRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private static final Decimal MIN_ITEM_MARKDOWN_PCT = new Decimal(30, 2);
     private static final Decimal MAX_ITEM_MARKDOWN_PCT = new Decimal(90, 2);
     private static final int ROW_SIZE_I_PRODUCT_NAME = 50;
@@ -85,14 +60,12 @@ public class ItemRowGenerator
 
     private Optional<ItemRow> previousRow = Optional.empty();
 
-    public ItemRowGenerator()
-    {
+    public ItemRowGenerator() {
         super(ITEM);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(ITEM, getRandomNumberStream(I_NULLS));
         long iItemSk = rowNumber;
 

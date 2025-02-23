@@ -22,7 +22,6 @@ import com.teradata.tpcds.type.Address;
 import com.teradata.tpcds.type.Decimal;
 
 import javax.annotation.concurrent.NotThreadSafe;
-
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -37,40 +36,23 @@ import static com.teradata.tpcds.distribution.NamesDistributions.FirstNamesWeigh
 import static com.teradata.tpcds.distribution.NamesDistributions.FirstNamesWeights.MALE_FREQUENCY;
 import static com.teradata.tpcds.distribution.NamesDistributions.pickRandomFirstName;
 import static com.teradata.tpcds.distribution.NamesDistributions.pickRandomLastName;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_ADDRESS;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_CLOSE_DATE;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_COMPANY_ID;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MANAGER;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MARKET_CLASS;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MARKET_DESC;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MARKET_ID;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_MARKET_MANAGER;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_NULLS;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_OPEN_DATE;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_SCD;
-import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.WEB_TAX_PERCENTAGE;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateRandomText;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomDecimal;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
-import static com.teradata.tpcds.random.RandomValueGenerator.generateWord;
+import static com.teradata.tpcds.generator.WebSiteGeneratorColumn.*;
+import static com.teradata.tpcds.random.RandomValueGenerator.*;
 import static com.teradata.tpcds.type.Address.makeAddressForColumn;
 import static com.teradata.tpcds.type.Decimal.ZERO;
 import static java.lang.String.format;
 
 @NotThreadSafe
 public class WebSiteRowGenerator
-        extends AbstractRowGenerator
-{
+        extends AbstractRowGenerator {
     private Optional<WebSiteRow> previousRow = Optional.empty();
 
-    public WebSiteRowGenerator()
-    {
+    public WebSiteRowGenerator() {
         super(WEB_SITE);
     }
 
     @Override
-    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
-    {
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator) {
         long nullBitMap = createNullBitMap(WEB_SITE, getRandomNumberStream(WEB_NULLS));
         long webSiteSk = rowNumber;
         String webClass = "Unknown";
@@ -92,8 +74,7 @@ public class WebSiteRowGenerator
                 webCloseDate = -1;
             }
             webName = format("site_%d", (int) (rowNumber / 6));
-        }
-        else {
+        } else {
             checkState(previousRow.isPresent(), "previousRow has not yet been initialized");
             webOpenDate = previousRow.get().getWebOpenDate();
             webCloseDate = previousRow.get().getWebCloseDate();

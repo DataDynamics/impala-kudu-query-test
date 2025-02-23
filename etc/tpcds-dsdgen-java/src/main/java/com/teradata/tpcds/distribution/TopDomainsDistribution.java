@@ -18,14 +18,13 @@ import com.teradata.tpcds.random.RandomNumberStream;
 
 import static com.teradata.tpcds.distribution.StringValuesDistribution.buildStringValuesDistribution;
 
-public final class TopDomainsDistribution
-{
+public final class TopDomainsDistribution {
     private static final StringValuesDistribution TOP_DOMAINS_DISTRIBUTION = buildStringValuesDistribution("top_domains.dst", 1, 1);
 
-    private TopDomainsDistribution() {}
+    private TopDomainsDistribution() {
+    }
 
-    public static String pickRandomTopDomain(RandomNumberStream stream)
-    {
+    public static String pickRandomTopDomain(RandomNumberStream stream) {
         return TOP_DOMAINS_DISTRIBUTION.pickRandomValue(0, 0, stream);
     }
 }

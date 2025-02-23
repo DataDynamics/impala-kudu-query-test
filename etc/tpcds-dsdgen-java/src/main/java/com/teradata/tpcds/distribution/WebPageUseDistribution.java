@@ -18,14 +18,13 @@ import com.teradata.tpcds.random.RandomNumberStream;
 
 import static com.teradata.tpcds.distribution.StringValuesDistribution.buildStringValuesDistribution;
 
-public class WebPageUseDistribution
-{
+public class WebPageUseDistribution {
     private static final StringValuesDistribution WEB_PAGE_USE_DISTRIBUTION = buildStringValuesDistribution("web_page_use.dst", 1, 1);
 
-    private WebPageUseDistribution() {}
+    private WebPageUseDistribution() {
+    }
 
-    public static String pickRandomWebPageUseType(RandomNumberStream stream)
-    {
+    public static String pickRandomWebPageUseType(RandomNumberStream stream) {
         return WEB_PAGE_USE_DISTRIBUTION.pickRandomValue(0, 0, stream);
     }
 }

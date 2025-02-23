@@ -26,8 +26,7 @@ import static com.teradata.tpcds.distribution.DistributionUtils.getDistributionI
 import static com.teradata.tpcds.distribution.DistributionUtils.getListFromCommaSeparatedValues;
 import static java.lang.Integer.parseInt;
 
-public class CategoriesDistribution
-{
+public class CategoriesDistribution {
     private static final int NUM_WEIGHT_FIELDS = 1;
     private static final String VALUES_AND_WEIGHTS_FILENAME = "categories.dst";
     private static final CategoriesDistribution CATEGORIES_DISTRIBUTION = buildCategoriesDistribution();
@@ -36,15 +35,13 @@ public class CategoriesDistribution
     private final ImmutableList<Integer> hasSizes;
     private final ImmutableList<Integer> weights;
 
-    private CategoriesDistribution(ImmutableList<String> names, ImmutableList<Integer> hasSizes, ImmutableList<Integer> weights)
-    {
+    private CategoriesDistribution(ImmutableList<String> names, ImmutableList<Integer> hasSizes, ImmutableList<Integer> weights) {
         this.names = names;
         this.hasSizes = hasSizes;
         this.weights = weights;
     }
 
-    private static CategoriesDistribution buildCategoriesDistribution()
-    {
+    private static CategoriesDistribution buildCategoriesDistribution() {
         ImmutableList.Builder<String> namesBuilder = ImmutableList.builder();
         ImmutableList.Builder<Integer> hasSizesBuilder = ImmutableList.builder();
         WeightsBuilder weightsBuilder = new WeightsBuilder();
@@ -71,18 +68,15 @@ public class CategoriesDistribution
                 weightsBuilder.build());
     }
 
-    public static Integer pickRandomIndex(RandomNumberStream stream)
-    {
+    public static Integer pickRandomIndex(RandomNumberStream stream) {
         return DistributionUtils.pickRandomIndex(CATEGORIES_DISTRIBUTION.weights, stream);
     }
 
-    public static String getCategoryAtIndex(int index)
-    {
+    public static String getCategoryAtIndex(int index) {
         return CATEGORIES_DISTRIBUTION.names.get(index);
     }
 
-    public static int getHasSizeAtIndex(int index)
-    {
+    public static int getHasSizeAtIndex(int index) {
         return CATEGORIES_DISTRIBUTION.hasSizes.get(index);
     }
 }

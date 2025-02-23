@@ -16,21 +16,16 @@ package com.teradata.tpcds.row;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.teradata.tpcds.generator.DbgenVersionGeneratorColumn.DV_CMDLINE_ARGS;
-import static com.teradata.tpcds.generator.DbgenVersionGeneratorColumn.DV_CREATE_DATE;
-import static com.teradata.tpcds.generator.DbgenVersionGeneratorColumn.DV_CREATE_TIME;
-import static com.teradata.tpcds.generator.DbgenVersionGeneratorColumn.DV_VERSION;
+import static com.teradata.tpcds.generator.DbgenVersionGeneratorColumn.*;
 
 public class DbgenVersionRow
-        extends TableRowWithNulls
-{
+        extends TableRowWithNulls {
     private final String dvVersion;
     private final String dvCreateDate;
     private final String dvCreateTime;
     private final String dvCmdlineArgs;
 
-    public DbgenVersionRow(long nullBitMap, String dvVersion, String dvCreateDate, String dvCreateTime, String dvCmdlineArgs)
-    {
+    public DbgenVersionRow(long nullBitMap, String dvVersion, String dvCreateDate, String dvCreateTime, String dvCmdlineArgs) {
         super(nullBitMap, DV_VERSION);
         this.dvVersion = dvVersion;
         this.dvCreateDate = dvCreateDate;
@@ -39,8 +34,7 @@ public class DbgenVersionRow
     }
 
     @Override
-    public List<String> getValues()
-    {
+    public List<String> getValues() {
         return newArrayList(getStringOrNull(dvVersion, DV_VERSION),
                 getStringOrNull(dvCreateDate, DV_CREATE_DATE),
                 getStringOrNull(dvCreateTime, DV_CREATE_TIME),

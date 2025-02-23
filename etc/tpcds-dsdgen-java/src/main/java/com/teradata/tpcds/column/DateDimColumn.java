@@ -16,14 +16,10 @@ package com.teradata.tpcds.column;
 import com.teradata.tpcds.Table;
 
 import static com.teradata.tpcds.Table.DATE_DIM;
-import static com.teradata.tpcds.column.ColumnTypes.DATE;
-import static com.teradata.tpcds.column.ColumnTypes.IDENTIFIER;
-import static com.teradata.tpcds.column.ColumnTypes.INTEGER;
-import static com.teradata.tpcds.column.ColumnTypes.character;
+import static com.teradata.tpcds.column.ColumnTypes.*;
 
 public enum DateDimColumn
-        implements Column
-{
+        implements Column {
     D_DATE_SK(IDENTIFIER),
     D_DATE_ID(character(16)),
     D_DATE(DATE),
@@ -55,32 +51,27 @@ public enum DateDimColumn
 
     private final ColumnType type;
 
-    DateDimColumn(ColumnType type)
-    {
+    DateDimColumn(ColumnType type) {
         this.type = type;
     }
 
     @Override
-    public Table getTable()
-    {
+    public Table getTable() {
         return DATE_DIM;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name().toLowerCase();
     }
 
     @Override
-    public ColumnType getType()
-    {
+    public ColumnType getType() {
         return type;
     }
 
     @Override
-    public int getPosition()
-    {
+    public int getPosition() {
         return ordinal();
     }
 }
