@@ -4,6 +4,8 @@ Impala ODBC Driver를 사용하기 위한 설정 방법을 설명합니다.
 
 ## 필요 버전
 
+다음의 패키지는 CentOS, RHEL 기준으로 설명합니다.
+
 * iODBC 3.42.9 이후 버전
 * unixODBC 2.2.14 이후 버전
   * RHEL 9.4 버전에는 2.3.9-4 버전을 OS에서 기본 제공
@@ -15,6 +17,8 @@ Impala ODBC Driver를 사용하기 위한 설정 방법을 설명합니다.
 
 
 ## ODBC 설치
+
+다음의 커맨드로 SASL 및 ODBC 관련 패키지를 설치합니다.
 
 ```
 yum install -y unixODBC cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain
