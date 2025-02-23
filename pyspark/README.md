@@ -110,3 +110,14 @@ user_1_movies.show()
 # SparkSession 종료
 spark.stop()
 ```
+
+Kudu 테이블을 PySpark에서 이용하려면 다음과 같이 인자를 추가합니다.
+
+```shell
+# spark3-shell --packages org.apache.kudu:kudu-spark3_2.12:<kudu-cdp-version> --repositories https://repository.cloudera.com/artifactory/cloudera-repos/
+
+
+# spark3-shell --jars /opt/cloudera/parcels/CDH/lib/kudu/kudu-spark3_2.12.jar
+```
+
+PySpark에서 Kudu 사용방법은 https://docs.cloudera.com/runtime/7.3.1/kudu-development/topics/kudu-integration-with-spark.html를 참고하십시오.
