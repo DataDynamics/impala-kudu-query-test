@@ -9,8 +9,12 @@ target/tpcds_kit.zip: tpcds_kit.zip
 	cp tpcds_kit.zip target/tpcds_kit.zip
 
 tpcds_kit.zip:
-	curl http://public-repo-1.hortonworks.com/hive-testbench/tpcds/README
-	curl --output tpcds_kit.zip http://public-repo-1.hortonworks.com/hive-testbench/tpcds/TPCDS_Tools.zip
+	@if [ ! -f $@ ]; then \
+		echo "Downloading tpcds_kit.zip..."; \
+		curl --output $@ http://dev.hortonworks.com.s3.amazonaws.com/hive-testbench/tpcds/tpcds_kit.zip; \
+	else \
+		echo "tpcds_kit.zip already exists. Skipping download."; \
+	fi
 
 target/lib/dsdgen.jar: target/tools/dsdgen
 	cd target/; mkdir -p lib/; ( jar cvf lib/dsdgen.jar tools/ || gjar cvf lib/dsdgen.jar tools/ )
