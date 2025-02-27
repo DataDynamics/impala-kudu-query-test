@@ -214,3 +214,75 @@ cursor.close()
 conn.close()
 
 ```
+
+### Cloudera Impala & HS2 Client
+
+Cloudera에서 비공식적으로 제공하는 Impala & HS2 Client 구현체인 impyla (https://github.com/cloudera/impyla)를 사용할 수 있습니다. impyla는 pandas나 sqlalchemy 등의 하이레벨 인터페이스를 지원합니다.
+
+Dependency에 대한 요건이 까다로우므로 아래와 같이 0.20.0 버전의 경우 https://github.com/cloudera/impyla의 문서에 따라서 dependency를 명확하게 설치하도록 합니다.
+
+PyPi Repository는 https://pypi.org/project/impyla/에서 확인할 수 있습니다.
+
+```
+pip3 install impyla==0.20.0 numpy pyodbc sqlalchemy Impyla[kerberos] six bitarray thrift==0.16.0 thrift_sasl==0.4.3 pure-sasl
+```
+
+Python 3.10, 3.6 등과 같이 다양한 Python 버전에 따라서 dependency가 상이할 수 있습니다.
+
+```
+# tree
+├── 3.10.9
+│   ├── bitarray-2.9.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+│   ├── greenlet-3.1.1-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl
+│   ├── impyla-0.20.0-py2.py3-none-any.whl
+│   ├── JayDeBeApi-1.2.3-py3-none-any.whl
+│   ├── jpype1-1.5.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+│   ├── kerberos-1.3.1.tar.gz
+│   ├── numpy-2.2.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+│   ├── packaging-24.2-py3-none-any.whl
+│   ├── pure-sasl-0.6.2.tar.gz
+│   ├── pyodbc-5.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+│   ├── six-1.17.0-py2.py3-none-any.whl
+│   ├── SQLAlchemy-2.0.38-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+│   ├── thrift-0.16.0.tar.gz
+│   ├── thrift_sasl-0.4.3-py2.py3-none-any.whl
+│   └── typing_extensions-4.12.2-py3-none-any.whl
+└── 3.6.5
+    ├── bitarray-2.9.3-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+    ├── greenlet-2.0.2-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+    ├── importlib_metadata-4.8.3-py3-none-any.whl
+    ├── impyla-0.20.0-py2.py3-none-any.whl
+    ├── JayDeBeApi-1.2.3-py3-none-any.whl
+    ├── JPype1-1.3.0-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.whl
+    ├── kerberos-1.3.1.tar.gz
+    ├── numpy-1.19.5-cp36-cp36m-manylinux2010_x86_64.whl
+    ├── pure-sasl-0.6.2.tar.gz
+    ├── pyodbc-4.0.39-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+    ├── six-1.17.0-py2.py3-none-any.whl
+    ├── SQLAlchemy-1.4.54-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+    ├── thrift-0.16.0.tar.gz
+    ├── thrift_sasl-0.4.3-py2.py3-none-any.whl
+    ├── typing_extensions-4.1.1-py3-none-any.whl
+    └── zipp-3.6.0-py3-none-any.whl
+```
+
+이제 impyla를 이용하여 다음과 같이 연동 코드를 작성할 수 있습니다. ODBC/JDBC가 연동하는데 필요한 21050 포트를 사용하므로 클라이언트는 방화벽이 개방되어야 합니다. 이 21050은 Impala Coordinator Port입니다.
+
+N개의 Impala Coordinator를 구성하는 경우 L4 Switch로 구성하게 되므로 21050 포트는 일반적인 운영 환경에서는 L4 Switch의 포트가 되며, L4 Algorithm은 Round Robin이나 Least Connection으로 구성합니다.
+
+```python
+from impala.dbapi import connect
+conn = connect(host='hdw1.ibk.datalake.net', port=21050, database='default',
+               use_ssl=True,
+               auth_mechanism='GSSAPI',
+)
+
+cursor = conn.cursor()
+cursor.execute('SELECT * FROM test2 LIMIT 10')
+# prints the result set's schema
+print(cursor.description)
+
+results = cursor.fetchall()
+for row in results:
+    print(f'row={row}')
+```
