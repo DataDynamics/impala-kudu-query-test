@@ -45,6 +45,9 @@ jdbc:impala://localhost:18000/default2;AuthMech=3;UID=cloudera;PWD=cloudera;MEM_
    * 기본값은 0이며 timeout이 없는 상태
 * `TransportMode`
    * Thrift로 전송하는 프로토콜
+   * `binary` - Binary Transport Protocol을 사용
+   * `sasl` - SASL Transport Protocol을 사용
+   * `http` - HTTP Transport Protocol을 사용
 
 ## JDBC Example
 
@@ -70,6 +73,3 @@ conn.close();
 
 System.out.println("Elapsed Time (sec)  : " + (finishTime - startTime) / 1000);
 ```
-   * `binary` - Binary Transport Protocol을 사용
-   * `sasl` - SASL Transport Protocol을 사용
-   * `http` - HTTP Transport Protocol을 사용
