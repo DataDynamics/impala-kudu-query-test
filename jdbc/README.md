@@ -45,6 +45,31 @@ jdbc:impala://localhost:18000/default2;AuthMech=3;UID=cloudera;PWD=cloudera;MEM_
    * 기본값은 0이며 timeout이 없는 상태
 * `TransportMode`
    * Thrift로 전송하는 프로토콜
+
+## JDBC Example
+
+```java
+Class.forName("com.cloudera.impala.jdbc.Driver");
+
+String jdbcUrl = "jdbc:impala://hdw1.dd.io:21050/default";
+String sql = "SELECT * FROM impala_raw_format";
+
+long startTime = System.currentTimeMillis();
+
+Connection conn = DriverManager.getConnection(jdbcUrl);
+PreparedStatement psmt = conn.prepareStatement(sql);
+ResultSet rs = psmt.executeQuery();
+int rows = 0;
+while (rs.next()) {
+	rows++;
+}
+long finishTime = System.currentTimeMillis();
+rs.close();
+psmt.close();
+conn.close();
+
+System.out.println("Elapsed Time (sec)  : " + (finishTime - startTime) / 1000);
+```
    * `binary` - Binary Transport Protocol을 사용
    * `sasl` - SASL Transport Protocol을 사용
    * `http` - HTTP Transport Protocol을 사용
